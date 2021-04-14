@@ -1,0 +1,32 @@
+.image-preview{
+    width: 150px;
+    min-height: 150px;
+    border: 2px solid #DDDDDD;
+    margin-top: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #CCCCCC;
+}
+.image-preview__image{
+    /*display: none;*/
+    width: 100%;
+}
+.image-preview2{
+    width: 200px;
+    min-height: 200px;
+    border: 2px solid #DDDDDD;
+    margin-top: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #CCCCCC;
+}
+.image-preview__image2{
+    /*display: none;*/
+    width: 100%;
+}
