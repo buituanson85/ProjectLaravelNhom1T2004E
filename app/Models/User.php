@@ -40,9 +40,21 @@ class User extends Authenticatable
     public function roles(){
         return $this->belongsToMany(Role::class,'user_role');
     }
-//    public function product(){
-//        return $this->hasOne('App\Models\Backend\Product');
-//    }
+    public function product(){
+        return $this->hasOne('App\Models\Backend\Product');
+    }
+
+    public function file(){
+        return $this->hasOne('App\Models\Backend\File');
+    }
+
+    public function order(){
+        return $this->hasOne('App\Models\Frontend\Order');
+    }
+
+    public function orderdetails(){
+        return $this->hasOne('App\Models\Frontend\OrderDetails');
+    }
     /**
      * The attributes that should be hidden for arrays.
      *
