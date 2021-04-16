@@ -45,7 +45,15 @@
                                             <label>
                                                 {{ ucfirst($permission->name) }}
                                             </label>
-                                            <input type="checkbox" name="permissions[]" value="{{ $permission->id }}">
+                                            <input
+                                                @foreach($role->permissions as $key)
+                                                @if($key->name == $permission->name)
+                                                checked="checked"
+                                                @else
+
+                                                @endif
+                                                @endforeach
+                                                type="checkbox" name="permissions[]" value="{{ $permission->id }}">
                                             <br>
                                         </div>
 
