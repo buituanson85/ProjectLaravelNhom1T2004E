@@ -48,6 +48,7 @@ return array(
     'App\\Models\\Backend\\Coupon' => $baseDir . '/app/Models/Backend/Coupon.php',
     'App\\Models\\Backend\\District' => $baseDir . '/app/Models/Backend/District.php',
     'App\\Models\\Backend\\File' => $baseDir . '/app/Models/Backend/File.php',
+    'App\\Models\\Backend\\Galaxy' => $baseDir . '/app/Models/Backend/Galaxy.php',
     'App\\Models\\Backend\\Permission' => $baseDir . '/app/Models/Backend/Permission.php',
     'App\\Models\\Backend\\Product' => $baseDir . '/app/Models/Backend/Product.php',
     'App\\Models\\Backend\\Role' => $baseDir . '/app/Models/Backend/Role.php',

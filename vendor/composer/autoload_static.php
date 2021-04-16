@@ -603,6 +603,7 @@ class ComposerStaticInit1ceb9d4acd1b20cea75462c9641edcb4
         'App\\Models\\Backend\\Coupon' => __DIR__ . '/../..' . '/app/Models/Backend/Coupon.php',
         'App\\Models\\Backend\\District' => __DIR__ . '/../..' . '/app/Models/Backend/District.php',
         'App\\Models\\Backend\\File' => __DIR__ . '/../..' . '/app/Models/Backend/File.php',
+        'App\\Models\\Backend\\Galaxy' => __DIR__ . '/../..' . '/app/Models/Backend/Galaxy.php',
         'App\\Models\\Backend\\Permission' => __DIR__ . '/../..' . '/app/Models/Backend/Permission.php',
         'App\\Models\\Backend\\Product' => __DIR__ . '/../..' . '/app/Models/Backend/Product.php',
         'App\\Models\\Backend\\Role' => __DIR__ . '/../..' . '/app/Models/Backend/Role.php',

@@ -36,4 +36,8 @@ class Product extends Model
     public function orderdetails(){
         return $this->hasOne('App\Models\Frontend\OrderDetails');
     }
+
+    public function galaxy(){
+        return $this->hasOne('App\Models\Backend\Galaxy');
+    }
 }

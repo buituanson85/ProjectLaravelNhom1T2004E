@@ -17,16 +17,16 @@ class UserController extends Controller
         $allRole = Role::all();
 
         if (isset($name) && isset($utype)){
-            $users = User::where('name', 'like','%'.$name.'%')->where('utype', $utype)->paginate(5);
+            $users = User::where('name', 'like','%'.$name.'%')->where('utype', $utype)->orderBy('id','DESC')->paginate(5);
             $users->appends($request->all());
         }elseif (isset($name)){
-            $users = User::where('name','like','%'.$name.'%')->paginate(5);
+            $users = User::where('name','like','%'.$name.'%')->orderBy('id','DESC')->paginate(5);
             $users->appends($request->all());
         }elseif (isset($utype)){
-            $users = User::where('utype', $utype)->paginate(5);
+            $users = User::where('utype', $utype)->orderBy('id','DESC')->paginate(5);
             $users->appends($request->all());
         }else{
-            $users = User::paginate(5);
+            $users = User::orderBy('id','DESC')->paginate(5);
         }
 
         return view('Backend.administration.users.index')->with(array('users'=>$users, 'utype' => $utype));
