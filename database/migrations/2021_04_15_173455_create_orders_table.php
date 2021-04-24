@@ -15,6 +15,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('order_id'); //chuyển thành string
             $table->unsignedInteger('customer_id');
             $table->unsignedInteger('payment_id');
             $table->float('price_total');

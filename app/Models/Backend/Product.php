@@ -22,7 +22,7 @@ class Product extends Model
         return $this->belongsTo('App\Models\Backend\Category');
     }
     public function user(){
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\User', 'partner_id');
     }
 
     public function brand(){
@@ -34,7 +34,7 @@ class Product extends Model
     }
 
     public function orderdetails(){
-        return $this->hasOne('App\Models\Frontend\OrderDetails');
+        return $this->hasMany('App\Models\Frontend\OrderDetails');
     }
 
     public function galaxy(){

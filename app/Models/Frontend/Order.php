@@ -16,12 +16,13 @@ class Order extends Model
     ];
     protected $primaryKey = 'id';
 
+
     public function payment(){
         return $this->belongsTo('App\Models\Frontend\Payment');
     }
 
     public function user(){
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\User', 'customer_id');
     }
 
     public function orderdetails(){

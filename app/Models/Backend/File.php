@@ -17,7 +17,7 @@ class File extends Model
     protected $primaryKey = 'id';
 
     public function user(){
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\User', 'customer_id');
     }
 
 }

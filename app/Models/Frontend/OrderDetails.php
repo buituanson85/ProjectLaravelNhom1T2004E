@@ -17,13 +17,10 @@ class OrderDetails extends Model
     protected $primaryKey = 'id';
 
     public function order(){
-        return $this->belongsTo('App\Models\Frontend\Order');
-    }
-    public function user(){
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\Frontend\Order','order_id');
     }
 
     public function product(){
-        return $this->belongsTo('App\Models\Backend\Product');
+        return $this->belongsTo('App\Models\Backend\Product', 'product_id');
     }
 }

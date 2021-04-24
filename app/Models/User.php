@@ -41,15 +41,15 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class,'user_role');
     }
     public function product(){
-        return $this->hasOne('App\Models\Backend\Product');
+        return $this->hasMany('App\Models\Backend\Product', 'partner_id');
     }
 
     public function file(){
-        return $this->hasOne('App\Models\Backend\File');
+        return $this->hasOne('App\Models\Backend\File', 'customer_id');
     }
 
     public function order(){
-        return $this->hasOne('App\Models\Frontend\Order');
+        return $this->hasMany('App\Models\Frontend\Order');
     }
 
     public function orderdetails(){
@@ -84,4 +84,5 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
 }

@@ -23,13 +23,13 @@ class CreateProductsTable extends Migration
             $table->float('deposit');
             $table->integer('km');
             $table->float('additional');
-            $table->enum('engine', ['gasoline', 'oil']);
+            $table->enum('engine', ['Xăng', 'Dầu', 'Điện']);
             $table->string('seat');
             $table->string('capacity');
             $table->string('range');
             $table->string('gear');
             $table->string('consumption');
-            $table->enum('status', ['instock', 'outofstock']);
+            $table->enum('status', ['refused','pending', 'ready', 'unavailable']);
             $table->boolean('featured')->default(false);
             $table->unsignedInteger('district_id');
             $table->unsignedInteger('brand_id');

@@ -16,7 +16,8 @@ class Payment extends Model
     ];
     protected $primaryKey = 'id';
 
-    public function product(){
+    public function order(){
         return $this->hasOne('App\Models\Frontend\Order');
     }
+
 }

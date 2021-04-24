@@ -24,7 +24,20 @@
     <link rel="stylesheet" href="{{ asset('Backend/vendors/flag-icon-css/css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('Backend/vendors/selectFX/css/cs-skin-elastic.css') }}">
     <link rel="stylesheet" href="{{ asset('Backend/vendors/jqvmap/dist/jqvmap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('Backend/vendors/jqvmap/dist/jqvmap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('Backend/assets/css/slider_single_product.css') }}">
+{{--    <link rel="stylesheet" type="text/css" href="{{ asset('Backend/assets/css/bulma.min.css') }}">--}}
+{{--    <link rel="stylesheet" type="text/css" href="{{ asset('Backend/assets/css/dataTables.bulma.min.css') }}">--}}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+{{--    Alertify--}}
+<!-- CSS -->
+    <link rel="stylesheet" href="{{ asset('Backend/vendors/alertifyjs/css/alertify.css') }}"/>
+    <!-- Default theme -->
+    <link rel="stylesheet" href="{{ asset('Backend/vendors/alertifyjs/css/themes/default.css') }}"/>
+    <!-- Semantic UI theme -->
+    <link rel="stylesheet" href="{{ asset('Backend/vendors/alertifyjs/css/themes/semantic.css') }}"/>
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="{{ asset('Backend/vendors/alertifyjs/css/themes/bootstrap.css') }}"/>
 
 
     <link rel="stylesheet" href="{{ asset('Backend/assets/css/style.css') }}">
@@ -73,6 +86,10 @@
 <script src="{{ asset('Backend/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js') }}"></script>
 <script src="{{ asset('Backend/vendors/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
 <script src="{{ asset('Backend/assets/js/slider_single_product.js') }}"></script>
+{{--<script src="{{ asset('Backend/assets/js/jquery.dataTables.min.js') }}"></script>--}}
+{{--<script src="{{ asset('Backend/assets/js/dataTables.bulma.min.js') }}"></script>--}}
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
 <script>
     (function($) {
         "use strict";
@@ -127,6 +144,11 @@
         document.getElementById('slug').value = slug;
     }
 </script>
+
+
+@yield('addjs')
+
+
 </body>
 
 </html>
