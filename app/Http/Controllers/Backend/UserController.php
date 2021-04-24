@@ -163,8 +163,6 @@ class UserController extends Controller
     public function registers(Request $request){
         $user = auth()->user();
 
-
-
         $request->session()->flash('success', 'Users Create Successfully!');
         return redirect()->route('users.index');
     }

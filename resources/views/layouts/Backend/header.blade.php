@@ -95,7 +95,10 @@
 
                     <a class="nav-link" href="{{ route('home.index') }}"><i class="fa fa-cog"></i> Home Pages</a>
 
-                    <a class="nav-link" href="#"><i class="fa fa-power-off"></i> Logout</a>
+                    <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> Logout</a>
+                    <form id="logout-form"  action="{{ route('logout') }}" method="post">
+                        @csrf
+                    </form>
                 </div>
             </div>
 
