@@ -80,8 +80,8 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="card height-dxht" style="min-height: 315px"><img alt="Proposals"
-                                                                       src="{{ asset('Frontend/assets/images/icon2-slide.png') }}"
-                                                                       class="card-img-top icon-partner">
+                                                                                                 src="{{ asset('Frontend/assets/images/icon2-slide.png') }}"
+                                                                                                 class="card-img-top icon-partner">
                                         <div class="card-body"><p class="card-text margin-info">Chúng tôi sẽ đóng vai trò
                                                 một
                                                 đại lý cung cấp khách đến từ kênh trực tuyến cho đơn vị thuê xe để bổ
@@ -91,8 +91,8 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="card height-dxht" style="min-height: 315px"><img alt="Proposals"
-                                                                       src="{{ asset('Frontend/assets/images/icon3-slide.png') }}"
-                                                                       class="card-img-top icon-partner">
+                                                                                                 src="{{ asset('Frontend/assets/images/icon3-slide.png') }}"
+                                                                                                 class="card-img-top icon-partner">
                                         <div class="card-body"><p class="card-text margin-info">Đơn vị cho thuê xe sẽ
                                                 trả
                                                 phí giới thiệu khách hàng cho chúng tôi dựa trên các giao dịch thành công
@@ -166,48 +166,95 @@
                                                                       style="text-align: center;">
                                         Đăng ký làm đối tác</p></div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <form class="form form-content">
-                                        <div class="form-group" style="width: 410px;"><p
-                                                class="title-ip-register form-input">Tên đơn vị/chủ xe *</p><input
-                                                class="name input-tabs form-control" id="name" placeholder="Nhập tên đơn vị/chủ xe ..." type="text"
-                                                value=""></div>
-                                        <div class="form-group" style="width: 410px;"><p class="title-ip-register"> Số
-                                                điện
-                                                thoại * </p><input class="phone input-tabs form-control"
-                                                                   placeholder="Nhập số điện thoại ..."
-                                                                   type="text" pattern="[0-9]*" value=""></div>
-                                        <div class="form-group" style="width: 410px;"><p class="title-ip-register">
-                                                Email
-                                                * </p><input class="email input-tabs form-control" placeholder="Nhập địa chỉ email ..."
-                                                             type="email" value=""></div>
-                                        <div class="form-group" style="width: 410px;"><p class="title-ip-register"> Địa
-                                                chỉ </p>
-                                            <div><input autocomplete="off" role="combobox" aria-autocomplete="list"
-                                                        aria-expanded="false" placeholder="Nhập địa chỉ ..." type="text"
-                                                        class="address input-tabs form-control" value="">
-                                                <div class="autocomplete-dropdown-container wborder"></div>
+                            @if ($message = Session::get('success'))
+                            <script type="text/javascript">
+                                $.notify("Gửi đăng ký", "Thành công");
+                            </script>
+                            @endif
+                            <div class="alert-danger"></div>
+                            <form class="form-group" method="POST" action="{{route('pages.storepartners')}}">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-6 offset-md-3">
+                                        <div class="form-group">
+                                            <label class="col-md-12 col-form-label pull-right">Tên đối tác:</label>
+                                            <div class="col-md-12">
+                                                <input type="text" name="name"  id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Enter Name">
+                                                @error('name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
                                             </div>
                                         </div>
-                                        <div class="form-group" style="width: 410px;"><p class="title-ip-register"> Tiêu
-                                                đề </p><input class="input-tabs" placeholder="Nhập tiêu đề ..."
-                                                              type="text"
-                                                              value=""></div>
-                                        <div class="form-group" style="width: 410px;"><p class="title-ip-register"> Nội
-                                                dung</p><textarea class="input-tabs" placeholder="Nhập nội dung ..."
-                                                                  type="text" rows="5"></textarea></div>
-                                        <div class="form-error is-visible form-group"></div>
-                                        <div class="form-group" style="width: 410px; text-align: center;">
-                                            <div class="btn-disabled partner-button">Đăng ký</div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-12 col-form-label pull-right">Địa chỉ email:</label>
+                                            <div class="col-md-12">
+                                                <input type="email" name="email"  id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Enter Email">
+                                                @error('email')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
                                         </div>
-                                        <div class="form-group" style="text-align: center; margin-bottom: 24px;"><a
-                                                href="/">
-                                                <div class="btn_back partner-back">Quay lại trang chủ</div>
-                                            </a></div>
-                                    </form>
+
+                                        <div class="form-group">
+                                            <label class="col-md-12 col-form-label pull-right">Số điện thoại</label>
+                                            <div class="col-md-12">
+                                                <input type="text" name="phone"  id="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" placeholder="Enter Phone">
+                                                @error('phone')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-12 col-form-label pull-right">Địa chỉ:</label>
+                                            <div class="col-md-12">
+                                                <input type="text" name="address"  id="address" class="form-control @error('address') is-invalid @enderror" value="{{ old('address') }}" placeholder="Enter Address">
+                                                @error('address')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-12 col-form-label pull-right">Tiêu đề:</label>
+                                            <div class="col-md-12">
+                                                <input type="text" name="title"  id="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}" placeholder="Tiêu đề">
+                                                @error('title')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-12 col-form-label pull-right">Nội dung</label>
+                                            <div class="col-md-12">
+                                            <textarea  name="note"  id="note" class="form-control @error('note') is-invalid @enderror" value="{{ old('note') }}" placeholder="Nội dung">
+
+                                            </textarea>
+                                                @error('note')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group pt-3 pl-3">
+                                            <button type="submit" class="btn btn-primary" name="register"><i class="fas fa-save"></i>&nbsp;Register</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

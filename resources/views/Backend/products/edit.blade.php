@@ -175,9 +175,20 @@
                                             <div class="col-md-9">
                                                 <select name="engine"  id="engine" class="form-control @error('engine') is-invalid @enderror" value="{{ old('engine') }}">
                                                     <option value="">Chọn loại động cơ</option>
-                                                    <option value="Xăng" {{$product->engine == 'Xăng'?'selected':''}}>Xăng</option>
-                                                    <option value="Dầu" {{$product->engine == 'Dầu'?'selected':''}}>Dầu</option>
-                                                    <option value="Điện" {{$product->engine == 'Điện'?'selected':''}}>Điện</option>
+                                                    @if($product->engine == "Xăng")
+                                                        <option selected value="Xăng">Xăng</option>
+                                                        <option value="Dầu">Dầu</option>
+                                                        <option value="Điện">Điện</option>
+                                                    @elseif($product->engine == "Dầu")
+                                                        <option value="Xăng">Xăng</option>
+                                                        <option selected value="Dầu">Dầu</option>
+                                                        <option value="Điện">Điện</option>
+                                                    @else
+                                                        <option value="Xăng">Xăng</option>
+                                                        <option value="Dầu">Dầu</option>
+                                                        <option selected value="Điện">Điện</option>
+                                                    @endif
+
                                                 </select>
                                                 @error('engine')
                                                 <span class="invalid-feedback" role="alert">
@@ -193,11 +204,37 @@
                                             <div class="col-md-9">
                                                 <select type="number" name="seat"  id="seat" class="form-control @error('seat') is-invalid @enderror" value="{{ old('seat') }}">
                                                     <option value="">Chọn số lượng ghế</option>
-                                                    <option value="Xe máy" {{$product->seat == 'Xe máy'?'selected':''}}>Xe máy</option>
-                                                    <option value="4-5 chỗ" {{$product->seat == '4-5 chỗ'?'selected':''}}>4-5 chỗ</option>
-                                                    <option value="7 chỗ" {{$product->seat == '7 chỗ'?'selected':''}}>7 chỗ</option>
-                                                    <option value="16 chỗ" {{$product->seat == '16 chỗ'?'selected':''}}>16 chỗ</option>
-                                                    <option value="Khác" {{$product->seat == 'Khác'?'selected':''}}>Loại khác</option>
+                                                    @if($product->seat == "Xe máy")
+                                                        <option selected value="Xe máy">Xe máy</option>
+                                                        <option value="4 Chỗ">4 Chỗ</option>
+                                                        <option value="7 Chỗ">7 Chỗ</option>
+                                                        <option value="Bán Tải">Bán Tải</option>
+                                                        <option value="Xe Sang">Xe Sang</option>
+                                                    @elseif($product->seat == "4 Chỗ")
+                                                        <option value="Xe máy">Xe máy</option>
+                                                        <option selected value="4 Chỗ">4 Chỗ</option>
+                                                        <option value="7 Chỗ">7 Chỗ</option>
+                                                        <option value="Bán Tải">Bán Tải</option>
+                                                        <option value="Xe Sang">Xe Sang</option>
+                                                    @elseif($product->seat == "7 Chỗ")
+                                                        <option value="Xe máy">Xe máy</option>
+                                                        <option value="4 Chỗ">4 Chỗ</option>
+                                                        <option selected value="7 Chỗ">7 Chỗ</option>
+                                                        <option value="Bán Tải">Bán Tải</option>
+                                                        <option value="Xe Sang">Xe Sang</option>
+                                                    @elseif($product->seat == "Xe Sang")
+                                                        <option value="Xe máy">Xe máy</option>
+                                                        <option value="4 Chỗ">4 Chỗ</option>
+                                                        <option value="7 Chỗ">7 Chỗ</option>
+                                                        <option value="Bán Tải">Bán Tải</option>
+                                                        <option selected value="Xe Sang">Xe Sang</option>
+                                                    @else
+                                                        <option value="Xe máy">Xe máy</option>
+                                                        <option value="4 Chỗ">4 Chỗ</option>
+                                                        <option value="7 Chỗ">7 Chỗ</option>
+                                                        <option selected value="Bán Tải">Bán Tải</option>
+                                                        <option value="Xe Sang">Xe Sang</option>
+                                                    @endif
                                                 </select>
                                                 @error('seat')
                                                 <span class="invalid-feedback" role="alert">
@@ -224,12 +261,49 @@
                                             <div class="col-md-9">
                                                 <select type="text" name="range"  id="range" class="form-control @error('range') is-invalid @enderror" value="{{ old('range') }}">
                                                     <option value="">Chọn kiểu phương tiện</option>
-                                                    <option value="Sedan" {{$product->range == 'Sedan'?'selected':''}}>Sedan</option>
-                                                    <option value="Coupe" {{$product->range == 'Coupe'?'selected':''}}>Coupe</option>
-                                                    <option value="Sport" {{$product->range == 'Sport'?'selected':''}}>Sport</option>
-                                                    <option value="Hatchback" {{$product->range == 'Hatchback'?'selected':''}}>Hatchback</option>
-                                                    <option value="Minivan" {{$product->range == 'Minivan'?'selected':''}}>Minivan</option>
-                                                    <option value="Motor" {{$product->range == 'Motor'?'selected':''}}>Xe máy</option>
+                                                    @if($product->range == "Sedan")
+                                                        <option selected value="Sedan">Sedan</option>
+                                                        <option value="Coupe">Coupe</option>
+                                                        <option value="Sport">Sport</option>
+                                                        <option value="Hatchback">Hatchback</option>
+                                                        <option value="Minivan">Minivan</option>
+                                                        <option value="Fashion">Fashion</option>
+                                                    @elseif($product->range == "Coupe")
+                                                        <option value="Sedan">Sedan</option>
+                                                        <option selected value="Coupe">Coupe</option>
+                                                        <option value="Sport">Sport</option>
+                                                        <option value="Hatchback">Hatchback</option>
+                                                        <option value="Minivan">Minivan</option>
+                                                        <option value="Fashion">Fashion</option>
+                                                    @elseif($product->range == "Sport")
+                                                        <option value="Sedan">Sedan</option>
+                                                        <option value="Coupe">Coupe</option>
+                                                        <option selected value="Sport">Sport</option>
+                                                        <option value="Hatchback">Hatchback</option>
+                                                        <option value="Minivan">Minivan</option>
+                                                        <option value="Fashion">Fashion</option>
+                                                    @elseif($product->range == "Hatchback")
+                                                        <option value="Sedan">Sedan</option>
+                                                        <option value="Coupe">Coupe</option>
+                                                        <option value="Sport">Sport</option>
+                                                        <option selected value="Hatchback">Hatchback</option>
+                                                        <option value="Minivan">Minivan</option>
+                                                        <option value="Fashion">Fashion</option>
+                                                    @elseif($product->range == "Minivan")
+                                                        <option value="Sedan">Sedan</option>
+                                                        <option value="Coupe">Coupe</option>
+                                                        <option value="Sport">Sport</option>
+                                                        <option value="Hatchback">Hatchback</option>
+                                                        <option selected value="Minivan">Minivan</option>
+                                                        <option value="Fashion">Fashion</option>
+                                                    @else
+                                                        <option value="Sedan">Sedan</option>
+                                                        <option value="Coupe">Coupe</option>
+                                                        <option value="Sport">Sport</option>
+                                                        <option value="Hatchback">Hatchback</option>
+                                                        <option value="Minivan">Minivan</option>
+                                                        <option selected value="Fashion">Fashion</option>
+                                                    @endif
                                                 </select>
                                                 @error('range')
                                                 <span class="invalid-feedback" role="alert">
@@ -244,12 +318,49 @@
                                             <div class="col-md-9">
                                                 <select type="text" name="gear"  id="gear" class="form-control @error('gear') is-invalid @enderror" value="{{ old('gear') }}">
                                                     <option value="">Chọn loại động cơ xe</option>
-                                                    <option value="Xe ô tô số sàn" {{$product->gear == 'Xe ô tô số sàn'?'selected':''}}>Xe ô tô số sàn</option>
-                                                    <option value="Xe ô tô số tự động" {{$product->gear == 'Xe ô tô số tự động'?'selected':''}}>Xe ô tô tự động</option>
-                                                    <option value="Xe máy tay ga" {{$product->gear == 'Xe máy tay ga'?'selected':''}}>Xe máy tay ga</option>
-                                                    <option value="Xe máy tay côn" {{$product->gear == 'Xe máy tay côn'?'selected':''}}>Xe máy tay côn</option>
-                                                    <option value="Xe máy số" {{$product->gear == 'Xe máy số'?'selected':''}}>Xe máy số</option>
-                                                    <option value="Xe máy điện" {{$product->gear == 'Xe máy điện'?'selected':''}}>Xe máy điện</option>
+                                                    @if($product->gear == "Số sàn")
+                                                    <option selected value="Số sàn">Số sàn</option>
+                                                    <option value="Số tự động">Số tự động</option>
+                                                    <option value="Xe số">Xe số</option>
+                                                    <option value="Xe tay ga">Xe tay ga</option>
+                                                    <option value="Xe côn">Xe côn</option>
+                                                    <option value="Xe máy điện">Xe máy điện</option>
+                                                    @elseif($product->gear == "Số tự động")
+                                                    <option  value="Số sàn">Số sàn</option>
+                                                    <option selected value="Số tự động">Số tự động</option>
+                                                    <option value="Xe số">Xe số</option>
+                                                    <option value="Xe tay ga">Xe tay ga</option>
+                                                    <option value="Xe côn">Xe côn</option>
+                                                    <option value="Xe máy điện">Xe máy điện</option>
+                                                    @elseif($product->gear == "Số tự động")
+                                                        <option value="Xe số">Số sàn</option>
+                                                        <option value="Số tự động">Số tự động</option>
+                                                        <option selected value="Xe số">Xe số</option>
+                                                        <option value="Xe tay ga">Xe tay ga</option>
+                                                        <option value="Xe côn">Xe côn</option>
+                                                        <option value="Xe máy điện">Xe máy điện</option>
+                                                    @elseif($product->gear == "Xe tay ga")
+                                                        <option value="Số sàn">Số sàn</option>
+                                                        <option value="Số tự động">Số tự động</option>
+                                                        <option value="Xe số">Xe số</option>
+                                                        <option selected value="Xe tay ga">Xe tay ga</option>
+                                                        <option value="Xe côn">Xe côn</option>
+                                                        <option value="Xe máy điện">Xe máy điện</option>
+                                                    @elseif($product->gear == "Xe côn")
+                                                        <option value="Số sàn">Số sàn</option>
+                                                        <option value="Số tự động">Số tự động</option>
+                                                        <option value="Xe số">Xe số</option>
+                                                        <option value="Xe tay ga">Xe tay ga</option>
+                                                        <option selected value="Xe côn">Xe côn</option>
+                                                        <option value="Xe máy điện">Xe máy điện</option>
+                                                    @else
+                                                        <option  value="Số sàn">Số sàn</option>
+                                                        <option value="Số tự động">Số tự động</option>
+                                                        <option value="Xe số">Xe số</option>
+                                                        <option  value="Xe tay ga">Xe tay ga</option>
+                                                        <option value="Xe côn">Xe côn</option>
+                                                        <option selected value="Xe máy điện">Xe máy điện</option>
+                                                    @endif
                                                 </select>
                                                 @error('gear')
                                                 <span class="invalid-feedback" role="alert">
@@ -271,6 +382,28 @@
                                             </div>
                                         </div>
 
+                                        <div class="form-group row">
+                                            <label class="col-md-3 col-form-label pull-right">Thành Phố:</label>
+                                            <div class="col-md-9">
+                                                <select name="city_id"  id="city_id" class="form-control @error('city_id') is-invalid @enderror" value="{{ old('city_id') }}">
+                                                    <option value="">Chọn thành phố (địa chỉ nhận xe)</option>
+                                                    @foreach($cities as $city)
+                                                        <option
+                                                            @if($product->city_id == $city->id)
+                                                            selected
+                                                            @else
+
+                                                            @endif
+                                                            value="{{$city->id}}" >{{$city->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('city_id')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
 
                                         <div class="form-group row">
                                             <label class="col-md-3 col-form-label pull-right">Quận:</label>
@@ -278,11 +411,13 @@
                                                 <select name="district_id"  id="district_id" class="form-control @error('district_id') is-invalid @enderror" value="{{ old('district_id') }}">
                                                     <option value="">Chọn quận (địa chỉ nhận xe)</option>
                                                     @foreach($districts as $district)
-                                                        @if($product->district_id == $district->id)
-                                                        <option value="{{$district->id}}" selected>{{$district->name}}</option>
-                                                        @else
-                                                        <option value="{{$district->id}}" selected>{{$district->name}}</option>
-                                                        @endif
+                                                        <option
+                                                            @if($product->district_id == $district->id)
+                                                            selected
+                                                            @else
+
+                                                            @endif
+                                                            value="{{$district->id}}" >{{$district->name}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('district_id')

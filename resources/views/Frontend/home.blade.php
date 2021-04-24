@@ -1,6 +1,7 @@
 @extends('layouts.Frontend.base')
-@section('title', 'Home Pages')
+@section('title', 'Trang chủ')
 @section('content')
+
     <div class="swiper-container">
 
         <div class="swiper-wrapper" style="max-width: 100%;height: 600px;">
@@ -25,20 +26,19 @@
             <div class="swiper-slide"  style="background-image: url('{{ asset('Frontend/assets/images/slide_4.jpg') }}')">
                 <div class="slide__content" style="background: rgba(0,0,0,0.3);height: 100%">
                     <div class="text_in_slide">
-
                         <h1>Đi lại thoải mái không giới hạn cùng</h1>
                         <h1>Chungxe</h1>
-
                     </div>
                 </div>
             </div>
             <div class="form_search">
-                <form action="{{ route('pages.chooseproducts') }}" method="post">
+                <form id="homeForm" action="{{ route('pages.chooseproducts') }}" method="post">
+                    {{--                <form id="homeForm">--}}
                     @csrf
                     <h2 style="text-align: center">Bạn cần thuê xe ?</h2>
                     <div class="form_checkbox"style="position: relative">
                         <div class="form_checkbox_general">
-                            <select class="form-control" id="categori_id" name="categori_id" style="flex: 1;background-color: whitesmoke">
+                            <select class="form-control" id="category_id" name="category_id" style="flex: 1;background-color: whitesmoke">
                                 <option value="">Chọn Phương Tiện</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -56,25 +56,32 @@
                         </select>
                     </div>
 
-                    <div class="form_time">
-                        <div class="form_time_general">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <input class="form-control" style="background-color: whitesmoke;border: none;border-radius: 5px;width: 160px"  type="date" id="start_time" name="start_time">
-                                </div>
-                                <div class="col-md-5">
-                                    <input class="form-control" style="background-color: whitesmoke;border: none;border-radius: 5px; width: 160px"  type="date" id="end_time" name="end_time">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {{--                    <div class="form_time">--}}
+                    {{--                        <div class="form_time_general">--}}
+                    {{--                            <div class="row">--}}
+                    {{--                                <div class="col-md-5">--}}
+                    {{--                                    <input class="form-control" style="background-color: whitesmoke;border-radius: 5px;width: 160px"  type="text" id="start_time" name="start_time">--}}
+                    {{--                                    <p id="demo_start_time"></p>--}}
+                    {{--                                </div>--}}
+                    {{--                                <div class="col-md-5">--}}
+                    {{--                                    <input class="form-control" style="background-color: whitesmoke;border-radius: 5px; width: 160px"  type="text" id="end_time" name="end_time">--}}
+                    {{--                                </div>--}}
+                    {{--                            </div>--}}
+                    {{--                        </div>--}}
+                    {{--                    </div>--}}
                     <div class="form_submit">
                         <button class="btn btn-primary" type="submit">Tìm xe</button>
                     </div>
+                    {{--                    <script>--}}
+                    {{--                        var dateStart = document.querySelector('#start_time');--}}
+                    {{--                        var dateEnd = document.querySelector('#end_time');--}}
+                    {{--                        var now = new Date();--}}
+                    {{--                        dateStart.value = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1).toLocaleString('en-GB', { timeZone: 'UTC' });--}}
+                    {{--                        dateEnd.value = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 5).toLocaleString('en-GB', { timeZone: 'UTC' });--}}
+                    {{--                    </script>--}}
 
                 </form>
             </div>
-
 
         </div>
         <!-- Add Pagination -->
@@ -96,9 +103,9 @@
                         <img src="{{ asset('Frontend/assets/images/profit_1.png') }}" style="width: 80px;height: 80px" alt="">
 
                         <span style=" line-height: 20px; padding-left: 20px">
-                            <p style="font-weight: 700; font-size: 20px;">Nhiều sự lựa chọn</p>
-                            <p>Hàng trăm loại xe đa dạng ở nhiều địa điểm trên cả nước, phù hợp với mọi mục đích của bạn</p>
-                        </span>
+                                <p style="font-weight: 700; font-size: 20px;">Nhiều sự lựa chọn</p>
+                                <p>Hàng trăm loại xe đa dạng ở nhiều địa điểm trên cả nước, phù hợp với mọi mục đích của bạn</p>
+                            </span>
 
 
 
@@ -108,9 +115,9 @@
                         <img src="{{ asset('Frontend/assets/images/profit_2.png') }}" style="width: 80px;height: 80px" alt="">
 
                         <span style=" line-height: 20px; padding-left: 20px">
-                            <p style="font-weight: 700; font-size: 20px;"> Thuận tiện</p>
-                            <p>Dễ dàng tìm kiếm, so sánh và đặt chiếc xe như ý với chỉ vài click chuột</p>
-                        </span>
+                                <p style="font-weight: 700; font-size: 20px;"> Thuận tiện</p>
+                                <p>Dễ dàng tìm kiếm, so sánh và đặt chiếc xe như ý với chỉ vài click chuột</p>
+                            </span>
 
 
                     </div>
@@ -119,9 +126,9 @@
                         <img src="{{ asset('Frontend/assets/images/profit_3.png') }}" style="width: 80px;height: 80px" alt="">
 
                         <span style=" line-height: 20px; padding-left: 20px">
-                            <p style="font-weight: 700; font-size: 20px;">Giá cả cạnh tranh</p>
-                            <p>Giá thuê được niêm yết công khai và rẻ hơn 10% so với giá truyền thống</p>
-                        </span>
+                                <p style="font-weight: 700; font-size: 20px;">Giá cả cạnh tranh</p>
+                                <p>Giá thuê được niêm yết công khai và rẻ hơn 10% so với giá truyền thống</p>
+                            </span>
 
 
                     </div>
@@ -132,9 +139,9 @@
                         <img src="{{ asset('Frontend/assets/images/profit_4.png') }}" style="width: 80px;height: 80px" alt="">
 
                         <span style=" line-height: 20px; padding-left: 20px">
-                            <p style="font-weight: 700; font-size: 20px;">Tin cậy</p>
-                            <p>Các xe đều có thời gian sử dụng dưới 3 năm và được bảo dưỡng thường xuyên</p>
-                        </span>
+                                <p style="font-weight: 700; font-size: 20px;">Tin cậy</p>
+                                <p>Các xe đều có thời gian sử dụng dưới 3 năm và được bảo dưỡng thường xuyên</p>
+                            </span>
 
 
                     </div>
@@ -143,9 +150,9 @@
                         <img src="{{ asset('Frontend/assets/images/profit_5.png') }}" style="width: 80px;height: 80px" alt="">
 
                         <span style=" line-height: 20px; padding-left: 20px">
-                            <p style="font-weight: 700; font-size: 20px;">Hỗ trợ 24/7</p>
-                            <p>Có nhân viên hỗ trợ khách hàng trong suốt quá trình thuê xe</p>
-                        </span>
+                                <p style="font-weight: 700; font-size: 20px;">Hỗ trợ 24/7</p>
+                                <p>Có nhân viên hỗ trợ khách hàng trong suốt quá trình thuê xe</p>
+                            </span>
 
 
                     </div>
@@ -154,9 +161,9 @@
                         <img src="{{ asset('Frontend/assets/images/profit_6.png') }}" style="width: 80px;height: 80px" alt="">
 
                         <span style=" line-height: 20px; padding-left: 20px">
-                            <p style="font-weight: 700; font-size: 20px;">Bảo hiểm</p>
-                            <p>An tâm với các gói bảo hiểm vật chất và tai nạn trong suốt quá trình thuê xe</p>
-                        </span>
+                                <p style="font-weight: 700; font-size: 20px;">Bảo hiểm</p>
+                                <p>An tâm với các gói bảo hiểm vật chất và tai nạn trong suốt quá trình thuê xe</p>
+                            </span>
 
 
                     </div>
@@ -172,7 +179,6 @@
                     <div class="howto_book_general">
 
                         <img src="{{ asset('Frontend/assets/images/step1.webp') }}" alt="" style="width: 100%">
-
 
                         <p style="padding-top: 20px; font-size: 25px;font-weight: 600">Đặt xe</p>
                         <p>Nhanh chóng đặt một chiếc xe ưng ý thông qua Website của chúng tôi</p>
@@ -274,5 +280,6 @@
     </div>
 
 @endsection
+
 
 

@@ -13,23 +13,19 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $name = $request->name;
-        $utype = $request->utype;
         $allRole = Role::all();
 
-        if (isset($name) && isset($utype)){
-            $users = User::where('name', 'like','%'.$name.'%')->where('utype', $utype)->orderBy('id','DESC')->paginate(5);
-            $users->appends($request->all());
-        }elseif (isset($name)){
-            $users = User::where('name','like','%'.$name.'%')->orderBy('id','DESC')->paginate(5);
-            $users->appends($request->all());
-        }elseif (isset($utype)){
-            $users = User::where('utype', $utype)->orderBy('id','DESC')->paginate(5);
+        if (isset($name)){
+            $users = User::where([
+                ['name','like','%'.$name.'%'],
+                ['utype','=',"ADM"]
+            ])->orderBy('id','DESC')->paginate(5);
             $users->appends($request->all());
         }else{
-            $users = User::orderBy('id','DESC')->paginate(5);
+            $users = User::where('utype','=',"ADM")->orderBy('id','DESC')->paginate(5);
         }
 
-        return view('Backend.administration.users.index')->with(array('users'=>$users, 'utype' => $utype));
+        return view('Backend.administration.users.index')->with(array('users'=>$users));
 
     }
 
@@ -46,6 +42,7 @@ class UserController extends Controller
             'password_confirmation' => 'required|alpha_num|min:6',
             'phone' => 'required',
             'address' => 'required',
+            'birth_day' => 'required',
             'email' => 'required|email|unique:users'
         ]);
         $user = new User();
@@ -54,9 +51,9 @@ class UserController extends Controller
         $user->phone = $request->phone;
         $user->email = $request->email;
         $user->address = $request->address;
-        $user->city_id = $request->city;
-        $user->district_id = $request->district;
+        $user->birth_day = $request->birth_day;
         $user->password = bcrypt($request->password);
+        $user->utype = "ADM";
         $user->save();
 
         $request->session()->flash('success', 'Users Create Successfully!');

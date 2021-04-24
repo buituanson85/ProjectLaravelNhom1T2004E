@@ -93,7 +93,7 @@
 
                     <a class="nav-link" href="{{ route('dashboards.getpassword') }}"><i class="fas fa-key"></i>&nbsp;Password</a>
 
-                    <a class="nav-link" href="{{ route('homes.index') }}"><i class="fa fa-cog"></i> Home Pages</a>
+                    <a class="nav-link" href="{{ route('home.index') }}"><i class="fa fa-cog"></i> Home Pages</a>
 
                     <a class="nav-link" href="#"><i class="fa fa-power-off"></i> Logout</a>
                 </div>

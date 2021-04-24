@@ -181,10 +181,10 @@
                                                 <select type="number" name="seat"  id="seat" class="form-control @error('seat') is-invalid @enderror" value="{{ old('seat') }}">
                                                     <option value="">Chọn số lượng ghế</option>
                                                     <option value="Xe máy">Xe máy</option>
-                                                    <option value="4-5 chỗ">4-5 chỗ</option>
-                                                    <option value="7 chỗ">7 chỗ</option>
-                                                    <option value="16 chỗ">16 chỗ</option>
-                                                    <option value="Khác">Loại khác</option>
+                                                    <option value="4 chỗ">4 Chỗ</option>
+                                                    <option value="7 chỗ">7 Chỗ</option>
+                                                    <option value="16 chỗ">Bán Tải</option>
+                                                    <option value="Khác">Xe Sang</option>
                                                 </select>
                                                 @error('seat')
                                                 <span class="invalid-feedback" role="alert">
@@ -216,7 +216,7 @@
                                                     <option value="Sport">Sport</option>
                                                     <option value="Hatchback">Hatchback</option>
                                                     <option value="Minivan">Minivan</option>
-                                                    <option value="Motor">Xe máy</option>
+                                                    <option value="Fashion">Fashion</option>
                                                 </select>
                                                 @error('range')
                                                 <span class="invalid-feedback" role="alert">
@@ -231,11 +231,11 @@
                                             <div class="col-md-9">
                                                 <select type="text" name="gear"  id="gear" class="form-control @error('gear') is-invalid @enderror" value="{{ old('gear') }}">
                                                     <option value="">Chọn loại động cơ xe</option>
-                                                    <option value="Xe ô tô số sàn">Xe ô tô số sàn</option>
-                                                    <option value="Xe ô tô số tự động">Xe ô tô tự động</option>
-                                                    <option value="Xe máy tay ga">Xe máy tay ga</option>
-                                                    <option value="Xe máy tay côn">Xe máy tay côn</option>
-                                                    <option value="Xe máy số">Xe máy số</option>
+                                                    <option value="Số sàn">Số sàn</option>
+                                                    <option value="Số tự động">Số tự động</option>
+                                                    <option value="Xe số">Xe số</option>
+                                                    <option value="Xe tay ga">Xe tay ga</option>
+                                                    <option value="Xe côn">Xe côn</option>
                                                     <option value="Xe máy điện">Xe máy điện</option>
                                                 </select>
                                                 @error('gear')
@@ -258,6 +258,22 @@
                                             </div>
                                         </div>
 
+                                        <div class="form-group row">
+                                            <label class="col-md-3 col-form-label pull-right">Thành Phố:</label>
+                                            <div class="col-md-9">
+                                                <select name="city_id"  id="city_id" class="form-control @error('city_id') is-invalid @enderror" value="{{ old('city_id') }}">
+                                                    <option value="">Chọn thành phố (địa chỉ nhận xe)</option>
+                                                    @foreach($cities as $city)
+                                                        <option value="{{$city->id}}">{{$city->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('city_id')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
 
                                         <div class="form-group row">
                                             <label class="col-md-3 col-form-label pull-right">Quận:</label>

@@ -1,5 +1,5 @@
 @extends('layouts.Backend.base')
-@section('title', 'User')
+@section('title', 'Nhân Viên')
 @section('content')
     <div id="right-panel" class="right-panel">
 
@@ -13,7 +13,7 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('users.index') }}">Table Users</a></span>
+                        <span style="float: left"><a href="{{ route('users.index') }}">Danh sách nhân viên</a></span>
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="card-tools">
-                                            <a href="{{ route('users.create') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Create Users</a>
+                                            <a href="{{ route('users.create') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Thêm mới nhân viên</a>
                                         </div>
                                     </div>
                                     <div class="col-md-9">
@@ -37,15 +37,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <div class="col-md-12">
-                                                            <select class="form-control" name="utype" id="utype">
-                                                                <option value="">===== Select UTYPE =====</option>
-                                                                <option
-                                                                    {{ $utype == "ADM" ? 'selected' : ''}}
-                                                                    value="ADM">ADM</option>
-                                                                <option
-                                                                    {{ $utype == "URS" ? 'selected' : ''}}
-                                                                    value="USR">USR</option>
-                                                            </select>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -74,19 +66,19 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name</th>
+                                        <th>Tên</th>
                                         <th>utype</th>
                                         <th>Email</th>
                                         <th>Role</th>
-                                        <th>View</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
-                                        <th>Date Posted</th>
+                                        <th>Chi tiết</th>
+                                        <th>Sửa</th>
+                                        <th>Xóa</th>
+                                        <th>Ngày thêm</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @php
-                                    $index = $users->perPage()*($users->currentPage() - 1);
+                                        $index = $users->perPage()*($users->currentPage() - 1);
                                     @endphp
                                     @foreach($users as $user)
                                         <tr>
@@ -99,17 +91,17 @@
                                             <td>{{ $user->name }}</td>
                                             <td>
                                                 @if( $user->utype == "ADM" )
-                                                @forelse($user->roles as $role)
-                                                    @if($role->name == "Admin")
-                                                        <span class="badge badge-success">ADM</span>
-                                                        @break
-                                                    @else
+                                                    @forelse($user->roles as $role)
+                                                        @if($role->name == "Admin")
+                                                            <span class="badge badge-success">ADM</span>
+                                                            @break
+                                                        @else
+                                                            <a class="badge badge-success" href=" {{ route('dashboards.unlockutypeuser',$user->id) }}">ADM</a>
+                                                            @break
+                                                        @endif
+                                                    @empty
                                                         <a class="badge badge-success" href=" {{ route('dashboards.unlockutypeuser',$user->id) }}">ADM</a>
-                                                        @break
-                                                    @endif
-                                                @empty
-                                                        <a class="badge badge-success" href=" {{ route('dashboards.unlockutypeuser',$user->id) }}">ADM</a>
-                                                @endforelse
+                                                    @endforelse
                                                 @else
                                                     <a class="badge badge-warning" href="{{ route('dashboards.lockutypeuser',$user->id) }}">URS</a>
                                                 @endif

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Backend\Brand;
 use App\Models\Backend\Category;
+use App\Models\Backend\City;
 use App\Models\Backend\District;
 use App\Models\Backend\Product;
 use App\Models\User;
@@ -41,10 +42,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        $districts = District::all()->sortByDesc('name');
-        $brands = Brand::all()->sortBy('name', false);
-        return view("Backend.products.create")->with(['categories' => $categories, 'districts' => $districts, 'brands' => $brands]);
+        $cities = City::where('status','instock')->get();
+        $categories = Category::where('status','instock')->get();
+        $districts = District::where('status','instock')->orderBy('id','DESC')->get();
+        $brands = Brand::where('status','instock')->orderBy('id','DESC')->get();
+        return view("Backend.products.create")->with(['categories' => $categories, 'districts' => $districts, 'brands' => $brands, 'cities' => $cities]);
     }
 
     /**
@@ -72,17 +74,36 @@ class ProductController extends Controller
             'brand_id' => 'required',
             'district_id' => 'required',
             'category_id' => 'required',
+            'city_id' => 'required'
         ]);
         $product = new Product();
 
         $product->name = $request->name;
-        $get_image = $request->file('image');
-        if ($get_image) {
-            $get_name_image = $get_image->getClientOriginalName();
-            $name_image = current(explode('.', $get_name_image));
-            $new_image = $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
-            $get_image->move('public/Backend/images', $new_image);
-            $product->image = $new_image;
+
+//        $get_image = $request->file('image');
+//        if ($get_image) {
+//            $get_name_image = $get_image->getClientOriginalName();
+//            $name_image = current(explode('.', $get_name_image));
+//            $new_image = $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
+//            $get_image->move('public/Backend/images', $new_image);
+//            $product->image = $new_image;
+//        }
+        if ($request ->image != null){
+            $image = base64_encode(file_get_contents($_FILES['image']['tmp_name']));
+
+            $options = array('http' =>array(
+                'method' => "POST",
+                'header' => "Authorization: Bearer 3597bf9393d8155003c84329d6205961426482fc\n".
+                    "Content-Type: application/x-www-form-urlencoded",
+                'content' => $image
+            ));
+            $context = stream_context_create($options);
+            $imgurURL = "https://api.imgur.com/3/image";
+
+            $response = file_get_contents($imgurURL, false, $context);
+            $response = json_decode($response);
+            $msg = $response->data->link;
+            $product -> image = $msg;
         }
 
         $product->price = $request->price;
@@ -101,6 +122,7 @@ class ProductController extends Controller
         $product->district_id = $request->district_id;
         $product->brand_id = $request->brand_id;
         $product->category_id = $request->category_id;
+        $product->city_id = $request->city_id;
         $product->partner_id = Auth::user()->getAuthIdentifier();
 
         $product->save();
@@ -131,12 +153,13 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        $categories = Category::all();
-        $districts = District::all()->sortByDesc('name');
-        $brands = Brand::all()->sortBy('name', false);
+        $cities = City::where('status','instock')->get();
+        $categories = Category::where('status','instock')->get();
+        $districts = District::where('status','instock')->orderBy('id','DESC')->get();
+        $brands = Brand::where('status','instock')->orderBy('id','DESC')->get();
         $this->authorize('view', $product);
 
-        return view("Backend.products.edit")->with(['product' => $product, 'categories' => $categories, 'districts' => $districts, 'brands' => $brands]);
+        return view("Backend.products.edit")->with(['product' => $product, 'categories' => $categories, 'districts' => $districts, 'brands' => $brands, 'cities' => $cities]);
     }
 
     /**
@@ -164,16 +187,35 @@ class ProductController extends Controller
             'brand_id' => 'required',
             'district_id' => 'required',
             'category_id' => 'required',
+            'city_id' => 'required'
         ]);
         $product = Product::find($id);
         $product->name = $request->name;
         $get_image = $request->file('image');
-        if ($get_image) {
-            $get_name_image = $get_image->getClientOriginalName();
-            $name_image = current(explode('.', $get_name_image));
-            $new_image = $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
-            $get_image->move('public/Backend/images', $new_image);
-            $product->image = $new_image;
+
+//        if ($get_image) {
+//            $get_name_image = $get_image->getClientOriginalName();
+//            $name_image = current(explode('.', $get_name_image));
+//            $new_image = $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
+//            $get_image->move('public/Backend/images', $new_image);
+//            $product->image = $new_image;
+//        }
+        if ($request ->image != null){
+            $image = base64_encode(file_get_contents($_FILES['image']['tmp_name']));
+
+            $options = array('http' =>array(
+                'method' => "POST",
+                'header' => "Authorization: Bearer 3597bf9393d8155003c84329d6205961426482fc\n".
+                    "Content-Type: application/x-www-form-urlencoded",
+                'content' => $image
+            ));
+            $context = stream_context_create($options);
+            $imgurURL = "https://api.imgur.com/3/image";
+
+            $response = file_get_contents($imgurURL, false, $context);
+            $response = json_decode($response);
+            $msg = $response->data->link;
+            $product -> image = $msg;
         }
 
         $product->price = $request->price;
@@ -191,6 +233,7 @@ class ProductController extends Controller
         $product->district_id = $request->district_id;
         $product->brand_id = $request->brand_id;
         $product->category_id = $request->category_id;
+        $product->city_id = $request->city_id;
 
         $product->update();
         $request->session()->flash('success', 'Cập nhật phương tiện thành công!');

@@ -77,7 +77,43 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="password" class="col-md-4 col-form-label text-md-right">Mật Khẩu</label>
+                                            <label for="cmt" class="col-md-4 col-form-label text-md-right">Chứng Minh Thư Nhân Dân</label>
+                                            <div class="col-md-8">
+                                                <input id="cmt" type="text" class="form-control @error('cmt') is-invalid @enderror" name="cmt" value="{{ old('cmt') }}" placeholder="Vui lòng nhập chứng minh thư nhân dân...">
+                                                @error('cmt')
+                                                <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="cmt_day" class="col-md-4 col-form-label text-md-right">Ngày Cấp</label>
+                                            <div class="col-md-8">
+                                                <input id="cmt_day" type="date" class="form-control @error('cmt_day') is-invalid @enderror" name="cmt_day" value="{{ old('cmt_day') }}" placeholder="Vui lòng nhập ngày cấp...">
+                                                @error('cmt_day')
+                                                <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="birth_day" class="col-md-4 col-form-label text-md-right">Ngày/Tháng/Năm Sinh</label>
+                                            <div class="col-md-8">
+                                                <input id="birth_day" type="date" class="form-control @error('birth_day') is-invalid @enderror" name="birth_day" value="{{ old('birth_day') }}" placeholder="Vui lòng nhập ngày tháng năm sinh...">
+                                                @error('birth_day')
+                                                <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
                                             <div class="col-md-8">
                                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="************">
                                                 @error('password')

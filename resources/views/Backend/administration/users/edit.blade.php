@@ -1,5 +1,5 @@
 @extends('layouts.Backend.base')
-    @section('title', 'Edit User')
+    @section('title', 'Sửa nhân viên')
 @section('content')
     <section style="padding: 30px 0;">
         <div class="container-fluid">
@@ -7,9 +7,7 @@
                 <ul class="float-left">
                     <li style="float: left;list-style: none"><a class="longin-a" href="{{ route('dashboard.index') }}">Dashboard</a></li>
                     <li style="float: left; margin: 0 10px;list-style: none">/</li>
-                    <li style="float: left;list-style: none"><a class="longin-a" href="{{ route('users.index') }}">Users</a></li>
-                    <li style="float: left; margin: 0 10px;list-style: none">/</li>
-                    <li style="float: left;list-style: none"><a class="longin-a" href="{{ route('users.index') }}">Edit Users</a></li>
+                    <li style="float: left;list-style: none"><a class="longin-a" href="{{ route('users.index') }}">Sửa nhân niên</a></li>
                 </ul>
             </div>
             <hr>
@@ -17,9 +15,9 @@
                 <div class="col-md-10 offset-md-1">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Create New User</h3>
+                            <h3 class="card-title">Thêm mới nhân viên</h3>
                             <div class="card-tools">
-                                <a href="{{ route('users.index') }}" class="btn btn-danger"><i class="fas fa-shield-alt"></i> See all Users</a>
+                                <a href="{{ route('users.index') }}" class="btn btn-danger"><i class="fas fa-shield-alt"></i> Danh sách nhân viên</a>
                             </div>
                         </div>
                         <form class="form-group pt-3" method="POST" action="{{ route('users.update', $user->id) }}">
