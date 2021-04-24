@@ -56,6 +56,7 @@ return array(
     'App\\Models\\Frontend\\Order' => $baseDir . '/app/Models/Frontend/Order.php',
     'App\\Models\\Frontend\\OrderDetails' => $baseDir . '/app/Models/Frontend/OrderDetails.php',
     'App\\Models\\Frontend\\Payment' => $baseDir . '/app/Models/Frontend/Payment.php',
+    'App\\Models\\Frontend\\TimeOrder' => $baseDir . '/app/Models/Frontend/TimeOrder.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',

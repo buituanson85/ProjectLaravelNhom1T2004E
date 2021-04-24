@@ -19,4 +19,8 @@ class City extends Model
     public function district(){
         return $this->hasOne('App\Models\Backend\District');
     }
+
+    public function product(){
+        return $this->hasOne('App\Models\Backend\Product');
+    }
 }

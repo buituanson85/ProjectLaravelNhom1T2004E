@@ -37,7 +37,16 @@ class Product extends Model
         return $this->hasMany('App\Models\Frontend\OrderDetails');
     }
 
+    public function city(){
+        return $this->belongsTo('App\Models\Backend\City');
+    }
+
     public function galaxy(){
         return $this->hasOne('App\Models\Backend\Galaxy');
     }
+
+    public function timeorder(){
+        return $this->hasOne('App\Models\Frontend\TimeOrder');
+    }
+
 }

@@ -54,6 +54,8 @@ class UserController extends Controller
         $user->phone = $request->phone;
         $user->email = $request->email;
         $user->address = $request->address;
+        $user->city_id = $request->city;
+        $user->district_id = $request->district;
         $user->password = bcrypt($request->password);
         $user->save();
 

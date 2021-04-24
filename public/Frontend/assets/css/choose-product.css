@@ -1,0 +1,386 @@
+*{
+    box-sizing: inherit;
+}
+
+html{
+
+    line-height: 1.6rem;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+}
+
+.nav-list{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 80px;
+    background: white;
+}
+.nav-list-left{
+    display: flex;
+
+}
+.nav-list-left-logo{
+    width: 250px;
+    height: 200px;
+    margin: 5px;
+    margin-left: 50px;
+}
+.nav-list-left-logo a img{
+    width: 100%;
+}
+.nav-list-left-partner{
+    padding: 30px 10px;
+
+}
+.nav-list-left-partner a{
+
+    padding: 10px;
+    border: 1px solid lightseagreen;
+    color: lightseagreen;
+
+    border-radius: 10px;
+
+}
+.nav-list-left-partner :hover{
+    text-decoration: none;
+    background-color: lightseagreen;
+    color: white;
+}
+/*right*/
+.nav-list-right{
+    display: flex;
+    color: black;
+    margin-right: 50px;
+    font-size: 18px;
+}
+.nav-list-right-1{
+    display: flex;
+    padding: 30px 10px;
+    list-style-type: none;
+
+}
+.nav-list-right-1 li {
+    padding-right: 15px;
+    color: black;
+
+}
+.nav-list-right-1 li a:hover{
+
+    text-decoration: none;
+
+}
+.nav-list-right-1 select {
+    border: none;
+
+}
+.nav-list-right-1-log-in{
+
+
+
+}
+
+.nav-list-right-1-log-in a{
+    padding: 10px;
+    border: 1px solid lightseagreen;
+    color: white;
+    border-radius: 10px;
+    background-color: lightseagreen;
+}
+.nav-list-right-1-log-in a:hover{
+    background-color: white;
+    color: lightseagreen;
+}
+
+/*content*/
+.banner-product{
+    background: #f2f4f7;
+    padding: 30px 0;
+    height: auto;
+}
+
+.detail-choose{
+    background-color: #f2f4f7;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+}
+.detail-choose-left{
+
+    height: 200px;
+    flex: 1;
+
+}
+/*range*/
+
+.detail-choose-left-range{
+    margin-top: 20px;
+    background: white;
+}
+
+.range-slide {
+    position: relative;
+    margin: 40px;
+    height: 4px;
+    width: 240px;
+}
+
+.range-slide .slide {
+    position: absolute;
+    top: 0;
+    height: 4px;
+    background: #ccc;
+    left: 9px;
+    right: 9px;
+}
+
+.range-slide .line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 4px;
+    background-color: lightseagreen;
+}
+
+.range-slide .thumb {
+    position: absolute;
+    z-index: 2;
+    text-align: left;
+    border: 1px solid lightseagreen;
+    background-color: white;
+    border-radius: 50%;
+    outline: none;
+    top: -7px;
+    height: 18px;
+    width: 18px;
+    margin-left: -9px;
+}
+
+.range-slide input {
+    -webkit-appearance: none;
+    appearance: none;
+    position: absolute;
+    pointer-events: none;
+    z-index: 3;
+    height: 3px;
+    top: 0;
+    width: 100%;
+    opacity: 0;
+    margin: 0;
+}
+
+.range-slide input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    pointer-events: all;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+.range-slide .display {
+    margin: 40px;
+    width: 240px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+
+.detail-choose-left-kieuxe{
+    display: flex;
+    position: relative;
+    padding-bottom: 15px;
+
+}
+.detail-choose-left-kieuxe>input{
+    border: white;
+    padding: 12px;
+    border-radius: 5px ;
+}
+
+
+/*loaijxe */
+.detail-choose-left-loaixe{
+    display: flex;
+    position: relative;
+
+
+}
+.detail-choose-left-loaixe>input{
+    border: white;
+    padding: 12px;
+    border-radius: 5px 5px 0 0;
+}
+
+
+/*hộp số*/
+.detail-choose-left-hopso{
+    display: flex;
+    position: relative;
+
+}
+.detail-choose-left-hopso>input{
+    border: white;
+    padding: 12px;
+}
+/*hãng xe*/
+.detail-choose-left-hangxe{
+    display: flex;
+    position: relative;
+    padding-bottom: 15px;
+
+
+}
+.detail-choose-left-hangxe>input{
+    border: white;
+    padding: 12px;
+    border-radius: 0 0 5px 5px;
+
+}
+
+
+/*details_right*/
+.detail-choose-right{
+
+    height: auto;
+    flex: 3;
+    margin-left: 30px;
+}
+.detail-choose-right-choose{
+    display: flex;
+    height: 50px;
+    margin-bottom: 15px;
+
+}
+.detail-choose-right-choose>div{
+    padding-right: 5px;
+}
+.detail-choose-right-choose-city{
+    flex: 1;
+
+    position: relative;
+
+}
+
+
+.detail-choose-right-choose-city>input{
+    border: white;
+    padding: 12px;
+    border-radius: 5px ;
+    width: 100px;
+}
+
+
+.detail-choose-right-choose-time{
+    flex: 1;
+
+}
+
+
+
+.detail-choose-right-choose-button-choose{
+    flex: 1;
+    display: flex;
+
+}
+.detail-choose-right-choose-button-choose button:first-child{
+    flex: 1;
+    width: 100%;
+    border-radius: 10px;
+    background-color: lightseagreen;
+    color: white;
+
+}
+.detail-choose-right-choose-button-choose button:last-child{
+    flex: 1;
+    width: 100%;
+    border-radius: 10px;
+    background-color: white;
+
+}
+
+
+/*list sản phẩm*/
+.detail-choose-right-product{
+    background-color: white;
+
+
+    display: flex ;
+    margin-bottom: 15px;
+}
+.product_img,
+ .product_detail,
+.product_price
+{
+    flex: 1;
+    padding: 10px;
+}
+
+.product_detail_type{
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    padding-top: 10px
+}
+.product_detail span i{
+    padding: 0 2px;
+}
+.product_detail_type_1{
+    flex: 1;
+
+}
+.product_detail_type_1 p i {
+    padding: 2px 5px;
+}
+
+.product_price > div{
+    font-size: 35px;
+    font-weight: 600;
+    color:lightseagreen
+}
+.product_price > p> a:hover{
+    text-decoration: none;
+}
+
+
+/*end*/
+.end{
+    background-color: lightseagreen;
+    width: 100%;
+}
+.over {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    padding: 50px 0;
+}
+.over-part{
+    padding-left: 30px;
+}
+.end div{
+    flex:1;
+}
+.over-part p a{
+    color: white;
+}
+
+.over-part p:first-child{
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+/*.over-part p:last-child{*/
+/*    font-size: 20px;*/
+/*    font-weight: 600;*/
+/*    text-transform: uppercase;*/
+/*}*/
+
+.over-part span:last-child a{
+    padding-right: 10px;
+    font-size: 40px;
+    color: #ffffff;
+}

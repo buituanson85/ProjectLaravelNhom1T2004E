@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\PartnerController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\RoleAddPermissionController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Frontend\ChooseProduct;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +25,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('/', HomeController::class);
 Route::resource('/homes', HomeController::class);
+Route::resource('/pages/registers',UserController::class);
+Route::post('/pages/choose-products',[ChooseProduct::class,'index'])->name('pages.chooseproducts');
+Route::post('/pages/show-products',[ChooseProduct::class,'showProducts'])->name('pages.showproducts');
+Route::get('/pages/register-partners',[PartnerController::class,'registerPartners'])->name('pages.registerpartners');
+
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function (){
 //pages

@@ -638,6 +638,7 @@ class ComposerStaticInit1ceb9d4acd1b20cea75462c9641edcb4
         'App\\Models\\Frontend\\Order' => __DIR__ . '/../..' . '/app/Models/Frontend/Order.php',
         'App\\Models\\Frontend\\OrderDetails' => __DIR__ . '/../..' . '/app/Models/Frontend/OrderDetails.php',
         'App\\Models\\Frontend\\Payment' => __DIR__ . '/../..' . '/app/Models/Frontend/Payment.php',
+        'App\\Models\\Frontend\\TimeOrder' => __DIR__ . '/../..' . '/app/Models/Frontend/TimeOrder.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
