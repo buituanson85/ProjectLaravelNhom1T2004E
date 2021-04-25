@@ -44,6 +44,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\Backend\Product', 'partner_id');
     }
 
+    public function wallet(){
+        return $this->hasMany('App\Models\Backend\Wallet', 'partner_id');
+    }
+
     public function file(){
         return $this->hasOne('App\Models\Backend\File', 'customer_id');
     }

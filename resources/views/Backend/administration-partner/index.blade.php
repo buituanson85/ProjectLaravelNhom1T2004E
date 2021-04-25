@@ -80,8 +80,10 @@
                                                 @if($product->status == "ready")
                                                     @if($product->confirm == 0)
                                                         <a href="{{ route('dashboards.lockstatustpartner', $product->id) }}"><span class="badge badge-secondary">Offline</span></a>
-                                                    @else
+                                                    @elseif($product->confirm == 1)
                                                         <a href="{{ route('dashboards.unlockstatustpartner', $product->id) }}"><span class="badge badge-success">Online</span></a>
+                                                    @else
+                                                        <span class="badge badge-primary">Đã nhận chuyến</span>
                                                     @endif
                                                 @else
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SendCreatePartner;
 use App\Mail\SendMailRegisterPartner;
 use App\Models\Backend\Brand;
 use App\Models\Backend\Category;
@@ -10,17 +11,20 @@ use App\Models\Backend\City;
 use App\Models\Backend\District;
 use App\Models\Backend\Partner;
 use App\Models\Backend\Product;
+use App\Models\Backend\Wallet;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class PartnerController extends Controller
 {
     public function index(Request $request){
         $user = auth()->user();
-        $products = Product::where('partner_id', $user->id)->orderBy('id','DESC')->paginate(5);
+        $products = Product::where('partner_id', $user->id)->orderBy('id','DESC')->paginate(10);
         $products->appends($request->all());
         return view('Backend.administration-partner.index',compact('products'));
     }
@@ -253,8 +257,43 @@ class PartnerController extends Controller
 
     public function confirmlock(Request $request,$id){
         $partner = Partner::find($id);
+
+        $password = Str::random(8);;
+        $user = new User();
+        $user->name = $partner->name;
+        $user->phone = $partner->phone;
+        $user->email = $partner->email;
+        $user->address = $partner->address;
+        $user->password = bcrypt($password);
+        $user->utype = "ADM";
+
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
+        $email = $partner->email;;
+        $date = "Date: ".''.$now;
+        $users = [
+            'name' => $partner->name,
+            'email' => $partner->email,
+            'password' => $password,
+            'date' => $date
+        ];
+
+        Mail::to($email)->send(new SendCreatePartner($users));
+        $user->save();
+
+        $user_id = $user->id;
+
+        //thêm ví cho tài xế
+        $wallet = new Wallet();
+
+        $wallet->account = Str::random(12);
+        $wallet->monney_confirm = 0;
+        $wallet->monney = 50000;
+        $wallet->partner_id = $user_id;
+        $wallet->note = "Nạp 50 nghìn duy trì tài khoản";
+        $wallet->save();
+
         Partner::where('id', $id)->update (['status'=> "instock"]);
-        $request->session()->flash('success', 'Update instock partner success!');
+        $request->session()->flash('success', 'Đăng ký tài khoản đối tác thành công!');
         return redirect(route('pages.confirmpartner'));
     }
 }

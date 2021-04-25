@@ -11,12 +11,14 @@ use App\Models\Backend\Category;
 use App\Models\Backend\District;
 use App\Models\Backend\Galaxy;
 use App\Models\Backend\Product;
+use App\Models\Backend\Wallet;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class VehiclesController extends Controller
 {
