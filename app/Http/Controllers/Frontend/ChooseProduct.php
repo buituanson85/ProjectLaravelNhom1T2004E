@@ -64,19 +64,25 @@ class ChooseProduct extends Controller
         }
         if (isset($sort)){
             if ($request->sort == 0){
-                $products = Product::where('status','instock')
+                $products = Product::where('status','ready')
+                    ->where('confirm', 1)
+                    ->where('featured', 0)
                     ->where($matchNight)
                     ->orderBy('price', 'ASC')
                     ->paginate(10);
             }else{
                 $products = Product::where($matchNight)
-                    ->where('status','instock')
+                    ->where('status','ready')
+                    ->where('confirm', 1)
+                    ->where('featured', 0)
                     ->orderBy('price', 'DESC')
                     ->paginate(10);
             }
         }else{
             $products = Product::where($matchNight)
-                ->where('status','instock')
+                ->where('status','ready')
+                ->where('confirm', 1)
+                ->where('featured', 0)
                 ->orderBy('price', 'ASC')
                 ->paginate(10);
         }
@@ -131,20 +137,26 @@ class ChooseProduct extends Controller
                 if (isset($sort)){
                     if ($request->sort == 0){
                         $data = Product::where('id','<', $id)
-                            ->where('status','instock')
+                            ->where('status','ready')
+                            ->where('confirm', 1)
+                            ->where('featured', 0)
                             ->where($matchNight)
                             ->orderBy('price', 'ASC')
                             ->limit(5)->get();
                     }else{
                         $data = Product::where('id','<', $id)
-                            ->where('status','instock')
+                            ->where('status','ready')
+                            ->where('confirm', 1)
+                            ->where('featured', 0)
                             ->where($matchNight)
                             ->orderBy('price', 'DESC')
                             ->limit(5)->get();
                     }
                 }else{
                     $data = Product::where('id','<', $id)
-                        ->where('status','instock')
+                        ->where('status','ready')
+                        ->where('confirm', 1)
+                        ->where('featured', 0)
                         ->where($matchNight)
                         ->orderBy('price', 'ASC')
                         ->limit(5)->get();
@@ -152,18 +164,25 @@ class ChooseProduct extends Controller
             }else{
                 if (isset($sort)){
                     if ($request->sort == 0){
-                        $data = Product::where('status','instock')
+                        $data = Product::where('status','ready')
+                            ->where('confirm', 1)
+                            ->where('featured', 0)
                             ->where($matchNight)
                             ->orderBy('price', 'ASC')
                             ->limit(5)->get();
                     }else{
-                        $data = Product::where('status','instock')
+                        $data = Product::where('status','ready')
+                            ->where('confirm', 1)
+                            ->where('featured', 0)
                             ->where($matchNight)
                             ->orderBy('price', 'DESC')
                             ->limit(5)->get();
                     }
                 }else{
-                    $data = Product::where('status','instock')
+                    $data = Product::
+                        where('status','ready')
+                        ->where('confirm', 1)
+                        ->where('featured', 0)
                         ->where($matchNight)
                         ->orderBy('price', 'ASC')
                         ->limit(5)->get();

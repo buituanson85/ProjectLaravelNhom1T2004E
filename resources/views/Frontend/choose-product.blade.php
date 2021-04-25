@@ -199,7 +199,6 @@
     <script src="{{ asset('Frontend/assets/js/jquery.js') }}"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaj0mHlR-keu-9hsR6d-gB0L9BclG04rk&callback=initMap&libraries=&v=weekly" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.css" integrity="sha512-40vN6DdyQoxRJCw0klEUwZfTTlcwkOLKpP8K8125hy9iF4fi8gPpWZp60qKC6MYAFaond8yQds7cTMVU8eMbgA==" crossorigin="anonymous" />
     <script type="text/javascript">
         $(document).ready(function () {
             var _token = $('input[name="_token"]').val();
@@ -245,28 +244,5 @@
             });
         });
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js" integrity="sha512-jWNpWAWx86B/GZV4Qsce63q5jxx/rpWnw812vh0RE+SBIo/mmepwOSQkY2eVQnMuE28pzUEO7ux0a5sJX91g8A==" crossorigin="anonymous"></script>
-
-    <script>
-        var slider = document.getElementById('slider');
-        noUiSlider.create(slider,{
-            start: [100000, 5000000],
-            connect: true,
-            range:{
-                'min' : 100000,
-                'max' : 5000000
-            },
-            pips:{
-                mode: 'steps',
-                stepped: true,
-                density:4
-            }
-        });
-
-        slider.noUiSlider.on('update', function (value) {
-
-        })
-    </script>
-
 
 @endsection

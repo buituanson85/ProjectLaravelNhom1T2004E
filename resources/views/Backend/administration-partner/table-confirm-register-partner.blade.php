@@ -13,7 +13,7 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('pages.confirmpartner') }}">Table Confirm Partner</a></span>
+                        <span style="float: left"><a href="{{ route('pages.confirmpartner') }}">Danh sách đăng ký đối tác</a></span>
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="card-tools">
-                                            <a href="{{ route('users.create') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Create Partner</a>
+                                            <a href="#" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Danh sách đăng ký</a>
                                         </div>
                                     </div>
                                     <div class="col-md-9">
@@ -98,7 +98,6 @@
             <link rel="stylesheet" href="{{ asset('css/app.css') }}">
             <script src="{{ asset('js/app.js') }}"></script>
         </div>
-
 
     </div><!-- /#right-panel -->
 

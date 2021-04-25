@@ -4,14 +4,196 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Mail\SendMailRegisterPartner;
+use App\Models\Backend\Brand;
+use App\Models\Backend\Category;
+use App\Models\Backend\City;
+use App\Models\Backend\District;
 use App\Models\Backend\Partner;
+use App\Models\Backend\Product;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class PartnerController extends Controller
 {
+    public function index(Request $request){
+        $user = auth()->user();
+        $products = Product::where('partner_id', $user->id)->orderBy('id','DESC')->paginate(5);
+        $products->appends($request->all());
+        return view('Backend.administration-partner.index',compact('products'));
+    }
+
+    public function create()
+    {
+        $districts = District::where('status','instock')->get();
+        $brands = Brand::where('status','instock')->get();
+        $categories = Category::where('status','instock')->get();
+        $cities = City::where('status','instock')->get();
+        return view('Backend.administration-partner.create', compact('districts','brands','categories','cities'));
+    }
+
+    public function store(Request $request){
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'price' => 'required',
+            'image' => 'required',
+            'insurance' => 'required',
+            'deposit' => 'required',
+            'km' => 'required',
+            'additional' => 'required',
+            'engine' => 'required',
+            'seat' => 'required',
+            'capacity' => 'required',
+            'range' => 'required',
+            'gear' => 'required',
+            'consumption' => 'required',
+            'brand_id' => 'required',
+            'district_id' => 'required',
+            'category_id' => 'required',
+            'city_id' => 'required'
+        ]);
+        $product = new Product();
+
+        $product->name = $request->name;
+
+//        $get_image = $request->file('image');
+//        if ($get_image) {
+//            $get_name_image = $get_image->getClientOriginalName();
+//            $name_image = current(explode('.', $get_name_image));
+//            $new_image = $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
+//            $get_image->move('public/Backend/images', $new_image);
+//            $product->image = $new_image;
+//        }
+        if ($request ->image != null){
+            $image = base64_encode(file_get_contents($_FILES['image']['tmp_name']));
+
+            $options = array('http' =>array(
+                'method' => "POST",
+                'header' => "Authorization: Bearer 3597bf9393d8155003c84329d6205961426482fc\n".
+                    "Content-Type: application/x-www-form-urlencoded",
+                'content' => $image
+            ));
+            $context = stream_context_create($options);
+            $imgurURL = "https://api.imgur.com/3/image";
+
+            $response = file_get_contents($imgurURL, false, $context);
+            $response = json_decode($response);
+            $msg = $response->data->link;
+            $product -> image = $msg;
+        }
+
+        $product->price = $request->price;
+        $product->insurrance = $request->insurance;
+        $product->deposit = $request->deposit;
+        $product->km = $request->km;
+        $product->additional = $request->additional;
+        $product->engine = $request->engine;
+        $product->seat = $request->seat;
+        $product->capacity = $request->capacity;
+        $product->range = $request->range;
+        $product->gear = $request->gear;
+        $product->consumption = $request->consumption;
+        $product->status = 'unavailable';
+        $product->featured = 0;
+        $product->district_id = $request->district_id;
+        $product->brand_id = $request->brand_id;
+        $product->category_id = $request->category_id;
+        $product->city_id = $request->city_id;
+        $product->partner_id = Auth::user()->getAuthIdentifier();
+
+        $product->save();
+        $request->session()->flash('success', 'Tạo phương tiện thành công!');
+        return redirect()->route('partners.index');
+    }
+
+    public function edit($id){
+        $product = Product::find($id);
+        $districts = District::where('status','instock')->get();
+        $brands = Brand::where('status','instock')->get();
+        $categories = Category::where('status','instock')->get();
+        return view('Backend.administration-partner.edit', compact('product', 'districts','brands', 'categories'));
+    }
+
+    public function update(Request $request,$id){
+        $this->validate($request,[
+            'name' => 'required',
+            'slug' => 'required',
+            'price' => 'required|integer',
+            'insurrance' => 'required',
+            'deposit' => 'required',
+            'km' => 'required',
+            'additional' => 'required',
+            'engine' => 'required',
+            'seat' => 'required',
+            'capacity' => 'required',
+            'range' => 'required',
+            'gear' => 'required',
+            'consumption' => 'required',
+            'status' => 'required',
+            'category_id' => 'required',
+            'brand_id' => 'required'
+        ]);
+        $product = Product::find($id);
+        $product -> name = $request ->name;
+        $product ->slug = $request ->slug;
+        $product -> price = $request ->price;
+        $product -> insurrance = $request ->insurrance;
+        $product -> deposit = $request ->deposit;
+        $product -> km = $request ->km;
+        $product -> additional = $request ->additional;
+        $product -> engine = $request ->engine;
+        $product -> seat = $request ->seat;
+        $product -> capacity = $request ->capacity;
+        $product -> range = $request ->range;
+        $product -> gear = $request ->gear;
+        $product -> consumption = $request ->consumption;
+        $product -> status = $request ->status;
+        $product -> category_id = $request ->category_id;
+        $product -> brand_id = $request ->brand_id;
+        $product -> district_id = $request ->district_id;
+        $product -> partner_id = $request ->partner_id;
+
+        if ($request ->image != null){
+            $image = base64_encode(file_get_contents($_FILES['image']['tmp_name']));
+
+            $options = array('http' =>array(
+                'method' => "POST",
+                'header' => "Authorization: Bearer 3597bf9393d8155003c84329d6205961426482fc\n".
+                    "Content-Type: application/x-www-form-urlencoded",
+                'content' => $image
+            ));
+            $context = stream_context_create($options);
+            $imgurURL = "https://api.imgur.com/3/image";
+
+            $response = file_get_contents($imgurURL, false, $context);
+            $response = json_decode($response);
+            $msg = $response->data->link;
+            $product -> image = $msg;
+        }
+
+        $product->save();
+        $request->session()->flash('success', 'Update product success!');
+        return redirect(route('partners.index'));
+    }
+
+    public function unlockstatustpartner(Request $request,$id){
+        $product = Product::find($id);
+        Product::where('id', $id)->update (['confirm'=> 0]);
+        $request->session()->flash('error', 'Phương tiện chuyển sang trạng thái Offline!');
+        return redirect(route('partners.index'));
+    }
+    public function lockstatustpartner(Request $request,$id){
+        $product = Product::find($id);
+        Product::where('id', $id)->update (['confirm'=> 1]);
+        $request->session()->flash('success', 'Phương tiện chuyển sang trạng thái Online!');
+        return redirect(route('partners.index'));
+    }
+
+
+
+
     //pages
 
     public function registerPartners(){

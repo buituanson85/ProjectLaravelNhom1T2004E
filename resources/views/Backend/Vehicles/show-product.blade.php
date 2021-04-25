@@ -1,5 +1,5 @@
 @extends('layouts.Backend.base')
-@section('title', 'Thông tin phương tiện')
+@section('title', 'Create Product')
 @section('content')
 
     <div id="right-panel" class="right-panel">
@@ -9,14 +9,12 @@
     <!-- Header-->
 
         <div class="breadcrumbs">
-            <div class="col-sm-8">
+            <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('partners.index') }}">Phương tiện</a></span>
-                        <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('product.show', $product->id) }}">Chi tiết</a></span>
+                        <span style="float: left"><a href="{{ route('products.index') }}">Chi tiết phương tiện</a></span>
                     </div>
                 </div>
             </div>
@@ -29,17 +27,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-8">
-                                    <h6 class="card-title">{{ $product->name }}
-                                        @if($product->status == 'pending')
-                                            <span class="badge badge-warning">Đợi phản hồi</span>
-                                        @elseif($product->status == 'refused')
-                                            <span class="badge badge-danger">Bị từ chối</span>
-                                        @elseif($product->status == 'ready')
-                                            <span class="badge badge-success">Sẵn sàng</span>
-                                        @elseif($product->status == 'unavailable')
-                                            <span class="badge badge-secondary">Đang hoàn thiện hồ sơ</span>
-                                        @endif
-                                    </h6>
+                                    <h6 class="card-title">{{ $product->name }}</h6>
                                     <div class="card-tools">
                                         <div class="image-preview" id="imagePreview">
                                             <img class="image-preview__image" width="150px" src="{{ $product->image }}" id="img_thumbnail" alt="">
@@ -90,9 +78,9 @@
                         </div>
                         @include('partials.alert')
                         <div class="alert-danger"></div>
-{{--                        <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">--}}
-{{--                            @csrf--}}
-                            {{--                            <input type="hidden" id="partner_id" name="partner_id" value="{{ $user->id }}">--}}
+                        <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
+                            @csrf
+{{--                            <input type="hidden" id="partner_id" name="partner_id" value="{{ $user->id }}">--}}
                             <div class="card-body">
 
                                 <div class="row">
@@ -144,7 +132,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="price">Giá Thuê/Ngày:</label>
-                                                    <input type="text" name="price"  id="price" class="form-control @error('price') is-invalid @enderror" value="{{ number_format($product->price,0) }}" readonly>
+                                                    <input type="text" name="price"  id="price" class="form-control @error('price') is-invalid @enderror" value="{{ $product->price }}" readonly>
                                                     @error('price')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -158,7 +146,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="insurrance">Tiền Bảo Hiểm:</label>
-                                                    <input type="text" name="insurrance"  id="insurrance" class="form-control @error('insurrance') is-invalid @enderror" value="{{ number_format($product->insurrance,0) }}" readonly>
+                                                    <input type="text" name="insurrance"  id="insurrance" class="form-control @error('insurrance') is-invalid @enderror" value="{{ $product->insurrance }}" readonly>
                                                     @error('insurrance')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -171,8 +159,8 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label for="deposit">Tiền Đặt Cọc:</label>
-                                                    <input type="text" name="deposit"  id="deposit" class="form-control @error('deposit') is-invalid @enderror" value="{{ number_format($product->deposit,0) }}" readonly />
+                                                    <label for="deposit">Tiền Đặt Cọc(Triệu):</label>
+                                                    <input type="text" name="deposit"  id="deposit" class="form-control @error('deposit') is-invalid @enderror" value="{{ $product->deposit }}" readonly />
                                                     @error('deposit')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -202,7 +190,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="additional">Tiền phụ trội(Khi vượt quá Km):</label>
-                                                    <input type="text" name="additional"  id="additional" class="form-control @error('additional') is-invalid @enderror" value="{{ number_format($product->additional,0) }}" readonly>
+                                                    <input type="text" name="additional"  id="additional" class="form-control @error('additional') is-invalid @enderror" value="{{ $product->additional }}" readonly>
                                                     @error('additional')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -227,55 +215,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="row" style="padding: 30px 0">
-                                            <div class="col-md-3">
-                                                <span style="font-size: 16px;font-weight: 600">Ảnh phương tiện</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            @foreach($galaxies as $galaxy)
-                                                <div class="col-md-3">
-                                                    <img src="{{ $galaxy->image }}" alt="">
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
 
-                            <div class="card-footer form-inline">
-
-                                <a  style="margin: 5px" href="{{ route('partners.index') }}" class="btn btn-primary"><i class="fas fa-save"></i> Quay lại</a>
-                                @if($product->status == 'pending')
-                                    <form  id="removeProduct" action="{{ route('product.removeProduct', $product->id) }}" method="post">
-                                        @csrf
-                                        <button style="margin: 5px" type="submit" href="" class="btn btn-warning"><i class="fas fa-eject"></i> Rút phương tiện</button>
-                                    </form>
-                                @elseif($product->status =='unavailable')
-                                    <form  id="reupProduct" action="{{ route('product.reupProduct', $product->id) }}" method="post">
-                                        @csrf
-                                        <button style="margin: 5px" type="submit" href="" class="btn btn-success"><i class="fas fa-eject"></i> Phương tiện sẵn sàng</button>
-                                    </form>
-                                @endif
-{{--                                @if(\Illuminate\Support\Facades\Auth::user()->roles->where('id', 1)->first() != null)--}}
-{{--                                    @if($product->status == 'pending')--}}
-{{--                                        <form id="acceptProduct" action="{{ route('product.acceptProduct', $product->id) }}" method="post">--}}
-{{--                                         @csrf--}}
-{{--                                            <button  style="margin: 5px" type="submit" href="" class="btn btn-success"><i class="fas fa-eject"></i> Chấp nhận hồ sơ phương tiện</button>--}}
-{{--                                        </form>--}}
-{{--                                        <form id="refuseProduct" action="{{ route('product.refuseProduct', $product->id) }}" method="post">--}}
-{{--                                         @csrf--}}
-{{--                                            <button onclick="alertify.defaults.theme.ok = 'btn btn-primary';"  style="margin: 5px" type="submit" href="" class="btn btn-danger"><i class="fas fa-remove"></i> Từ chối hồ sơ phương tiện</button>--}}
-{{--                                        </form>--}}
-{{--                                    @endif--}}
-{{--                                @endif--}}
+                            <div class="card-footer">
+                                <a href="{{ route('products.index') }}" class="btn btn-primary"><i class="fas fa-save"></i> Danh sách đối tác</a>
                             </div>
-
+                        </form>
                     </div>
                 </div>
             </div>
@@ -284,41 +230,4 @@
     </div><!-- /#right-panel -->
 
 @endsection
-@section('addjs')
-    <script src="{{ asset('Backend/vendors/alertifyjs/alertify.js') }}"></script>
-    <script>
-        jQuery('#removeProduct').submit(function (e){
-            e.preventDefault();
-            alertify.confirm('Bạn có muốn rút phương tiện khỏi hệ thống của chúng tôi',
-                function(){
-                    alertify.success('Đã rút phương tiện thành công');
-                    jQuery('#removeProduct')[0].submit();
-                }).set({"title":"Thông báo"});
-        })
-        jQuery('#acceptProduct').submit(function (e){
-            e.preventDefault();
-            alertify.confirm('Chấp thuận hồ sơ phương tiện',
-                function(){
-                    alertify.success('Đồng ý thành công');
-                    jQuery('#acceptProduct')[0].submit();
-                }).set({"title":"Thông báo"});
-        })
-        jQuery('#refuseProduct').submit(function (e){
-            e.preventDefault();
-            alertify.confirm('Từ chối hồ sơ phương tiện',
-                function(){
-                    alertify.success('Đã từ chối phương tiện');
-                    jQuery('#refuseProduct')[0].submit();
-                }).set({"title":"Thông báo"});
-        })
-        jQuery('#reupProduct').submit(function (e){
-            e.preventDefault();
-            alertify.confirm('Bạn có muốn đẩy lại hồ sơ phương tiện, sau khi đẩy lại hãy đợi chúng tôi phê duyệt',
-                function(){
-                    alertify.success('Đã gửi thông tin đến quản trị viên');
-                    jQuery('#reupProduct')[0].submit();
-                }).set({"title":"Thông báo"});
-        })
 
-    </script>
-@endsection

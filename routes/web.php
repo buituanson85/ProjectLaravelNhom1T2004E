@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\GalaxyController;
 use App\Http\Controllers\Backend\PartnerController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\RoleAddPermissionController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\VehiclesController;
 use App\Http\Controllers\Frontend\ChooseProduct;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\RegisterController;
@@ -95,28 +97,55 @@ Route::middleware(['auth:sanctum', 'verified','authadmin'])->group(function (){
     Route::middleware(['auth:sanctum', 'verified','authstaff'])->group(function (){
         //product
         Route::resource('/dashboards/product',ProductController::class);
-        Route::post('/dashboards/product/removeProduct/{product_id}', [ProductController::class,'removeProduct'])->name('product.removeProduct');
-        Route::post('/dashboards/product/reupProduct/{product_id}', [ProductController::class,'reupProduct'])->name('product.reupProduct');
     });
     //Support
     Route::middleware(['auth:sanctum', 'verified','authsupport'])->group(function (){
+        //Product
+        Route::resource('/dashboards/products',VehiclesController::class);
+        Route::get('/dashboards/table-products/{id}',[VehiclesController::class,'tableProducts'])->name('dashboards.tableproducts');
+        Route::get('/dashboards/show-products/{id}', [VehiclesController::class,'showProduct']);
+        Route::get('/dashboards/productunlock/{id}', [VehiclesController::class, 'unlockfeaturedproduct'])->name('dashboards.unlockfeaturedproduct');
+        Route::get('/dashboards/productlock/{id}', [VehiclesController::class, 'locksfeaturedproduct'])->name('dashboards.locksfeaturedproduct');
+
+        //confirm
+        Route::get('/dashboards/confirm-product',[VehiclesController::class,'confirmProduct'])->name('dashboards.confirmproduct');
+        Route::get('/dashboards/show-confirm/{id}',[VehiclesController::class,'showConfirm'])->name('dashboards.showconfirm');
+//        Route::get('/dashboards/accept-confirm/{id}',[VehiclesController::class,'acceptConfirm'])->name('dashboards.acceptconfirm');
+        Route::get('/dashboards/accept-confirm/{id}',[VehiclesController::class,'acceptProductConfirm'])->name('dashboards.acceptproductconfirm');
+        Route::get('/dashboards/refused-confirm/{id}',[VehiclesController::class,'refusedProductConfirm'])->name('dashboards.refusedproductconfirm');
+
+        //admin -->product: để duyệt sản phẩm
+
+        //confirm-register-partner
         Route::get('/dashboards/confirm-partner',[PartnerController::class,'confirmPartner'])->name('pages.confirmpartner');
         Route::post('/dashboards/delete-confirm-partner',[PartnerController::class,'deleteConfirmPartner'])->name('dashboards.deleteconfirmpartner');
         Route::get('/dashboards/confirmlock/{id}', [PartnerController::class, 'confirmlock'])->name('dashboards.confirmlock');
     });
 });
 
+//partner
+Route::resource('/dashboards/partners',PartnerController::class);
+Route::get('/dashboards/partnerunlock/{id}', [PartnerController::class, 'unlockstatustpartner'])->name('dashboards.unlockstatustpartner');
+Route::get('/dashboards/partnerlock/{id}', [PartnerController::class, 'lockstatustpartner'])->name('dashboards.lockstatustpartner');
+
+//Galaxy product
+Route::resource('/dashboards/product/galaxy',GalaxyController::class);
+Route::get('/dashboards/product/galaxys/{id}', [GalaxyController::class, 'galaxys'])->name('dashboards.galaxys');
+Route::post('/dashboards/product/galaxys/{id}',[GalaxyController::class, 'store'])->name('dashboards.storegalaxy');
+Route::get('/dashboards/product/deletegalaxys/{id}',[GalaxyController::class,'destroys'])->name('dashboards.deletegalaxys');
+
+//partner xác nhận hồ sơ
+Route::get('/dashboards/product/acceptProduct/{product_id}', [ProductController::class,'acceptProduct'])->name('product.acceptProduct');
+Route::post('/dashboards/product/refuseProduct/{product_id}', [ProductController::class,'refuseProduct'])->name('product.refuseProduct');
+Route::post('/dashboards/product/removeProduct/{product_id}', [ProductController::class,'removeProduct'])->name('product.removeProduct');
+Route::post('/dashboards/product/reupProduct/{product_id}', [ProductController::class,'reupProduct'])->name('product.reupProduct');
 
 
 
-
-    //admin -->product: để duyệt sản phẩm
-    Route::post('/dashboards/product/acceptProduct/{product_id}', [ProductController::class,'acceptProduct'])->name('product.acceptProduct');
-    Route::post('/dashboards/product/refuseProduct/{product_id}', [ProductController::class,'refuseProduct'])->name('product.refuseProduct');
-    //order
-    Route::resource('/dashboards/order',OrderController::class);
-    Route::post('/dashboards/order/acceptOrder/{order_id}', [OrderController::class,'acceptOrder'])->name('order.acceptOrder');
-    Route::post('/dashboards/order/refuseOrder/{order_id}', [OrderController::class,'refuseOrder'])->name('order.refuseOrder');
-    Route::get('/dashboards/order/printOrder/{order_id}', [OrderController::class,'printOrder'])->name('order.printOrder');
+//order
+Route::resource('/dashboards/order',OrderController::class);
+Route::post('/dashboards/order/acceptOrder/{order_id}', [OrderController::class,'acceptOrder'])->name('order.acceptOrder');
+Route::post('/dashboards/order/refuseOrder/{order_id}', [OrderController::class,'refuseOrder'])->name('order.refuseOrder');
+Route::get('/dashboards/order/printOrder/{order_id}', [OrderController::class,'printOrder'])->name('order.printOrder');
 
 

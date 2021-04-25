@@ -3,15 +3,20 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\RegisterProduct;
+use App\Mail\SendMailRegisterPartner;
 use App\Models\Backend\Brand;
 use App\Models\Backend\Category;
 use App\Models\Backend\City;
 use App\Models\Backend\District;
+use App\Models\Backend\Galaxy;
 use App\Models\Backend\Product;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ProductController extends Controller
 {
@@ -254,33 +259,45 @@ class ProductController extends Controller
         return redirect(route('product.index'));
     }
 
-    public function acceptProduct(Request $request, $id)
+    public function acceptProduct($id)
     {
         $product = Product::find($id);
-        $product->status = 'ready';
-        $product->save();
-        return view('Backend.products.show')->with(['product' => $product]);
+        $galaxies = Galaxy::where('product_id', $id)->get();
+        return view('Backend.products.show')->with(['product' => $product,'galaxies' => $galaxies]);
     }
 
-    public function refuseProduct(Request $request, $id)
+    public function refuseProduct($id)
     {
         $product = Product::find($id);
         $product->status = 'refused';
         $product->save();
-        return view('Backend.products.show')->with(['product' => $product]);
+        $galaxies = Galaxy::where('product_id', $id)->get();
+        return view('Backend.products.show')->with(['product' => $product,'galaxies' => $galaxies]);
     }
-    public function removeProduct(Request $request, $id)
+    public function removeProduct($id)
     {
         $product = Product::find($id);
         $product->status = 'unavailable';
         $product->save();
-        return view('Backend.products.show')->with(['product' => $product]);
+        $galaxies = Galaxy::where('product_id', $id)->get();
+        return view('Backend.products.show')->with(['product' => $product,'galaxies' => $galaxies]);
     }
-    public function reupProduct(Request $request, $id)
+    public function reupProduct($id)
     {
         $product = Product::find($id);
         $product->status = 'pending';
+        $email = Auth::user()->email;
+        $name = Auth::user()->name;
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
+        $date = "Date: ".''.$now;
+        $products = [
+            'name' => $name,
+            'date' => $date
+        ];
+
+        Mail::to($email)->send(new RegisterProduct($products));
         $product->save();
-        return view('Backend.products.show')->with(['product' => $product]);
+        $galaxies = Galaxy::where('product_id', $id)->get();
+        return view('Backend.products.show')->with(['product' => $product,'galaxies' => $galaxies]);
     }
 }
