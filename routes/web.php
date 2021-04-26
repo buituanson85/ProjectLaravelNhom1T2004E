@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\RoleAddPermissionController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\VehiclesController;
+use App\Http\Controllers\Backend\WalletController;
 use App\Http\Controllers\Frontend\ChooseProduct;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\RegisterController;
@@ -103,7 +104,8 @@ Route::middleware(['auth:sanctum', 'verified','authadmin'])->group(function (){
         //Product
         Route::resource('/dashboards/products',VehiclesController::class);
         Route::get('/dashboards/table-products/{id}',[VehiclesController::class,'tableProducts'])->name('dashboards.tableproducts');
-        Route::get('/dashboards/show-products/{id}', [VehiclesController::class,'showProduct']);
+        Route::get('/dashboards/show-products/{id}', [VehiclesController::class,'showProduct'])->name('dashboards.showproduct');
+
         Route::get('/dashboards/productunlock/{id}', [VehiclesController::class, 'unlockfeaturedproduct'])->name('dashboards.unlockfeaturedproduct');
         Route::get('/dashboards/productlock/{id}', [VehiclesController::class, 'locksfeaturedproduct'])->name('dashboards.locksfeaturedproduct');
 
@@ -142,7 +144,7 @@ Route::post('/dashboards/product/reupProduct/{product_id}', [ProductController::
 
 //Ví tài xế
 
-//Route::resource('/dashboards/wallet','')
+Route::resource('/dashboards/wallet',WalletController::class);
 
 //order
 Route::resource('/dashboards/order',OrderController::class);
