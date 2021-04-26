@@ -9,6 +9,7 @@ use App\Models\Backend\Brand;
 use App\Models\Backend\Category;
 use App\Models\Backend\City;
 use App\Models\Backend\District;
+use App\Models\Backend\HistoryMonney;
 use App\Models\Backend\Partner;
 use App\Models\Backend\Product;
 use App\Models\Backend\Wallet;
@@ -291,6 +292,15 @@ class PartnerController extends Controller
         $wallet->partner_id = $user_id;
         $wallet->note = "Nạp 50 nghìn duy trì tài khoản";
         $wallet->save();
+
+        //thêm vào lịch sử giao dịch
+        $history = new HistoryMonney();
+        $history->trading_code = Str::random(8);
+        $history->send_monney = "+ ".$wallet->monney." VNĐ";
+        $history->note = $wallet->note;
+        $history->wallet_id = $wallet->id;
+
+        $history->save();
 
         Partner::where('id', $id)->update (['status'=> "instock"]);
         $request->session()->flash('success', 'Đăng ký tài khoản đối tác thành công!');

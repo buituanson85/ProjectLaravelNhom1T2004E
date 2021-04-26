@@ -145,6 +145,10 @@ Route::post('/dashboards/product/reupProduct/{product_id}', [ProductController::
 //Ví tài xế
 
 Route::resource('/dashboards/wallet',WalletController::class);
+Route::get('/dashboards/tutorialMonney/{id}',[WalletController::class,'tutorialMonney'])->name('dashboards.tutorialmonney');
+Route::get('/dashboards/transactionHistory/{id}',[WalletController::class,'transactionHistory'])->name('dashboards.transactionhistory');
+Route::get('/dashboards/withdrawal',[WalletController::class,'withdrawal'])->name('dashboards.withdrawal');
+Route::post('/dashboards/withdrawalMonney',[WalletController::class,'withdrawalMonney'])->name('dashboards.withdrawalmonney');
 
 //order
 Route::resource('/dashboards/order',OrderController::class);

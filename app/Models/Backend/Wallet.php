@@ -19,4 +19,8 @@ class Wallet extends Model
     public function user(){
         return $this->belongsTo('App\Models\User', 'partner_id');
     }
+
+    public function historymonney(){
+        return $this->hasMany('App\Models\Backend\HistoryMonney', 'wallet_id');
+    }
 }
