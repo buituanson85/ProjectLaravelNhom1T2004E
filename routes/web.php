@@ -116,8 +116,18 @@ Route::middleware(['auth:sanctum', 'verified','authadmin'])->group(function (){
         Route::get('/dashboards/accept-confirm/{id}',[VehiclesController::class,'acceptProductConfirm'])->name('dashboards.acceptproductconfirm');
         Route::get('/dashboards/refused-confirm/{id}',[VehiclesController::class,'refusedProductConfirm'])->name('dashboards.refusedproductconfirm');
 
-        //admin -->product: để duyệt sản phẩm
+        //quản lý ví tiền
+        Route::get('/dashboards/wallet-partners',[WalletController::class,'walletPartners'])->name('dashboards.walletpartners');
+        Route::get('/dashboards/send-wallet',[WalletController::class,'sendWallet'])->name('dashboards.sendwallet');
+        Route::get('/dashboards/send-wallet-one/{id}',[WalletController::class,'sendWalletOne'])->name('dashboards.sendwalletone');
+        Route::get('/dashboards/send-wallet-two/{id}',[WalletController::class,'sendWalletTwo'])->name('dashboards.sendwallettwo');
+        Route::get('/dashboards/money-waiting',[WalletController::class,'moneyWaiting'])->name('dashboards.moneywaiting');
+        Route::get('/dashboards/send-money-waiting/{id}',[WalletController::class,'sendMoneyWaiting'])->name('dashboards.sendmoneywaiting');
 
+        //Nạp tiền thủ công.
+
+        Route::get('/dashboards/send-moneys',[WalletController::class,'sendMoneys'])->name('dashboards.sendmoneys');
+        Route::post('/dashboards/send-money',[WalletController::class,'sendMoney'])->name('dashboards.sendmoney');
         //confirm-register-partner
         Route::get('/dashboards/confirm-partner',[PartnerController::class,'confirmPartner'])->name('pages.confirmpartner');
         Route::post('/dashboards/delete-confirm-partner',[PartnerController::class,'deleteConfirmPartner'])->name('dashboards.deleteconfirmpartner');

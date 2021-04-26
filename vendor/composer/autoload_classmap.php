@@ -56,6 +56,7 @@ return array(
     'App\\Mail\\RegisterProduct' => $baseDir . '/app/Mail/RegisterProduct.php',
     'App\\Mail\\SendCreatePartner' => $baseDir . '/app/Mail/SendCreatePartner.php',
     'App\\Mail\\SendMailRegisterPartner' => $baseDir . '/app/Mail/SendMailRegisterPartner.php',
+    'App\\Models\\Backend\\Bankking' => $baseDir . '/app/Models/Backend/Bankking.php',
     'App\\Models\\Backend\\Brand' => $baseDir . '/app/Models/Backend/Brand.php',
     'App\\Models\\Backend\\Category' => $baseDir . '/app/Models/Backend/Category.php',
     'App\\Models\\Backend\\City' => $baseDir . '/app/Models/Backend/City.php',

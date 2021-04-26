@@ -32,6 +32,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @include('partials.alert')
                             <form action="{{ route('dashboards.withdrawalmonney') }}" method="post">
                                 @csrf
                             <div class="card-body">

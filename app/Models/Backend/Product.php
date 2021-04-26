@@ -19,7 +19,7 @@ class Product extends Model
     protected $primaryKey = 'id';
 
     public function category(){
-        return $this->belongsTo('App\Models\Backend\Category');
+        return $this->belongsTo('App\Models\Backend\Category','category_id');
     }
     public function user(){
         return $this->belongsTo('App\Models\User', 'partner_id');

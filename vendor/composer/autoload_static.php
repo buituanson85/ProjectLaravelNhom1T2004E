@@ -638,6 +638,7 @@ class ComposerStaticInit1ceb9d4acd1b20cea75462c9641edcb4
         'App\\Mail\\RegisterProduct' => __DIR__ . '/../..' . '/app/Mail/RegisterProduct.php',
         'App\\Mail\\SendCreatePartner' => __DIR__ . '/../..' . '/app/Mail/SendCreatePartner.php',
         'App\\Mail\\SendMailRegisterPartner' => __DIR__ . '/../..' . '/app/Mail/SendMailRegisterPartner.php',
+        'App\\Models\\Backend\\Bankking' => __DIR__ . '/../..' . '/app/Models/Backend/Bankking.php',
         'App\\Models\\Backend\\Brand' => __DIR__ . '/../..' . '/app/Models/Backend/Brand.php',
         'App\\Models\\Backend\\Category' => __DIR__ . '/../..' . '/app/Models/Backend/Category.php',
         'App\\Models\\Backend\\City' => __DIR__ . '/../..' . '/app/Models/Backend/City.php',

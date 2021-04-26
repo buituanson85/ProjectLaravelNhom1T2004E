@@ -48,6 +48,7 @@
 
                     <div class="row" style="padding: 10px 0">
                         <div class="col-md-12" style="padding-left: 50px">
+                            @if($product->category_id == 1)
                             <h6>TÍNH NĂNG</h6>
                             <div class="row">
                                 <div class="col-md-4"><img src="{{ asset('Frontend/assets/icon/1828739.svg') }}" width="15" alt="">&nbsp;&nbsp;Điều Hòa(A/C)</div>
@@ -57,12 +58,15 @@
                             <div class="row pt-1">
                                 <div class="col-md-4"><img src="{{ asset('Frontend/assets/icon/1828739.svg') }}" width="15" alt="">&nbsp;&nbsp;Khe cắm USB</div>
                             </div>
+                            @else
+                            @endif
                         </div>
                     </div>
 
                     <div class="row" style="padding-top: 30px">
                         <div class="col-md-12" style="padding-left: 50px">
                             <h6>THỦ TỤC</h6>
+                            @if($product->category_id == 1)
                             <div class="row">
                                 <div class="col-md-4"><img src="{{ asset('Frontend/assets/icon/3596097.svg') }}" width="25" alt="">&nbsp;&nbsp;CMTND</div>
                                 <div class="col-md-4"><img src="{{ asset('Frontend/assets/icon/4337795.svg') }}" width="25" alt="">&nbsp;&nbsp;SỔ HỘ KHẨU</div>
@@ -71,6 +75,13 @@
                             <div class="row pt-1">
                                 <div class="col-md-4"><img src="{{ asset('Frontend/assets/icon/637126.svg') }}" width="25" alt="">&nbsp;&nbsp;Đặt cọc</div>
                             </div>
+                            @else
+                            <div class="row">
+                                <div class="col-md-4"><img src="{{ asset('Frontend/assets/icon/3596097.svg') }}" width="25" alt="">&nbsp;&nbsp;CMTND</div>
+                                <div class="col-md-4"><img src="{{ asset('Frontend/assets/icon/273916.svg') }}" width="25" alt="">&nbsp;&nbsp;Bằng lái</div>
+                                <div class="col-md-4"><img src="{{ asset('Frontend/assets/icon/637126.svg') }}" width="25" alt="">&nbsp;&nbsp;Đặt cọc</div>
+                            </div>
+                            @endif
                         </div>
                     </div>
                     <div class="row" style="padding: 30px 0;">
@@ -84,21 +95,35 @@
                     <div class="row">
                         <div class="col-md-12" style="padding-left: 50px">
                             <h6>GHI CHÚ</h6>
-                            <div class="row pt-1">
-                                <div class="col-md-12"><span>- CMND: Bản gốc</span></div>
-                            </div>
+                            @if( $product->category_id == 1)
+                                <div class="row pt-1">
+                                    <div class="col-md-12"><span>- CMND: Bản gốc</span></div>
+                                </div>
 
-                            <div class="row pt-1">
-                                <div class="col-md-12"><span>- Sổ hộ khẩu: Bản gốc hoặc KT3</span></div>
-                            </div>
+                                <div class="row pt-1">
+                                    <div class="col-md-12"><span>- Sổ hộ khẩu: Bản gốc hoặc KT3</span></div>
+                                </div>
 
-                            <div class="row pt-1">
-                                <div class="col-md-12"><span>- Bằng lái: B2 trở lên</span></div>
-                            </div>
+                                <div class="row pt-1">
+                                    <div class="col-md-12"><span>- Bằng lái: B2 trở lên</span></div>
+                                </div>
 
-                            <div class="row pt-1">
-                                <div class="col-md-12"><span>- Đặt cọc: Xe máy chính chủ + giấy đăng ký xe hoặc đặt cọc tiền mặt tối thiểu {{ $product->deposit }} triệu</span></div>
-                            </div>
+                                <div class="row pt-1">
+                                    <div class="col-md-12"><span>- Đặt cọc: Xe máy chính chủ + giấy đăng ký xe hoặc đặt cọc tiền mặt tối thiểu {{ $product->deposit }} triệu</span></div>
+                                </div>
+                            @else
+                                <div class="row pt-1">
+                                    <div class="col-md-12"><span>- CMND: Bản gốc</span></div>
+                                </div>
+
+                                <div class="row pt-1">
+                                    <div class="col-md-12"><span>- Bằng lái</span></div>
+                                </div>
+
+                                <div class="row pt-1">
+                                    <div class="col-md-12"><span>- Đặt Cọc: Đặt cọc {{ $product->deposit }} triệu đồng (SV được miễn giảm)</span></div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -179,7 +204,9 @@
                                 @endphp
                                 <div class="row pl-2">
                                     <div class="col-md-8">Thời gian thuê</div>
-                                    <div class="col-md-4">1 ngày</div>
+                                    <div class="col-md-4" id="price">
+                                        1 Ngày
+                                    </div>
                                 </div>
                             </div>
                         </div>

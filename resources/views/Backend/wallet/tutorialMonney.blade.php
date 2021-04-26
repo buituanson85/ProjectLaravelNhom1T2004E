@@ -57,7 +57,7 @@
                                 <div class="row pt-3">
                                     <div class="col-md-12">
                                         <ul class="pl-3">
-                                            <li> - Số tài khoản: <span style="font-size: 16px;font-weight: 700">00100208980}</span></li>
+                                            <li> - Số tài khoản: <span style="font-size: 16px;font-weight: 700">00100208980</span></li>
                                             <li> - Chủ tài khoản: <span style="font-size: 16px;font-weight: 700">Công ty cổ phần ChungXe</span></li>
                                             <li> - Ngân Hàng: <span style="font-size: 16px;font-weight: 700">Ngân hàng TMCP Quốc Dân (NCB)</span></li>
                                             <li> - Nội dung nộp tiền: <span style="font-size: 16px;font-weight: 700">[ Điền số điện thoại,email đăng ký tài khoản chungxe của quý đối tác]</span></li></li>

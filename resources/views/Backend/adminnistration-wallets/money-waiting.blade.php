@@ -1,5 +1,5 @@
 @extends('layouts.Backend.base')
-@section('title', 'Đối tác')
+@section('title', 'Giao dịch thẻ')
 @section('content')
     <div id="right-panel" class="right-panel">
 
@@ -13,7 +13,7 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('products.index') }}">Ví đối tác</a></span>
+                        <span style="float: left"><a href="{{ route('dashboards.sendwallet') }}">Giao dịch thẻ</a></span>
                     </div>
                 </div>
             </div>
@@ -27,28 +27,30 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="card-tools">
-                                            <span style="font-size: 16px;font-weight: 600">Lịch sử giao dịch:</span>
+                                            <span style="font-size: 16px;font-weight: 600">Lịch sử giao dịch thẻ:</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body p-0">
+                                @include('partials.alert')
                                 <table class="table">
                                     <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Mã giao dịch</th>
+                                        <th>Tài Khoản</th>
+                                        <th>Tiền thẻ</th>
                                         <th>Tiền</th>
-                                        <th>Nội dung</th>
-                                        <th>Trạng thái</th>
+                                        <th>Tên Đối Tác</th>
+                                        <th>Trạng Thái</th>
                                         <th>Ngày đăng</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @php
-                                        $index = $histories->perPage()*($histories->currentPage() - 1);
+                                        $index = $wallets->perPage()*($wallets->currentPage() - 1);
                                     @endphp
-                                    @foreach($histories as $history)
+                                    @foreach($wallets as $wallet)
                                         <tr>
                                             <td>
                                                 @php
@@ -56,29 +58,24 @@
                                                 @endphp
                                                 {{ $index }}
                                             </td>
-                                            <td>{{ $history->trading_code }}</td>
-                                            <td>{{ $history->send_monney }}</td>
-                                            <td>{{ $history->note }}</td>
+                                            <td>{{ $wallet->account }}</td>
+                                            <td>{{ $wallet->monney_confirm }}</td>
+                                            <td>{{ $wallet->monney }}</td>
+                                            <td>{{ $wallet->user->name }}</td>
                                             <td>
-                                                @if($history->status == "pending")
-                                                    <span class="badge badge-warning">Đang chờ xử lý</span>
-                                                @elseif($history->status == "refuse")
-                                                    <span class="badge badge-danger">Từ chối</span>
-                                                @else
-                                                    <span class="badge badge-primary">Đã duyệt</span>
-                                                @endif
+                                                <a href="{{ route('dashboards.sendmoneywaiting', $wallet->id) }}" class="badge badge-warning">pending</a>
                                             </td>
-                                            <td>{{ $history->created_at }}</td>
+                                            <td>{{ $wallet->created_at }}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
-                                {!! $histories->render('pagination::bootstrap-4') !!}
+                                {!! $wallets->render('pagination::bootstrap-4') !!}
                             </div>
                             <div class="card-footer">
                                 <div class="row pt-3 pl-3">
                                     <div class="col-md-12">
-                                        <a href="{{ route('wallet.index') }}" class="btn btn-primary">Về Ví</a>
+                                        {{--                                        <a href="{{ route('dashboards.walletpartners') }}" class="btn btn-primary">Về Ví</a>--}}
                                     </div>
                                 </div>
                             </div>
@@ -94,6 +91,9 @@
     </div><!-- /#right-panel -->
 
 @endsection
+
+
+
 
 
 

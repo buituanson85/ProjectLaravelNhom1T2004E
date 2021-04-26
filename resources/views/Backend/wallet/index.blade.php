@@ -13,7 +13,7 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('products.index') }}">Ví đối tác</a></span>
+                        <span style="float: left"><a href="{{ route('dashboards.sendmoneys') }}">Ví đối tác</a></span>
                     </div>
                 </div>
             </div>

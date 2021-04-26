@@ -288,9 +288,9 @@ class PartnerController extends Controller
 
         $wallet->account = Str::random(12);
         $wallet->monney_confirm = 0;
-        $wallet->monney = 50000;
+        $wallet->monney = 500000;
         $wallet->partner_id = $user_id;
-        $wallet->note = "Nạp 50 nghìn duy trì tài khoản";
+        $wallet->note = "Nạp 500 nghìn duy trì tài khoản";
         $wallet->save();
 
         //thêm vào lịch sử giao dịch
