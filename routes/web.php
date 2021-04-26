@@ -53,7 +53,7 @@ Route::resource('/pages/registers',RegisterController::class);
 Route::post('/pages/choose-products',[ChooseProduct::class,'index'])->name('pages.chooseproducts');
 Route::post('/pages/load-products',[ChooseProduct::class,'loadData'])->name('loadmore.loaddata');
 
-Route::post('/pages/show-products',[ChooseProduct::class,'showProducts'])->name('pages.showproducts');
+Route::get('/pages/show-products/{id}',[ChooseProduct::class,'showProducts'])->name('pages.showproducts');
 
 //đăng ký chủ xe
 Route::get('/pages/register-partners',[PartnerController::class,'registerPartners'])->name('pages.registerpartners');
@@ -140,7 +140,9 @@ Route::post('/dashboards/product/refuseProduct/{product_id}', [ProductController
 Route::post('/dashboards/product/removeProduct/{product_id}', [ProductController::class,'removeProduct'])->name('product.removeProduct');
 Route::post('/dashboards/product/reupProduct/{product_id}', [ProductController::class,'reupProduct'])->name('product.reupProduct');
 
+//Ví tài xế
 
+//Route::resource('/dashboards/wallet','')
 
 //order
 Route::resource('/dashboards/order',OrderController::class);

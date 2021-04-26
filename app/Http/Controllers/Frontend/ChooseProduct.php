@@ -225,8 +225,7 @@ class ChooseProduct extends Controller
                                     <div class="product_price">
                                         <div>'.number_format($row->price).'₫ <span style="font-size: 12px">/ngày</span></div>
                                         <p style="font-style: italic;color: green">-5% khi thanh toán online</p>
-                                        <p style="text-align: center;padding-top: 18px;color: white;display: flex">
-                                        </p>
+                                        <p style="text-align: center;padding-top: 18px;color: white;display: flex"><a href="/pages/show-products/'.$row->id.'" style="border: 1px solid lightseagreen;color: white;flex: 1; background-color:lightseagreen;padding: 5px; border-radius: 5px" >Chi tiết</a></p>
                                     </div>
                                 </div>
                     ';
@@ -249,11 +248,9 @@ class ChooseProduct extends Controller
         }
     }
 
-    public function showProducts(Request $request){
-        $product_id = $request->product_id;
-        $product = Product::find($product_id);
-        $start_time = $request->start_time;
-        $end_time = $request->end_time;
-        return view('Frontend.single-product', compact('product','start_time','end_time'));
+    public function showProducts($id){
+//        $product_id = $request->product_id;
+        $product = Product::find($id);
+        return view('Frontend.single-product', compact('product'));
     }
 }

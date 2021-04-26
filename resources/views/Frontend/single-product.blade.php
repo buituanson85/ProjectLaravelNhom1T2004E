@@ -122,10 +122,10 @@
                                 <h6>Ngày nhận xe - Ngày trả xe</h6>
                                 <div class="row">
                                     <div class="col-md-6" style="padding-right: 0!important;text-align: center">
-                                        <input class="form-control" style="background-color: #ffffff;border: none;border-radius: 5px;width: 160px"  type="date" id="start_time" name="start_time" value="{{ $start_time }}">
+                                        <input class="form-control" style="background-color: #ffffff;border: none;border-radius: 5px;width: 160px"  type="date" id="start_time" name="start_time">
                                     </div>
                                     <div class="col-md-6" style="padding-left: 0!important;text-align: center">
-                                        <input class="form-control" style="background-color: #ffffff;border: none;border-radius: 5px; width: 160px"  type="date" id="end_time" name="end_time" value="{{ $end_time }}">
+                                        <input class="form-control" style="background-color: #ffffff;border: none;border-radius: 5px; width: 160px"  type="date" id="end_time" name="end_time">
                                     </div>
                                 </div>
                             </div>
