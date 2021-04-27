@@ -13,6 +13,10 @@
     <meta name="description" content="Sufee Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
+
+
+
     <link rel="apple-touch-icon" href="{{ asset('Backend/images/admin.jpg') }}">
     <link rel="shortcut icon" href="{{ asset('Backend/images/favicon.ico') }}">
 
@@ -24,25 +28,30 @@
     <link rel="stylesheet" href="{{ asset('Backend/vendors/flag-icon-css/css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('Backend/vendors/selectFX/css/cs-skin-elastic.css') }}">
     <link rel="stylesheet" href="{{ asset('Backend/vendors/jqvmap/dist/jqvmap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('Backend/vendors/jqvmap/dist/jqvmap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('Backend/assets/css/slider_single_product.css') }}">
-{{--    <link rel="stylesheet" type="text/css" href="{{ asset('Backend/assets/css/bulma.min.css') }}">--}}
-{{--    <link rel="stylesheet" type="text/css" href="{{ asset('Backend/assets/css/dataTables.bulma.min.css') }}">--}}
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-{{--    Alertify--}}
-<!-- CSS -->
-    <link rel="stylesheet" href="{{ asset('Backend/vendors/alertifyjs/css/alertify.css') }}"/>
-    <!-- Default theme -->
-    <link rel="stylesheet" href="{{ asset('Backend/vendors/alertifyjs/css/themes/default.css') }}"/>
-    <!-- Semantic UI theme -->
-    <link rel="stylesheet" href="{{ asset('Backend/vendors/alertifyjs/css/themes/semantic.css') }}"/>
-    <!-- Bootstrap theme -->
-    <link rel="stylesheet" href="{{ asset('Backend/vendors/alertifyjs/css/themes/bootstrap.css') }}"/>
 
 
+{{--    link huy--}}
+    <link href="{{asset('Backend/template/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome Icons -->
+{{--    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />--}}
+    <!-- Ionicons -->
+{{--    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />--}}
+    <!-- Theme style -->
+    <link href="{{asset('Backend/template/dist/css/AdminLTE.min.css')}}" rel="stylesheet" type="text/css" />
+
+{{--    <link href="{{asset('Backend/jvectormap/jquery-jvectormap-1.2.2.css')}}" rel="stylesheet" type="text/css" />--}}
+{{--    <link href="{{asset('Backend/daterangepicker/daterangepicker-bs3.css')}}" rel="stylesheet" type="text/css" />--}}
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.css"/>
+
+
+
+{{--    end--}}
     <link rel="stylesheet" href="{{ asset('Backend/assets/css/style.css') }}">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
 
 </head>
 
@@ -61,7 +70,6 @@
             <a class="navbar-brand" href="{{ route('dashboard.index') }}"><img src="{{ asset('Backend/images/logo.png') }}" alt="Logo"></a>
             <a class="navbar-brand hidden" href="{{ route('dashboard.index') }}"><img src="{{ asset('Backend/images/logo2.png') }}" alt="Logo"></a>
         </div>
-
         @include('layouts.Backend.function')
     </nav>
 </aside><!-- /#left-panel -->
@@ -86,10 +94,7 @@
 <script src="{{ asset('Backend/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js') }}"></script>
 <script src="{{ asset('Backend/vendors/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
 <script src="{{ asset('Backend/assets/js/slider_single_product.js') }}"></script>
-{{--<script src="{{ asset('Backend/assets/js/jquery.dataTables.min.js') }}"></script>--}}
-{{--<script src="{{ asset('Backend/assets/js/dataTables.bulma.min.js') }}"></script>--}}
-<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.js"></script>
 
 <script>
     (function($) {
@@ -145,11 +150,12 @@
         document.getElementById('slug').value = slug;
     }
 </script>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+
 
 
 @yield('addjs')
-
-
 </body>
 
 </html>

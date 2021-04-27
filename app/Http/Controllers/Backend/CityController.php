@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Backend\City;
+use App\Models\Backend\District;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\DocBlock\Tags\Version;
 
 class CityController extends Controller
 {
@@ -14,7 +17,8 @@ class CityController extends Controller
      */
     public function index()
     {
-        //
+        $all_city = City::all();
+        return view('Backend.city.index')->with(['all_city'=>$all_city]);
     }
 
     /**
@@ -24,7 +28,7 @@ class CityController extends Controller
      */
     public function create()
     {
-        //
+        return view('Backend.city.add_new');
     }
 
     /**
@@ -35,7 +39,19 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required|unique:cities,name',
+            'slug' => 'required',
+            'status' => 'required'
+        ]);
+        $city = new City();
+        $city->name = $request->name;
+        $city->slug = $request->slug;
+        $city->status = $request->status;
+        $city->save();
+        $request->session()->flash('success','add success');
+        return redirect(route('city.index'));
+
     }
 
     /**
@@ -57,7 +73,8 @@ class CityController extends Controller
      */
     public function edit($id)
     {
-        //
+        $city = City::find($id);
+        return view('Backend.city.update')->with(['city'=>$city]);
     }
 
     /**
@@ -69,7 +86,13 @@ class CityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $city =City::find($id);
+        $city->name = $request->name;
+        $city->slug = $request->slug;
+        $city->status = $request->status;
+        $city->save();
+        $request->session()->flash('success','Update success');
+        return redirect(route('city.index'));
     }
 
     /**
@@ -78,8 +101,10 @@ class CityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        //
+        City::find($id)->delete();
+        $request->session()->flash('success','Yêu cầu xóa đã được thực hiện');
+        return redirect(route('city.index'));
     }
 }

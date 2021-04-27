@@ -168,3 +168,35 @@ Route::post('/dashboards/order/refuseOrder/{order_id}', [OrderController::class,
 Route::get('/dashboards/order/printOrder/{order_id}', [OrderController::class,'printOrder'])->name('order.printOrder');
 
 
+//HUy
+//category
+Route::get('/dashboards/category',[App\Http\Controllers\Backend\CategoryController:: class, 'index'])->name('cate.index');
+Route::get('/dashboards/create_category',[App\Http\Controllers\Backend\CategoryController:: class, 'create'])->name('cate.create');
+Route::post('/dashboards/add_category',[App\Http\Controllers\Backend\CategoryController:: class, 'store'])->name('cate.store');
+Route::get('/dashboards/update/{id}',[App\Http\Controllers\Backend\CategoryController:: class, 'edit'])->name('cate.edit');
+Route::post('/dashboards/updated/{id}',[App\Http\Controllers\Backend\CategoryController:: class, 'update'])->name('cate.update');
+Route::get('/dashboards/delete/{id}',[App\Http\Controllers\Backend\CategoryController:: class, 'destroy'])->name('cate.delete');
+//rout districts
+Route::get('/dashboards/districts',[App\Http\Controllers\Backend\DistrictController::class, 'index'])->name('district.index');
+Route::get('/dashboards/district/create_district',[App\Http\Controllers\Backend\DistrictController::class, 'create'])->name('district.create');
+Route::post('/dashboards/district/store_district',[App\Http\Controllers\Backend\DistrictController::class, 'store'])->name('district.store');
+Route::get('/dashboards/district/edit_district/{id}',[App\Http\Controllers\Backend\DistrictController::class, 'edit'])->name('district.edit');
+Route::post('/dashboards/district/update_district/{id}',[App\Http\Controllers\Backend\DistrictController::class, 'update'])->name('district.update');
+Route::get('/dashboards/district/delete_district/{id}',[App\Http\Controllers\Backend\DistrictController::class, 'destroy'])->name('district.delete');
+//City
+Route::get('/dashboards/city',[App\Http\Controllers\Backend\CityController::class, 'index'])->name('city.index');
+Route::get('/dashboards/city/create_city',[App\Http\Controllers\Backend\CityController::class, 'create'])->name('city.create');
+Route::post('/dashboards/city/store_city',[App\Http\Controllers\Backend\CityController::class, 'store'])->name('city.store');
+Route::get('/dashboards/city/edit_city/{id}',[App\Http\Controllers\Backend\CityController::class, 'edit'])->name('city.edit');
+Route::post('/dashboards/city/update_city/{id}',[App\Http\Controllers\Backend\CityController::class, 'update'])->name('city.update');
+Route::get('/dashboards/city/delete_city/{id}',[App\Http\Controllers\Backend\CityController::class, 'destroy'])->name('city.delete');
+
+
+//rout brands
+Route::get('/dashboards/brands',[App\Http\Controllers\Backend\BrandController::class, 'index'])->name('brand.index');
+Route::get('/dashboards/brands/create_brand',[App\Http\Controllers\Backend\BrandController::class, 'create'])->name('brand.create');
+Route::post('/dashboards/brands/store_brand',[App\Http\Controllers\Backend\BrandController::class, 'store'])->name('brand.store');
+Route::get('/dashboards/brands/edit_brand/{id}',[App\Http\Controllers\Backend\BrandController::class, 'edit'])->name('brand.edit');
+Route::post('/dashboards/brands/update_brand/{id}',[App\Http\Controllers\Backend\BrandController::class, 'update'])->name('brand.update');
+Route::get('/dashboards/brands/delete_brand/{id}',[App\Http\Controllers\Backend\BrandController::class, 'destroy'])->name('brand.delete');
+
