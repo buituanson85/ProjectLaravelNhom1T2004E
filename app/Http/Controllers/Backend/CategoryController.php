@@ -61,7 +61,7 @@ class CategoryController extends Controller
 
         $all_category -> save();
 
-        $request->session()->flash('success','Lưu thành công');
+        $request->session()->flash('success','Thêm loại danh mục thành công');
 
         return redirect(route('cate.index'));
     }
@@ -111,7 +111,7 @@ class CategoryController extends Controller
 
         $all_category -> save();
 
-        $request->session()->flash('success','Lưu thành công');
+        $request->session()->flash('success','Cập nhật loại danh mục thành công');
 
         return redirect(route('cate.index'));
     }
@@ -125,7 +125,7 @@ class CategoryController extends Controller
     public function destroy(Request $request,$id)
     {
         Category::find($id)->delete();
-        $request->session()->flash('success','Delete success');
+        $request->session()->flash('error','Xóa loại danh mục thành công');
         return redirect(route('cate.index'));
     }
 }

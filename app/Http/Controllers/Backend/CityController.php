@@ -49,7 +49,7 @@ class CityController extends Controller
         $city->slug = $request->slug;
         $city->status = $request->status;
         $city->save();
-        $request->session()->flash('success','add success');
+        $request->session()->flash('success','Thêm mới thành phố thành công');
         return redirect(route('city.index'));
 
     }
@@ -91,7 +91,7 @@ class CityController extends Controller
         $city->slug = $request->slug;
         $city->status = $request->status;
         $city->save();
-        $request->session()->flash('success','Update success');
+        $request->session()->flash('success','Cập nhật thành phố thành công');
         return redirect(route('city.index'));
     }
 
@@ -104,7 +104,7 @@ class CityController extends Controller
     public function destroy(Request $request,$id)
     {
         City::find($id)->delete();
-        $request->session()->flash('success','Yêu cầu xóa đã được thực hiện');
+        $request->session()->flash('error','Xóa thành phố thành công');
         return redirect(route('city.index'));
     }
 }

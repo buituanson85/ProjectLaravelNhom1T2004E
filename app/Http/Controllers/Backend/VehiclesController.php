@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Mail\AcceptRegisterProduct;
 use App\Mail\RefusedRegisterProduct;
+use App\Mail\SendLockPartner;
 use App\Mail\SendMailRegisterPartner;
+use App\Mail\SendUnLockPartner;
 use App\Models\Backend\Brand;
 use App\Models\Backend\Category;
 use App\Models\Backend\District;
@@ -24,25 +26,35 @@ class VehiclesController extends Controller
 {
     public function index(Request $request){
         $name = $request->name;
-
         if (isset($name)){
-            $users = DB::table('users')
-                ->join('user_role', 'user_role.user_id','=','users.id')
-                ->join('roles','roles.id','=','user_role.role_id')
-                ->select('users.*')
-                ->where('roles.name','Partner')->where('users.name','like','%'.$name.'%')->orderBy('id','DESC')->paginate(5);
+            $users = User::where([
+                ['name','like','%'.$name.'%'],
+                ['utype','=',"PTR"]
+            ])->orderBy('id','DESC')->paginate(5);
             $users->appends($request->all());
         }else{
-            $users = DB::table('users')
-                ->join('user_role', 'user_role.user_id','=','users.id')
-                ->join('roles','roles.id','=','user_role.role_id')
-                ->select('users.*')
-                ->where('roles.name','Partner')
-//                ->whereNotIn('roles.name','Admin')
-                ->orderBy('id','DESC')->paginate(5);
+            $users = User::where('utype',"PTR")->orderBy('id','DESC')->paginate(5);
             $users->appends($request->all());
-//            $users = User::with('roles')->paginate(5);
         }
+
+//        if (isset($name)){
+//            $users = DB::table('users')
+//                ->join('user_role', 'user_role.user_id','=','users.id')
+//                ->join('roles','roles.id','=','user_role.role_id')
+//                ->select('users.*')
+//                ->where('roles.name','Partner')->where('users.name','like','%'.$name.'%')->orderBy('id','DESC')->paginate(5);
+//            $users->appends($request->all());
+//        }else{
+//            $users = DB::table('users')
+//                ->join('user_role', 'user_role.user_id','=','users.id')
+//                ->join('roles','roles.id','=','user_role.role_id')
+//                ->select('users.*')
+//                ->where('roles.name','Partner')
+////                ->whereNotIn('roles.name','Admin')
+//                ->orderBy('id','DESC')->paginate(5);
+//            $users->appends($request->all());
+////            $users = User::with('roles')->paginate(5);
+//        }
         return view('Backend.Vehicles.index')->with(array('users'=>$users));
     }
 
@@ -122,7 +134,10 @@ class VehiclesController extends Controller
     }
 
     public function tableProducts(Request $request,$id){
-        $products = Product::where('partner_id', $id)->orderBy('id','DESC')->paginate(5);
+        $products = Product::where([
+            ['partner_id', $id],
+            ['status', 'ready']
+        ])->orderBy('id','DESC')->paginate(5);
         $products->appends($request->all());
         $user = User::find($id);
         return view('Backend.Vehicles.table-products',compact('products', 'user'));
@@ -217,7 +232,61 @@ class VehiclesController extends Controller
     public function acceptConfirm(Request $request,$id){
         $product = Product::find($id);
         Product::where('id', $id)->update (['confirm'=> 1]);
-        $request->session()->flash('success', 'Update confirm product success!');
+        $request->session()->flash('success', 'Cập nhật confirm phương tiện thành công!');
         return redirect(route('dashboards.confirmproduct'));
     }
+
+    public function doitaclock(Request $request,$id){
+        $user = User::find($id);
+        $user->status = 'outstock';
+        $checkUser = User::where('id',$user->id)->withCount('roles')->get()->toArray();
+        if($checkUser[0]['roles_count']>0){
+            $user->roles()->detach();//delete all relationship in role_permission
+        }
+        $user->roles()->attach(7);//add list permissions
+        $user->utype = 'PTR';
+
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
+        $email = $user->email;
+        $name = $user->name;
+        $date = "Date: ".''.$now;
+        $users = [
+            'name' => $name,
+            'date' => $date
+        ];
+        Mail::to($email)->send(new SendLockPartner($users));
+
+        $user->save();
+        $request->session()->flash('error', 'Khóa tài khoản đối tác thành công!');
+        return redirect(route('products.index'));
+    }
+
+    public function doitacunlock(Request $request,$id){
+        $user = User::find($id);
+        $user->status = 'instock';
+
+        $checkUser = User::where('id',$user->id)->withCount('roles')->get()->toArray();
+        if($checkUser[0]['roles_count']>0){
+            $user->roles()->detach();//delete all relationship in role_permission
+        }
+        $user->roles()->attach(7);//add list permissions
+        $user->roles()->attach(6);//add list permissions
+        $user ->with('roles')->get();
+        $user->utype = 'PTR';
+
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
+        $email = $user->email;
+        $name = $user->name;
+        $date = "Date: ".''.$now;
+        $users = [
+            'name' => $name,
+            'date' => $date
+        ];
+        Mail::to($email)->send(new SendUnLockPartner($users));
+
+        $user->save();
+        $request->session()->flash('success', 'Mở khóa tài khoản đối tác thành công!');
+        return redirect(route('products.index'));
+    }
+
 }

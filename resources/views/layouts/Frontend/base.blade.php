@@ -55,7 +55,7 @@
                 <li>
                     @if(Route::has('login'))
                         @auth()
-                            @if(Auth::user()->utype === 'ADM')
+                            @if(Auth::user()->utype === 'ADM' || Auth::user()->utype === 'PTR')
                                 <div class="dropdown">
                                     <span class="dropdown-toggle the_a" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         {{ Auth::user()->name }}

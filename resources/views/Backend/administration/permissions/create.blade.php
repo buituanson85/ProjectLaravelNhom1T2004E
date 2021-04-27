@@ -1,5 +1,5 @@
 @extends('layouts.Backend.base')
-@section('title', 'Create Permissions')
+@section('title', 'Thêm Permissions')
 @section('content')
 
     <div id="right-panel" class="right-panel">
@@ -14,7 +14,7 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('permissions.create') }}">Create Permission</a></span>
+                        <span style="float: left"><a href="{{ route('permissions.create') }}">Thêm Permission</a></span>
                     </div>
                 </div>
             </div>
@@ -24,9 +24,9 @@
                 <div class="col-md-10 offset-md-1">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Create new Permission</h3>
+                            <h3 class="card-title">Thêm mới Permission</h3>
                             <div class="card-tools">
-                                <a href="{{ route('permissions.index') }}" class="btn btn-danger"><i class="fas fa-shield-alt"></i> See all Permission</a>
+                                <a href="{{ route('permissions.index') }}" class="btn btn-danger"><i class="fas fa-shield-alt"></i> Danh sách permission</a>
                             </div>
                         </div>
                         @include('partials.alert')
@@ -35,12 +35,12 @@
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="name">Permission Name</label>
-                                    <input type="text" name="name" onkeyup="ChangeToSlug()"  id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Permission Name">
+                                    <label for="name">Tên Permission</label>
+                                    <input type="text" name="name" onkeyup="ChangeToSlug()"  id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Nhập tên permission">
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                     @enderror
                                 </div>
 
@@ -49,8 +49,8 @@
                                     <input type="text" name="slug"  id="slug" class="form-control @error('slug') is-invalid @enderror" value="{{ old('slug') }}" placeholder="Permission Slug">
                                     @error('slug')
                                     <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                     @enderror
                                 </div>
 
@@ -59,8 +59,8 @@
                                     <input type="text" name="url"  id="url" class="form-control @error('url') is-invalid @enderror" value="{{ old('url') }}"  placeholder="Permission URL">
                                     @error('url')
                                     <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                     @enderror
                                 </div>
 
@@ -69,13 +69,13 @@
                                     <input type="text" name="icon"  id="icon" class="form-control @error('icon') is-invalid @enderror" value="{{ old('icon') }}"  placeholder="Permission Icon">
                                     @error('icon')
                                     <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                     @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="name">Permission Parent</label>
+                                    <label for="name">Permission Thư mục</label>
                                     <select class="form-control" id="parent" name="parent">
                                         <option value="0">=== Permission Parent ===</option>
                                         @foreach($permissions as $permission)
@@ -89,10 +89,8 @@
                                 </div>
                             </div>
 
-
-
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Create Permission</button>
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Thêm Permission</button>
                             </div>
                         </form>
                     </div>

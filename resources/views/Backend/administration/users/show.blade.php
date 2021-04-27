@@ -1,5 +1,5 @@
 @extends('layouts.Backend.base')
-@section('title', 'User')
+@section('title', 'Nhân viên')
 @section('content')
     <div id="right-panel" class="right-panel">
 
@@ -13,24 +13,36 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('permissions.create') }}">Create Permission</a></span>
+                        <span style="float: left"><a href="{{ route('permissions.create') }}">Chi tiết nhân viên</a></span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="breadcrumbs">
             <div class="pt-5">
-                <div class="col-md-12">
+                <div class="col-md-10 offset-1">
                     <div class="card">
                         <div class="card-header">
-                            Profile User
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <span style="font-size: 16px;font-weight: 700">Profile Nhân viên</span>
+                                </div>
+                                <div class="col-md-6 pull-left">
+                                    <img width="100" src="{{ $users->profile_photo_path }} " alt="">
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th scope="col" class="text-uppercase">User name: {{ $users->name }}</th>
-                                    <th scope="col"><img width="100" src="{{ asset('Backend/uploads/users') }}/{{ $users->profile_photo_path }}" alt=""></th>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <th scope="col" class="text-uppercase">Tên:</th>
+                                            <td>{{ $users->name }}</td>
+                                        </div>
+                                    </div>
+
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -39,7 +51,7 @@
                                     <td>{{ $users->email }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Phone</th>
+                                    <th scope="row">Số điện thoại</th>
                                     <td>{{ $users->phone }}</td>
                                 </tr>
                                 <tr>

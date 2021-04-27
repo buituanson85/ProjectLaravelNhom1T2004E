@@ -86,6 +86,7 @@
                                         <th>Tên phương tiện</th>
                                         <th>Giá</th>
                                         <th>Trạng thái</th>
+                                        <th>Confirm</th>
                                         <th>Hãng</th>
                                         <th>Danh mục</th>
                                         <th>Quận</th>
@@ -115,6 +116,19 @@
                                                     <a href=" {{ route('dashboards.unlockfeaturedproduct',$product->id) }}"><span class="badge badge-success">đang hoạt động</span></a>
                                                 @else
                                                     <a href="{{ route('dashboards.locksfeaturedproduct', $product->id) }}"><span class="badge badge-danger">Tạm khóa</span></a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($product->status == "ready")
+                                                    @if($product->confirm == 0)
+                                                        <span class="badge badge-secondary">Offline</span>
+                                                    @elseif($product->confirm == 1)
+                                                        <span class="badge badge-success">Online</span>
+                                                    @else
+                                                        <span class="badge badge-primary">Đã nhận chuyến</span>
+                                                    @endif
+                                                @else
+
                                                 @endif
                                             </td>
                                             <td>{{ $product->brand->name }}</td>

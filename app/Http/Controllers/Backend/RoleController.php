@@ -34,7 +34,7 @@ class RoleController extends Controller
             'slug' => $request->slug,
             'title' => $request->title
         ]);
-        return redirect()->route('roles.index')->with('success', 'Roles Created Successfully!');
+        return redirect()->route('roles.index')->with('success', 'Thêm roles thành công!');
     }
 
     public function edit($id)
@@ -58,14 +58,14 @@ class RoleController extends Controller
             'slug' => $request->slug,
             'title' => $request->title
         ]);
-        $request->session()->flash('success', 'Roles Update Successfully!');
+        $request->session()->flash('success', 'Cập nhật roles thành công!');
         return redirect(route('roles.index'));
     }
 
     public function destroy(Request $request,$id)
     {
         Role::find($id)->delete();
-        $request->session()->flash('success', 'Delete roles success!');
+        $request->session()->flash('error', 'Xóa roles thành công!');
         return redirect(route('roles.index'));
     }
 }

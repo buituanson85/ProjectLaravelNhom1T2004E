@@ -1,5 +1,5 @@
 @extends('layouts.Backend.base')
-@section('title', 'Edit Galaxy')
+@section('title', 'Cập nhật thư viện ảnh')
 @section('content')
     <div id="right-panel" class="right-panel">
 
@@ -13,7 +13,7 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="#">Create Galaxy</a></span>
+                        <span style="float: left"><a href="#">Cập nhật thư viện ảnh</a></span>
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="card-tools">
-                                            Edit Image:
+                                            Cập nhật ảnh:
                                         </div>
                                     </div>
                                 </div>
@@ -52,7 +52,7 @@
                                         </div>
                                     </div>
                                     <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                                        <button type="submit" class="btn btn-primary btn-sm">Cập nhật</button>
                                     </div>
                                 </form>
                             </div>

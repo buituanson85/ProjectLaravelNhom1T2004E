@@ -42,7 +42,7 @@
                                 <div class="card">
                                     @include('partials.alert')
                                     <div class="card-header">
-                                        <h4>Edit Profile</h4>
+                                        <h4>Cập nhật Profile</h4>
                                     </div>
                                     <div class="card-body">
                                         <div>
@@ -51,8 +51,8 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <label for="name">Name</label>
-                                                            <input type="text" name="name"  id="name" class="form-control @error('email') is-invalid @enderror" value="{{ auth()->user()->name }}" placeholder="Name">
+                                                            <label for="name">Tên</label>
+                                                            <input type="text" name="name"  id="name" class="form-control @error('email') is-invalid @enderror" value="{{ auth()->user()->name }}" placeholder="Name" readonly>
                                                             @error('name')
                                                             <span class="invalid-feedback" role="alert">
                                                                 <strong>{{ $message }}</strong>
@@ -61,8 +61,8 @@
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label for="email">Email Address</label>
-                                                            <input type="email" name="email"  id="email" class="form-control @error('email') is-invalid @enderror" value="{{ auth()->user()->email }}" placeholder="E-mail Address">
+                                                            <label for="email">Địa chỉ email</label>
+                                                            <input type="email" name="email"  id="email" class="form-control @error('email') is-invalid @enderror" value="{{ auth()->user()->email }}" placeholder="E-mail Address" readonly>
                                                             @error('siteemail')
                                                             <span class="invalid-feedback" role="alert">
                                                                 <strong>{{ $message }}</strong>
@@ -71,7 +71,7 @@
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label for="phone">Phone Number</label>
+                                                            <label for="phone">Số điện thoại</label>
                                                             <input type="text" name="phone" id="phone" class="form-control @error('phone') is-invalid @enderror" placeholder="Phone Number" value="{{ auth()->user()->phone }}">
                                                             @error('phone')
                                                             <span class="invalid-feedback" role="alert">
@@ -81,7 +81,7 @@
                                                         </div>
 
                                                         <div class="form-group">
-                                                            <label for="phone">Address</label>
+                                                            <label for="phone">Địa chỉ</label>
                                                             <input type="text" name="address" id="address" class="form-control @error('address') is-invalid @enderror" placeholder="Address" value="{{ auth()->user()->address }}">
                                                             @error('address')
                                                             <span class="invalid-feedback" role="alert">
@@ -92,8 +92,7 @@
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="form-group button">
-                                                            <button type="submit" class="btn btn-primary"><i class="fas fa-user-edit"></i> Update Profile</button>
-                                                            {{--  <a role="button" href="admin/index.html" class="bizwheel-btn theme-2">Login</a>  --}}
+                                                            <button type="submit" class="btn btn-primary"><i class="fas fa-user-edit"></i> Cập nhật Profile</button>
                                                         </div>
                                                     </div>
                                                 </div>

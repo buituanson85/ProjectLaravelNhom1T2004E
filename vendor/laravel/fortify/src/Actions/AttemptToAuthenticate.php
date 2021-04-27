@@ -58,6 +58,9 @@ class AttemptToAuthenticate
             if (\Auth::user()->utype === 'ADM'){
                 session(['utype' => 'ADM']);
                 return redirect(RouteServiceProvider::HOME);
+            }elseif (\Auth::user()->utype === 'PTR') {
+                session(['utype' => 'PTR']);
+                return redirect(RouteServiceProvider::HOME);
             }else if (\Auth::user()->utype === 'URS'){
                 session(['utype' => 'URS']);
                 return redirect(RouteServiceProvider::HOME);

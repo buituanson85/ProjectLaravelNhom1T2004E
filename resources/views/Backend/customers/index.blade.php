@@ -56,7 +56,7 @@
                                         <th>No</th>
                                         <th>Tên</th>
                                         <th>utype</th>
-                                        <th>Trạng thái</th>
+{{--                                        <th>Trạng thái</th>--}}
                                         <th>Email</th>
                                         <th>Số điện thoại</th>
                                         <th>Địa chỉ</th>
@@ -79,20 +79,20 @@
                                             </td>
                                             <td>{{ $user->name }}</td>
                                             <td>
-                                                <span class="badge badge-primary">{{ $user->utype }}</span>
+                                                <span class="badge badge-secondary">{{ $user->utype }}</span>
                                             </td>
-                                            <td>
-                                                @if($user->status == 'instock')
-                                                    <a href="{{ route('dashboards.doitaclock', $user->id) }}" class="badge badge-warning">Đang hoạt động</a>
-                                                @else
-                                                    <a href="{{ route('dashboards.doitacunlock', $user->id) }}" class="badge badge-danger">Tạm khóa</a>
-                                                @endif
-                                            </td>
+{{--                                            <td>--}}
+{{--                                                @if($user->status == 'instock')--}}
+{{--                                                    <a href="{{ route('dashboards.doitaclock', $user->id) }}" class="badge badge-warning">Đang hoạt động</a>--}}
+{{--                                                @else--}}
+{{--                                                    <a href="{{ route('dashboards.doitacunlock', $user->id) }}" class="badge badge-danger">Tạm khóa</a>--}}
+{{--                                                @endif--}}
+{{--                                            </td>--}}
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->phone }}</td>
                                             <td>{{ $user->address }}</td>
                                             <td>
-                                                <a href="/dashboards/table-products/{{ $user->id }}"><span class="btn btn-sm btn-primary"><i class="fa fa-eye"></i>&nbsp;Chi tiết</span></a>
+                                                <a href="{{ route('customers.show', $user->id) }}"><span class="btn btn-sm btn-primary"><i class="fa fa-eye"></i>&nbsp;Chi tiết</span></a>
                                             </td>
                                             <td>{{ $user->created_at }}</td>
                                             <td>
@@ -120,6 +120,7 @@
     </div><!-- /#right-panel -->
 
 @endsection
+
 
 
 

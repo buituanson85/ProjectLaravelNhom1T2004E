@@ -16,32 +16,32 @@ class HomeController extends Controller
     }
 
     public function tutorial(){
-        return view('Frontend.tutorial');
+        return view('Frontend.Child.tutorial');
     }
 
     public function abountus(){
-        return view('Frontend.abountus');
+        return view('Frontend.Child.abountus');
     }
 
     public function promotion(){
-        return view('Frontend.promotion');
+        return view('Frontend.Child.promotion');
     }
     public function camnang(){
-        return view('Frontend.camnang');
+        return view('Frontend.Child.Child.camnang');
     }
     public function hoanhuy(){
-        return view('Frontend.hoanhuy');
+        return view('Frontend.Child.hoanhuy');
     }
     public function hopdong(){
-        return view('Frontend.hopdong');
+        return view('Frontend.Child.hopdong');
     }
     public function khieunai(){
-        return view('Frontend.khieunai');
+        return view('Frontend.Child.khieunai');
     }
     public function baomat(){
-        return view('Frontend.baomat');
+        return view('Frontend.Child.baomat');
     }
     public function service(){
-        return view('Frontend.service');
+        return view('Frontend.Child.service');
     }
 }

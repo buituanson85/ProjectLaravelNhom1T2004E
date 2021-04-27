@@ -85,14 +85,6 @@ class ProductController extends Controller
 
         $product->name = $request->name;
 
-//        $get_image = $request->file('image');
-//        if ($get_image) {
-//            $get_name_image = $get_image->getClientOriginalName();
-//            $name_image = current(explode('.', $get_name_image));
-//            $new_image = $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
-//            $get_image->move('public/Backend/images', $new_image);
-//            $product->image = $new_image;
-//        }
         if ($request ->image != null){
             $image = base64_encode(file_get_contents($_FILES['image']['tmp_name']));
 
@@ -198,13 +190,6 @@ class ProductController extends Controller
         $product->name = $request->name;
         $get_image = $request->file('image');
 
-//        if ($get_image) {
-//            $get_name_image = $get_image->getClientOriginalName();
-//            $name_image = current(explode('.', $get_name_image));
-//            $new_image = $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
-//            $get_image->move('public/Backend/images', $new_image);
-//            $product->image = $new_image;
-//        }
         if ($request ->image != null){
             $image = base64_encode(file_get_contents($_FILES['image']['tmp_name']));
 

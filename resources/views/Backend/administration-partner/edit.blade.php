@@ -14,7 +14,7 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('partners.index') }}">Edit Product</a></span>
+                        <span style="float: left"><a href="{{ route('partners.index') }}">Cập nhật Phương tiện</a></span>
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-5">
-                                    <h3 class="card-title">Edit Product</h3>
+                                    <h3 class="card-title">Cập nhật phương tiện</h3>
                                     <div class="card-tools">
                                         <a href="{{ route('products.index') }}" class="btn btn-danger"><i class="fas fa-shield-alt"></i> See all Partner</a>
                                     </div>
@@ -339,7 +339,7 @@
                             </div>
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Update Product</button>
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Cập nhật</button>
                             </div>
                         </form>
                     </div>

@@ -26,11 +26,11 @@ class Product extends Model
     }
 
     public function brand(){
-        return $this->belongsTo('App\Models\Backend\Brand');
+        return $this->belongsTo('App\Models\Backend\Brand','brand_id');
     }
 
     public function district(){
-        return $this->belongsTo('App\Models\Backend\District');
+        return $this->belongsTo('App\Models\Backend\District','district_id');
     }
 
     public function orderdetails(){

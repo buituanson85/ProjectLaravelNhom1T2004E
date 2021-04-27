@@ -63,14 +63,6 @@ class PartnerController extends Controller
 
         $product->name = $request->name;
 
-//        $get_image = $request->file('image');
-//        if ($get_image) {
-//            $get_name_image = $get_image->getClientOriginalName();
-//            $name_image = current(explode('.', $get_name_image));
-//            $new_image = $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
-//            $get_image->move('public/Backend/images', $new_image);
-//            $product->image = $new_image;
-//        }
         if ($request ->image != null){
             $image = base64_encode(file_get_contents($_FILES['image']['tmp_name']));
 
@@ -179,8 +171,29 @@ class PartnerController extends Controller
         }
 
         $product->save();
-        $request->session()->flash('success', 'Update product success!');
+        $request->session()->flash('success', 'Cập nhật phương tiện thành công!');
         return redirect(route('partners.index'));
+    }
+
+    public function destroy(Request $request,$id)
+    {
+        $user = User::findOrFail($id);
+        $checkUser = User::where('id',$user->id)->withCount('roles')->get()->toArray();
+        if($checkUser[0]['roles_count']>0){
+            $user->roles()->detach();//delete all relationship in role_permission
+        }
+
+        //xóa sản phẩm
+        $products = Product::where('partner_id', $id)->get();
+        foreach ($products as $product){
+            Product::find($product->id)->delete();
+        }
+        //Xóa ví
+        $wallet = Wallet::where('partner_id',$id)->fisrt();
+        $wallet->delete();
+        $user->delete();
+        $request->session()->flash('error', 'Xóa nhân viên thành công!');
+        return redirect(route('users.index'));
     }
 
     public function unlockstatustpartner(Request $request,$id){
@@ -239,7 +252,7 @@ class PartnerController extends Controller
         Mail::to($email)->send(new SendMailRegisterPartner($partners));
 
         $partner->save();
-        $request->session()->flash('success', 'Partner Create Successfully!');
+        $request->session()->flash('success', 'Thêm mới đối tác thành công!');
         return view('Frontend.policy');
     }
 
@@ -252,7 +265,7 @@ class PartnerController extends Controller
     public function deleteConfirmPartner(Request $request){
         $id =$request->partner_id;
         Partner::find($id)->delete();
-        $request->session()->flash('success', 'Delete Confirm success!');
+        $request->session()->flash('error', 'Xóa đối tác thành công!');
         return redirect(route('pages.confirmpartner'));
     }
 
@@ -266,7 +279,7 @@ class PartnerController extends Controller
         $user->email = $partner->email;
         $user->address = $partner->address;
         $user->password = bcrypt($password);
-        $user->utype = "ADM";
+        $user->utype = "PTR";
 
         $now = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
         $email = $partner->email;;
@@ -283,7 +296,16 @@ class PartnerController extends Controller
 
         $user_id = $user->id;
 
-        //thêm ví cho tài xế
+        //add role cho đối tác
+        $checkUser = User::where('id',$user->id)->withCount('roles')->get()->toArray();
+        if($checkUser[0]['roles_count']>0){
+            $user->roles()->detach();//delete all relationship in role_permission
+        }
+        $user->roles()->attach(7);//add list permissions
+        $user->roles()->attach(6);
+        $user ->with('roles')->get();
+
+        //thêm ví cho đối tác
         $wallet = new Wallet();
 
         $wallet->account = Str::random(12);

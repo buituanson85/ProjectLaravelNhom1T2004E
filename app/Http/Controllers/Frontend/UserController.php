@@ -26,7 +26,7 @@ class UserController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-        $request->session()->flash('success', 'Users Create Successfully!');
+        $request->session()->flash('success', 'Đăng ký tài khoản thành công!');
         return redirect()->route('login');
     }
 }

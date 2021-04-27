@@ -49,7 +49,7 @@ class BrandController extends Controller
         $brand -> status = $request ->status;
         $brand->save();
 
-        $request->session()->flash('success','Add new success');
+        $request->session()->flash('success','Thêm mới thương hiệu thành công');
         return redirect(route('brand.index'));
 
     }
@@ -95,7 +95,7 @@ class BrandController extends Controller
         $brand -> status = $request ->status;
         $brand->save();
 
-        $request->session()->flash('success','Update new success');
+        $request->session()->flash('success','Cập nhật thương hiệu thành công');
         return redirect(route('brand.index'));
     }
 
@@ -108,7 +108,7 @@ class BrandController extends Controller
     public function destroy(Request $request,$id)
     {
         Brand::find($id)->delete();
-        $request->session()->flash('success','Update new success');
+        $request->session()->flash('error','Xóa thương hiệu thành công');
         return redirect(route('brand.index'));
     }
 }

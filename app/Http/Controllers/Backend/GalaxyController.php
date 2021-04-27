@@ -84,7 +84,7 @@ class GalaxyController extends Controller
 
         $galaxy->save();
         $request->session()->flash('success', 'Sửa ảnh thành công!');
-        return back()->with("success","Update Success");
+        return back()->with("success","Sửa ảnh thành công");
     }
     public function destroys(Request $request,$id){
         Galaxy::find($id)->delete();

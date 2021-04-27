@@ -1,5 +1,5 @@
 @extends('layouts.Backend.base')
-@section('title', 'Edit Role')
+@section('title', 'Cập nhật role')
 @section('content')
 
     <div id="right-panel" class="right-panel">
@@ -14,7 +14,7 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('roles.index') }}">Edit Role</a></span>
+                        <span style="float: left"><a href="{{ route('roles.index') }}">Cập nhật role</a></span>
                     </div>
                 </div>
             </div>
@@ -24,9 +24,9 @@
                 <div class="col-md-10 offset-md-1">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Edit Roles</h3>
+                            <h3 class="card-title">Cập nhật role</h3>
                             <div class="card-tools">
-                                <a href="{{ route('roles.index') }}" class="btn btn-danger"><i class="fas fa-shield-alt"></i> See all Roles</a>
+                                <a href="{{ route('roles.index') }}" class="btn btn-danger"><i class="fas fa-shield-alt"></i> Danh sách roles</a>
                             </div>
                         </div>
                         <div class="alert-danger"></div>
@@ -35,7 +35,7 @@
                             @method('PUT')
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="name">Roles Name</label>
+                                    <label for="name">Tên role</label>
                                     <input type="text" name="name" onkeyup="ChangeToSlug()"  id="name" class="form-control @error('name') is-invalid @enderror" value="{{ $role->name }}" placeholder="Roles Name">
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -45,7 +45,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="slug">Roles Slug</label>
+                                    <label for="slug">Role Slug</label>
                                     <input type="text" name="slug"  id="slug" class="form-control @error('slug') is-invalid @enderror" value="{{ $role->slug }}">
                                     @error('slug')
                                     <span class="invalid-feedback" role="alert">
@@ -55,7 +55,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="title">Roles Title</label>
+                                    <label for="title">Tiêu đề role</label>
                                     <input type="text" name="title"  id="title" class="form-control @error('title') is-invalid @enderror" value="{{ $role->title }}">
                                     @error('title')
                                     <span class="invalid-feedback" role="alert">
@@ -67,7 +67,7 @@
                             </div>
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Update Role</button>
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Cập nhật</button>
                             </div>
                         </form>
                     </div>

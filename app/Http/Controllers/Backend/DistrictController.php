@@ -54,7 +54,7 @@ class DistrictController extends Controller
 
         $district->save();
 
-        $request->session()->flash('success','Add new success');
+        $request->session()->flash('success','Thêm mới quận huyện thành công');
         return redirect(route('district.index'));
 
     }
@@ -106,7 +106,7 @@ class DistrictController extends Controller
 
         $district->save();
         dd($district);
-        $request->session()->flash('success','Update new success');
+        $request->session()->flash('success','Cập nhật quận huyện thành công');
         return redirect(route('district.index'));
     }
 
@@ -119,7 +119,7 @@ class DistrictController extends Controller
     public function destroy(Request $request,$id)
     {
         District::find($id)->delete();
-        $request->session()->flash('success','Update new success');
+        $request->session()->flash('error','Xóa quận huyện thành công');
         return redirect(route('district.index'));
     }
 }

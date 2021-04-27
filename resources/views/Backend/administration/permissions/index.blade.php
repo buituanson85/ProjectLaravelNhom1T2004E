@@ -25,10 +25,10 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <h3 class="card-title">Permission Table</h3>
+                                    <h3 class="card-title">Danh sách permission</h3>
 
                                     <div class="card-tools">
-                                        <a href="{{ route('permissions.create') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Create new permission</a>
+                                        <a href="{{ route('permissions.create') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Thêm permission</a>
                                     </div>
                                 </div>
                                 <div class="col-md-8 mt-4">
@@ -39,10 +39,10 @@
                                                     <div class="col-md-12">
                                                         <div class="row">
                                                             <div class="col-md-9">
-                                                                <input type="text" name="name" id="name" value="" placeholder="Permission Name" class="form-control input-md">
+                                                                <input type="text" name="name" id="name" value="" placeholder="Nhập tên permission" class="form-control input-md">
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <button type="submit" class="btn btn-primary">Search</button>
+                                                                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -61,13 +61,13 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
+                                    <th>Tên</th>
                                     <th>Slug</th>
                                     <th>URL</th>
-                                    <th>Parent</th>
+                                    <th>Thư mục</th>
                                     <th>Date Posted</th>
-                                    <th>Edit</th>
-                                    <th>Destroy</th>
+                                    <th>Cập nhật</th>
+                                    <th>Xóa</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -87,25 +87,25 @@
                                         <td>{{ $permission->url }}</td>
                                         <td>
                                             @if($permission->parent == 0)
-                                                <span class="badge badge-danger">Parent</span>
+                                                <span class="badge badge-danger">Cha</span>
                                             @else
-                                                <span class="badge badge-success">Child</span>
+                                                <span class="badge badge-success">Con</span>
                                             @endif
                                         </td>
                                         <td>{{ $permission->created_at }}</td>
                                         <td>
-                                            <a href="{{ route('permissions.edit', $permission->id) }}"><span class="btn btn-sm btn-warning"><i class="fa fa-edit"></i>&nbsp;Edit</span></a>
+                                            <a href="{{ route('permissions.edit', $permission->id) }}"><span class="btn btn-sm btn-warning"><i class="fa fa-edit"></i>&nbsp;Cập nhật</span></a>
                                         </td>
                                         <td>
                                             <form action="{{ route('permissions.destroy', $permission->id) }}" method="post">
                                                 @csrf
                                                 @method('delete')
-                                                <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;Delete</button>
+                                                <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;Xóa</button>
                                             </form>
                                         </td>
                                     </tr>
                                 @empty
-                                    <tr>No Result Found</tr>
+                                    <tr>Không có dữ liệu</tr>
                                 @endforelse
                                 </tbody>
                             </table>

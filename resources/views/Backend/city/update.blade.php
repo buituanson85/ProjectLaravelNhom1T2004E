@@ -1,5 +1,5 @@
 @extends('layouts.Backend.base')
-@section('title', 'Thành phố hoạt động:')
+@section('title', 'Cập nhật thành phố')
 @section('content')
 
     <div id="right-panel" class="right-panel">
@@ -14,7 +14,7 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="#">:</a></span>
+                        <span style="float: left"><a href="{{ route('city.index') }}">Cập nhật thành phố</a></span>
                     </div>
                 </div>
             </div>
@@ -24,7 +24,7 @@
                 <div class="col-md-10 offset-md-1">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">New brand</h3>
+                            <h3 class="card-title">Cập nhật thành phố</h3>
                             <div class="card-tools">
                                 <a href="{{route('city.index')}}" class="btn btn-danger"><i class="fas fa-shield-alt"></i> Back</a>
                             </div>
@@ -35,7 +35,7 @@
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="name">District </label>
+                                    <label for="name">Tên thành phố </label>
                                     <input type="text" name="name" onkeyup="ChangeToSlug()"  id="name" class="form-control @error('name') is-invalid @enderror" value="{{$city->name}}" >
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -47,7 +47,7 @@
 
 
                                 <div class="form-group">
-                                    <label for="slug">Slug</label>
+                                    <label for="slug">Thành phố Slug</label>
                                     <input type="text" name="slug"  id="slug" class="form-control @error('slug') is-invalid @enderror" value="{{ $city->slug}}" placeholder=" Slug">
                                     @error('slug')
                                     <span class="invalid-feedback" role="alert">
@@ -56,7 +56,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="status">District Status</label>
+                                    <label for="status">Trạng thái</label>
                                     <select class="form-control @error('status') is-invalid @enderror" id="status" name="status">
                                         <option value="instock" {{$city->status == 'instock' ? 'selected' : ''}}>InStock</option>
                                         <option value="outofstock" {{$city->status == 'outofstock' ? 'selected' : ''}}>Out of Stock</option>
@@ -72,7 +72,7 @@
 
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Update </button>
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Cập nhật </button>
                             </div>
                         </form>
                     </div>

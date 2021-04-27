@@ -181,20 +181,25 @@ class WalletController extends Controller
 
         $total = $wallet->monney + $request->monney;
 
-        //Cộng tài khoản ví.
-        $wallet->monney = $total;
-        $wallet->save();
+        if ($request->monney >= 200000){
+            //Cộng tài khoản ví.
+            $wallet->monney = $total;
+            $wallet->save();
 
-        //thêm vào lịch sử giao dịch
-        $history = new HistoryMonney();
-        $history->trading_code = Str::random(8);
-        $history->send_monney = $request->monney;
-        $history->note = " Gửi tiền ";
-        $history->wallet_id = $wallet->id;
-        $history->save();
+            //thêm vào lịch sử giao dịch
+            $history = new HistoryMonney();
+            $history->trading_code = Str::random(8);
+            $history->send_monney = $request->monney;
+            $history->note = " Gửi tiền ";
+            $history->wallet_id = $wallet->id;
+            $history->save();
 
-        $request->session()->flash('success', 'Nạp tiền thành công!');
-        return redirect()->back()->with('success','Nạp tiền thành công');
+            $request->session()->flash('success', 'Nạp tiền thành công!');
+            return redirect()->back()->with('success','Nạp tiền thành công');
+        }else{
+            $request->session()->flash('error', 'Nạp tiền thất bại(số tiền phải >= 200.000 VNĐ)!');
+            return redirect()->back()->with('error','Nạp tiền thất bại(số tiền phải >= 200.000 VNĐ)!');
+        }
     }
     public function payMoneyWaiting(Request $request,$id){
         $history = HistoryMonney::find($id);

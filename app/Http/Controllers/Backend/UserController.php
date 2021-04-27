@@ -13,16 +13,14 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $name = $request->name;
-        $allRole = Role::all();
-        $users = User::with('roles')->get();
         if (isset($name)){
             $users = User::where([
                 ['name','like','%'.$name.'%'],
                 ['utype','=',"ADM"]
-            ])->orderBy('id','DESC')->paginate(5);
+            ])->orderBy('id','ASC')->paginate(5);
             $users->appends($request->all());
         }else{
-            $users = User::with('roles')->where('utype','=',"ADM")->orderBy('id','DESC')->paginate(5);
+            $users = User::where('utype',"ADM")->orderBy('id','ASC')->paginate(5);
             $users->appends($request->all());
         }
 
@@ -57,7 +55,15 @@ class UserController extends Controller
         $user->utype = "ADM";
         $user->save();
 
-        $request->session()->flash('success', 'Users Create Successfully!');
+        //add member cho user
+        $checkUser = User::where('id',$user->id)->withCount('roles')->get()->toArray();
+        if($checkUser[0]['roles_count']>0){
+            $user->roles()->detach();//delete all relationship in role_permission
+        }
+        $user->roles()->attach(7);//add list permissions
+        $user ->with('roles')->get();
+
+        $request->session()->flash('success', 'Thêm mới nhân viên thành công!');
         return redirect()->route('users.index');
     }
 
@@ -89,14 +95,18 @@ class UserController extends Controller
         }
         $user->roles()->attach($request->roles);//add list permissions
         $user ->with('roles')->get();
-        return redirect()->route('users.index')->with('success', 'User Edit Successfully!');
+        return redirect()->route('users.index')->with('success', 'Cập nhật role cho nhân viên thành công!');
     }
 
     public function destroy(Request $request,$id)
     {
         $user = User::findOrFail($id);
+        $checkUser = User::where('id',$user->id)->withCount('roles')->get()->toArray();
+        if($checkUser[0]['roles_count']>0){
+            $user->roles()->detach();//delete all relationship in role_permission
+        }
         $user->delete();
-        $request->session()->flash('success', 'Users Deleted Successfully!');
+        $request->session()->flash('error', 'Xóa nhân viên thành công!');
         return redirect(route('users.index'));
     }
 
@@ -141,7 +151,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->back()->with('success','Profile has been Updated Successfully!');
+        return redirect()->back()->with('success','Cập nhật profile thành công!');
     }
 
     public function getPassword(){
@@ -158,7 +168,7 @@ class UserController extends Controller
             'password' => bcrypt($request->newpassword)
         ]);
 
-        return redirect()->back()->with('success', 'Password has been Changed Successfully');
+        return redirect()->back()->with('success', 'Đổi mật khẩu thành công');
     }
 
     public function registers(Request $request){
@@ -168,17 +178,4 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function unlockutypeuser(Request $request,$id){
-        $user = User::find($id);
-        User::where('id', $id)->update (['utype'=> "USR"]);
-        $request->session()->flash('success', 'Update utype uses success!');
-        return redirect(route('users.index'));
-    }
-
-    public function lockutypeUser(Request $request,$id){
-        $user = User::find($id);
-        User::where('id', $id)->update (['utype'=> "ADM"]);
-        $request->session()->flash('success', 'Update utype uses success!');
-        return redirect(route('users.index'));
-    }
 }

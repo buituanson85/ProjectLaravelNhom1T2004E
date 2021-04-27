@@ -1,59 +1,93 @@
 @extends('layouts.Backend.base')
-
-@section('title', 'Địa chỉ nhà xe:')
-{{--@extends('layouts.Backend.function')--}}
+@section('title', 'Thương hiệu')
 @section('content')
+    <div id="right-panel" class="right-panel">
 
-
-
-    <!-- Right side column. Contains the navbar and content of the page -->
-
-    <!-- Content Header (Page header) -->
+        <!-- Header-->
     @include('layouts.Backend.header')
-    <section>
-        <table id="example" class="display" style="width:100%">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Slug</th>
-                <th>Status</th>
-                <th>Craete at</th>
-                <th>Update at</th>
-                <th scope="col"><a href="{{route('brand.create')}}" class="label label-primary">Add
-                        new</a></th>
-                <th scope="col"><a href="{{route('brand.index')}}" class="label label-default">View
-                        all</a></th>
-            </tr>
-            </thead>
-            <tbody>
+    <!-- Header-->
 
-            @foreach($all_brand as $brand)
-                <tr>
-                    <td>{{$brand->id}}</td>
-                    <td>{{$brand->name}}</td>
-                    <td>{{$brand->slug}}</td>
-                    <td>{{$brand->status}}</td>
-                    <td>{{$brand->created_at}}</td>
-                    <td>{{$brand->updated_at}}</td>
-                    <td></td>
+        <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title" style="margin-top: 10px">
+                        <span style="float: left">Dashboard</span>
+                        <span style="float: left;margin: 0 5px">/</span>
+                        <span style="float: left"><a href="{{ route('brand.index') }}">Thương hiệu</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumbs">
+            <div class="pt-5">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h3 class="card-title">Danh sách thương hiệu</h3>
 
-                    <td>
-                        <a class="label label-primary"
-                           href="{{route('brand.edit',$brand->id)}}">Edit</a>
-                        <a class="label label-danger"
-                           onclick="return confirm('Bạn có chắc chắn sẽ xóa?')"
-                           href="{{route('brand.delete',$brand->id)}}">Delete</a>
-                    </td>
-                </tr>
-            @endforeach
+                                    <div class="card-tools">
+                                    </div>
+                                </div>
+                                <div class="col-md-8 mt-4">
 
-            </tbody>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
 
-        </table>
-    </section>
+                            @include('partials.alert')
+                            <table id="example" class="display" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Tên</th>
+                                    <th>Slug</th>
+                                    <th>Trạng thái</th>
+                                    <th>Craete at</th>
+                                    <th>Update at</th>
+                                    <th scope="col">Cập nhật</th>
+                                    <th scope="col">Xóa</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                @foreach($all_brand as $brand)
+                                    <tr>
+                                        <td>{{$brand->id}}</td>
+                                        <td>{{$brand->name}}</td>
+                                        <td>{{$brand->slug}}</td>
+                                        <td>{{$brand->status}}</td>
+                                        <td>{{$brand->created_at}}</td>
+                                        <td>{{$brand->updated_at}}</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-warning"
+                                               href="{{route('brand.edit',$brand->id)}}">Cập nhật</a>
+                                        </td>
+
+                                        <td>
+
+                                            <a class="btn btn-sm btn-danger"
+                                               onclick="return confirm('Bạn có chắc chắn sẽ xóa?')"
+                                               href="{{route('brand.delete',$brand->id)}}">Xóa</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
+    </div><!-- /#right-panel -->
 
 @endsection
 
@@ -67,3 +101,4 @@
         });
     </script>
 @endsection
+

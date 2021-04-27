@@ -1,5 +1,5 @@
 @extends('layouts.Backend.base')
-@section('title', 'Create Role')
+@section('title', 'Thêm permissions vào role')
 @section('content')
 
 
@@ -9,9 +9,7 @@
                 <ul class="float-left">
                     <li style="float: left;list-style: none"><a class="longin-a" href="{{ route('dashboard.index') }}">Dashboard</a></li>
                     <li style="float: left; margin: 0 10px;list-style: none">/</li>
-                    <li style="float: left;list-style: none"><a class="longin-a" href="{{ route('roles-permissions.index') }}">Roles</a></li>
-                    <li style="float: left; margin: 0 10px;list-style: none">/</li>
-                    <li style="float: left;list-style: none"><a class="longin-a" href="{{ route('roles-permissions.create') }}">Add Roles</a></li>
+                    <li style="float: left;list-style: none"><a class="longin-a" href="{{ route('roles-permissions.create') }}">Thêm permissions vào role</a></li>
                 </ul>
             </div>
             <hr>
@@ -19,9 +17,9 @@
                 <div class="col-md-10 offset-md-1">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Create new Roles</h3>
+                            <h3 class="card-title">Thêm permission</h3>
                             <div class="card-tools">
-                                <a href="{{ route('roles-permissions.index') }}" class="btn btn-danger"><i class="fas fa-shield-alt"></i> See all Add Roles</a>
+                                <a href="{{ route('roles-permissions.index') }}" class="btn btn-danger"><i class="fas fa-shield-alt"></i> Danh sách role với permissions</a>
                             </div>
                         </div>
                         <form method="POST" action="{{ route('roles-permissions.store') }}">
@@ -30,12 +28,12 @@
 
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="name">Roles Name</label>
-                                    <input type="text" name="name"  id="name" class="form-control @error('name') is-invalid @enderror" value="{{ $role->name }}" readonly required placeholder="Roles Name">
+                                    <label for="name">Tên role</label>
+                                    <input type="text" name="name"  id="name" class="form-control @error('name') is-invalid @enderror" value="{{ $role->name }}" readonly required>
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -62,7 +60,7 @@
                             </div>
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Add Role</button>
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Thêm permission</button>
                             </div>
                         </form>
                     </div>

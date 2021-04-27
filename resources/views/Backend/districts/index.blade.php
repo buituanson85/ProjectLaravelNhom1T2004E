@@ -1,61 +1,95 @@
 @extends('layouts.Backend.base')
-
-@section('title', 'Địa chỉ nhà xe:')
-{{--@extends('layouts.Backend.function')--}}
+@section('title', 'Quận Huyện')
 @section('content')
+    <div id="right-panel" class="right-panel">
 
-
-
-    <!-- Right side column. Contains the navbar and content of the page -->
-
-        <!-- Content Header (Page header) -->
+        <!-- Header-->
     @include('layouts.Backend.header')
-    <section>
-        <table id="example" class="display" style="width:100%">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>District</th>
-                <th>City</th>
-                <th>Slug</th>
-                <th>Status</th>
-                <th>Location</th>
-                <th>Create at</th>
-                <th>Update at</th>
-                <th scope="col"><a href="{{route('district.create')}}" class="label label-primary">Add
-                        new</a></th>
-                <th scope="col"><a href="{{route('district.index')}}" class="label label-default">View
-                        all</a></th>
-            </tr>
-            </thead>
-            <tbody>
+    <!-- Header-->
 
-            @foreach($all_district as $district)
-                <tr>
-                    <td>{{$district->id}}</td>
-                    <td>{{$district->name}}</td>
-                    <td>{{$district->product->name}}</td>
-                    <td>{{$district->slug}}</td>
-                    <td>{{$district->status}}</td>
-                    <td>{{$district->location}}</td>
-                    <td>{{$district->created_at}}</td>
-                    <td>{{$district->updated_at}}</td>
-                    <td><a class="label label-primary"
-                           href="{{route('district.edit',$district->id)}}">Edit</a></td>
+        <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title" style="margin-top: 10px">
+                        <span style="float: left">Dashboard</span>
+                        <span style="float: left;margin: 0 5px">/</span>
+                        <span style="float: left"><a href="{{ route('district.index') }}">Danh sách quận huyện</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumbs">
+            <div class="pt-5">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h3 class="card-title">Danh sách quận huyện</h3>
 
-                    <td>
+                                    <div class="card-tools">
+                                    </div>
+                                </div>
+                                <div class="col-md-8 mt-4">
 
-                        <a class="label label-danger"
-                           onclick="return confirm('Bạn có chắc chắn sẽ xóa?')"
-                           href="{{route('district.delete',$district->id)}}">Delete</a>
-                    </td>
-                </tr>
-            @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
 
-            </tbody>
+                            @include('partials.alert')
+                            <table id="example" class="display" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Tên</th>
+                                    <th>Thành phố</th>
+                                    <th>Slug</th>
+                                    <th>Trạng thái</th>
+                                    <th>Location</th>
+                                    <th>Create at</th>
+                                    <th>Update at</th>
+                                    <th scope="col">Cập nhật</th>
+                                    <th scope="col">Xóa</th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-        </table>
-    </section>
+                                @foreach($all_district as $district)
+                                    <tr>
+                                        <td>{{$district->id}}</td>
+                                        <td>{{$district->name}}</td>
+                                        <td>{{$district->city->name}}</td>
+                                        <td>{{$district->slug}}</td>
+                                        <td>{{$district->status}}</td>
+                                        <td>{{$district->location}}</td>
+                                        <td>{{$district->created_at}}</td>
+                                        <td>{{$district->updated_at}}</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-warning" href="{{route('district.edit',$district->id)}}">Cập nhật</a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-sm btn-danger"
+                                               onclick="return confirm('Bạn có chắc chắn sẽ xóa?')"
+                                               href="{{route('district.delete',$district->id)}}">Xóa</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div><!-- /#right-panel -->
+
 @endsection
 
 @section('addjs')
@@ -65,3 +99,6 @@
         });
     </script>
 @endsection
+
+
+

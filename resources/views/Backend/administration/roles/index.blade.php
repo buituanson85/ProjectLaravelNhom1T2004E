@@ -1,5 +1,5 @@
 @extends('layouts.Backend.base')
-@section('title', 'Table Roles')
+@section('title', 'Danh sách roles')
 @section('content')
 
     <div id="right-panel" class="right-panel">
@@ -14,7 +14,7 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('roles.index') }}">Table Roles</a></span>
+                        <span style="float: left"><a href="{{ route('roles.index') }}">Danh sách roles</a></span>
                     </div>
                 </div>
             </div>
@@ -24,9 +24,9 @@
                 <div class="col-md-10 offset-md-1">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Roles Table</h3>
+                            <h3 class="card-title">Danh sách roles</h3>
                             <div class="card-tools">
-                                <a href="{{ route('roles.create') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Create new Role</a>
+                                <a href="{{ route('roles.create') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Thêm mới role</a>
                             </div>
                         </div>
                         <div class="card-body table-responsive p-0">
@@ -34,13 +34,13 @@
                             <table class="table table-hover text-nowrap">
                                 <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Role</th>
+                                    <th>STT</th>
+                                    <th>Tên role</th>
                                     <th>Slug</th>
-                                    <th>Title</th>
+                                    <th>Tiêu đề</th>
                                     <th>Date Posted</th>
-                                    <th>Edit</th>
-                                    <th>Destroy</th>
+                                    <th>Cập nhật</th>
+                                    <th>Xóa</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -58,7 +58,7 @@
                                             @if($role->name === "Admin")
 
                                             @else
-                                            <a href="{{ route('roles.edit', $role->id) }}"><span class="btn btn-sm btn-warning"><i class="fa fa-edit"></i>&nbsp;Edit</span></a>
+                                            <a href="{{ route('roles.edit', $role->id) }}"><span class="btn btn-sm btn-warning"><i class="fa fa-edit"></i>&nbsp;Cập nhật</span></a>
                                             @endif
                                         </td>
                                         <td>
@@ -68,14 +68,14 @@
                                             <form action="{{ route('roles.destroy', $role->id) }}" method="post">
                                                 @csrf
                                                 @method('delete')
-                                                <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;Delete</button>
+                                                <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;Xóa</button>
                                             </form>
                                             @endif
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td><i class="fas fa-folder-open"></i> No Record found</td>
+                                        <td><i class="fas fa-folder-open"></i> Không có dữ liệu</td>
                                     </tr>
                                 @endforelse
                                 </tbody>

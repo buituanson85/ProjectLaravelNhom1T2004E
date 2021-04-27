@@ -17,6 +17,7 @@ class PermissionController extends Controller
             $permissions->appends($request->all());
         }else{
             $permissions = Permission::orderBy('id', 'DESC')->paginate(6);
+            $permissions->appends($request->all());
         }
         return view('Backend.administration.permissions.index', compact('name','permissions'));
     }
@@ -43,7 +44,7 @@ class PermissionController extends Controller
             'icon' => $request ->icon,
             'parent' => $request->parent
         ]);
-        return redirect()->route('permissions.index')->with('success', 'Permission Created Successfully!');
+        return redirect()->route('permissions.index')->with('success', 'Thêm permission thành công!');
     }
 
     public function edit($id)
@@ -72,13 +73,13 @@ class PermissionController extends Controller
             ]);
         }
 
-        return redirect()->route('permissions.index')->with('success', 'Permission Update Successfully!');
+        return redirect()->route('permissions.index')->with('success', 'Cập nhật permission thành công!');
     }
 
     public function destroy(Request $request,$id)
     {
         Permission::find($id)->delete();
-        $request->session()->flash('success', 'Delete Permission success!');
+        $request->session()->flash('error', 'Xóa permission thành công!');
         return redirect(route('permissions.index'));
     }
 }

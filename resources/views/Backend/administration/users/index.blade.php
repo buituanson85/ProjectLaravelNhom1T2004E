@@ -20,7 +20,7 @@
         </div>
         <div class="breadcrumbs">
             <div id="app" class="pt-5">
-                <div class="col-md-10 offset-md-1">
+                <div class="col-md-12">
                     <div class="p-0">
                         <div class="card">
                             <div class="card-header ui-sortable-handle" style="cursor: move">
@@ -49,7 +49,7 @@
                                                                     <input type="text" name="name" id="name" value="" placeholder="Users Name" class="form-control input-md">
                                                                 </div>
                                                                 <div class="col-md-3">
-                                                                    <button type="submit" class="btn btn-primary">Search</button>
+                                                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -60,7 +60,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body table-responsive p-0">
+                            <div class="card-body">
                                 @include('partials.alert')
                                 <table class="table">
                                     <thead>
@@ -68,12 +68,11 @@
                                         <th>#</th>
                                         <th>Tên</th>
                                         <th>utype</th>
-                                        <th>Email</th>
+                                        <th style="width: 20px">Email</th>
                                         <th>Role</th>
                                         <th>Chi tiết</th>
                                         <th>Sửa</th>
                                         <th>Xóa</th>
-                                        <th>Ngày thêm</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -90,21 +89,7 @@
                                             </td>
                                             <td>{{ $user->name }}</td>
                                             <td>
-                                                @if( $user->utype == "ADM" )
-                                                    @forelse($user->roles as $role)
-                                                        @if($role->name == "Admin")
-                                                            <span class="badge badge-success">ADM</span>
-                                                            @break
-                                                        @else
-                                                            <a class="badge badge-success" href=" {{ route('dashboards.unlockutypeuser',$user->id) }}">ADM</a>
-                                                            @break
-                                                        @endif
-                                                    @empty
-                                                        <a class="badge badge-success" href=" {{ route('dashboards.unlockutypeuser',$user->id) }}">ADM</a>
-                                                    @endforelse
-                                                @else
-                                                    <a class="badge badge-warning" href="{{ route('dashboards.lockutypeuser',$user->id) }}">URS</a>
-                                                @endif
+                                                <span class="badge badge-success">ADM</span>
                                             </td>
                                             <td>{{ $user->email }}</td>
                                             <td>
@@ -121,14 +106,10 @@
                                                         @if($role->name == "Admin")
                                                             @break
                                                         @else
-                                                            <a href="{{ route('users.edit', $user->id) }}"><span class="btn btn-sm btn-warning"><i class="fa fa-edit"></i>&nbsp;Edit Role</span></a>
+                                                            <a href="{{ route('users.edit', $user->id) }}"><span class="btn btn-sm btn-warning"><i class="fa fa-edit"></i>&nbsp;Thêm Role</span></a>
                                                             @break
                                                         @endif
                                                     @endforeach
-                                                @else
-                                                    @if($user->utype == 'ADM')
-                                                        <a href="{{ route('users.edit', $user->id) }}"><span class="btn btn-sm btn-warning"><i class="fa fa-edit"></i>&nbsp;Create Role</span></a>
-                                                    @endif
                                                 @endif
                                             </td>
                                             <td>
@@ -140,20 +121,13 @@
                                                             <form action="{{ route('users.destroy', $user->id) }}" method="post">
                                                                 @csrf
                                                                 @method('delete')
-                                                                <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;Delete</button>
+                                                                <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;Xóa</button>
                                                             </form>
                                                             @break
                                                         @endif
                                                     @endforeach
-                                                @else
-                                                    <form action="{{ route('users.destroy', $user->id) }}" method="post">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;Delete</button>
-                                                    </form>
                                                 @endif
                                             </td>
-                                            <td>{{ $user->created_at }}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>

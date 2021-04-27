@@ -240,7 +240,7 @@ class ChooseProduct extends Controller
             else{
                 $output .= '
                     <div id="load_more">
-                        <button type="button" name="load_more_button" class="btn btn-info form-control">No Data Found</button>
+                        <button type="button" name="load_more_button" class="btn btn-info form-control">Không có dữ liệu</button>
                     </div>
                 ';
             }

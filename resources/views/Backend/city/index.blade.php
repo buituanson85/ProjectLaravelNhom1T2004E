@@ -1,59 +1,93 @@
 @extends('layouts.Backend.base')
-
-@section('title', 'Thành phố hoạt động:')
-{{--@extends('layouts.Backend.function')--}}
+@section('title', 'Thành Phố')
 @section('content')
+    <div id="right-panel" class="right-panel">
 
-
-
-    <!-- Right side column. Contains the navbar and content of the page -->
-
-        <!-- Content Header (Page header) -->
+        <!-- Header-->
     @include('layouts.Backend.header')
-    <section>
-        <table id="example" class="display" style="width:100%">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>City</th>
-                <th>Slug</th>
-                <th>Status</th>
-                <th>Create at</th>
-                <th>Update at</th>
-                <th scope="col"><a href="{{route('city.create')}}" class="label label-primary">Add
-                        new</a></th>
-                <th scope="col"><a href="{{route('city.index')}}" class="label label-default">View
-                        all</a></th>
-            </tr>
-            </thead>
-            <tbody>
+    <!-- Header-->
 
-            @foreach($all_city as $city)
-                <tr>
-                    <td>{{$city->id}}</td>
-                    <td>{{$city->name}}</td>
+        <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title" style="margin-top: 10px">
+                        <span style="float: left">Dashboard</span>
+                        <span style="float: left;margin: 0 5px">/</span>
+                        <span style="float: left"><a href="{{ route('city.index') }}">Thành Phố</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="breadcrumbs">
+            <div class="pt-5">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h3 class="card-title">Danh sách thành phố</h3>
 
-                    <td>{{$city->slug}}</td>
-                    <td>{{$city->status}}</td>
+                                    <div class="card-tools">
+                                    </div>
+                                </div>
+                                <div class="col-md-8 mt-4">
 
-                    <td>{{$city->created_at}}</td>
-                    <td>{{$city->updated_at}}</td>
-                    <td><a class="label label-primary"
-                           href="{{route('city.edit',$city->id)}}">Edit</a></td>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
 
-                    <td>
+                            @include('partials.alert')
+                            <table id="example" class="display" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Tên</th>
+                                    <th>Slug</th>
+                                    <th>Trạng thái</th>
+                                    <th>Create at</th>
+                                    <th>Update at</th>
+                                    <th scope="col">Cập nhật</th>
+                                    <th scope="col">Xóa</th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                        <a class="label label-danger"
-                           onclick="return confirm('Bạn có chắc chắn sẽ xóa?')"
-                           href="{{route('city.delete',$city->id)}}">Delete</a>
-                    </td>
-                </tr>
-            @endforeach
+                                @foreach($all_city as $city)
+                                    <tr>
+                                        <td>{{$city->id}}</td>
+                                        <td>{{$city->name}}</td>
 
-            </tbody>
+                                        <td>{{$city->slug}}</td>
+                                        <td>{{$city->status}}</td>
 
-        </table>
-    </section>
+                                        <td>{{$city->created_at}}</td>
+                                        <td>{{$city->updated_at}}</td>
+                                        <td><a class="btn btn-sm btn-warning"
+                                               href="{{route('city.edit',$city->id)}}">Cập nhật</a></td>
+                                        <td>
+
+                                            <a class="btn btn-sm btn-danger"
+                                               onclick="return confirm('Bạn có chắc chắn sẽ xóa?')"
+                                               href="{{route('city.delete',$city->id)}}">Xóa</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div><!-- /#right-panel -->
+
 @endsection
 
 @section('addjs')
@@ -63,3 +97,6 @@
         });
     </script>
 @endsection
+
+
+
