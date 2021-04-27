@@ -1,0 +1,52 @@
+*{
+    box-sizing: inherit;
+}
+
+html{
+
+    line-height: 1.6rem;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    font-size: 18px;
+}
+.bg{
+    width: 100%;
+    height: 100px;
+}
+.bg-content{
+    background: url(../images/slide_1.jpg) center/cover;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.policy_content{
+    background: #f2f4f7;
+    height: auto;
+    position: relative;
+}
+
+.policy{
+    background: #f2f4f7;
+    height: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.policy_first{
+    background: white;
+    padding: 20px;
+    margin: 20px 320px;
+}
+
+p span{
+    font-weight: bold;
+}
+.policy_second{
+
+    height: 300px;
+    background-color: white;
+    padding: 20px;
+    margin: 20px 320px;
+}
+.policy_first h3{
+    color: cadetblue;
+}

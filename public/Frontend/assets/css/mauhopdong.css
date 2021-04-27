@@ -1,0 +1,136 @@
+*{
+    box-sizing: inherit;
+}
+
+html{
+
+    line-height: 1.6rem;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    font-size: 18px;
+}
+.mhd{
+    background-color: white;
+    width: 100%;
+    height: auto;
+}
+.mhd_content{
+    background-color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+
+.mhd_content_left{
+    background-color: white;
+
+    flex: 2;
+    width: 100%;
+}
+.mhd_content_left_general{
+    background-color: whitesmoke;
+
+
+    width: 100%;
+}
+.mhd_content_left_form{
+    padding: 30px;
+
+    background-color: whitesmoke;
+}
+.mhd_content_left_form>h1{
+    padding-bottom: 20px;
+}
+.mhd_content_left_form>span{
+    padding-top: 50px;
+
+}
+
+
+.mhd_content_left_form>span>a{
+    color: grey;
+    text-decoration: none;
+    padding: 20px;
+    font-size: 15px;
+
+}
+
+
+.mhd_content_note{
+    background-color: darkslategray;
+    width: 100%;
+    margin-top: 10px;
+}
+.mhd_content_note_form{
+    background-color: darkslategray;
+    padding: 30px;
+    color: white;
+}
+.mhd_content_note_form span::before{
+    content: "";
+    display: inline-block;
+    position: relative;
+    top: calc(-0.1 * 1em);
+    vertical-align: middle;
+    height: calc(4px + 0.7em);
+    margin-right: calc(5px + 0.2em);
+    border-left: calc(5px + 0.1em) solid #f79005;
+}
+
+.mhd_content_news{
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+.mhd_content_news>span::before{
+    content: "";
+    display: inline-block;
+    position: relative;
+    top: calc(-0.1 * 1em);
+    vertical-align: middle;
+    height: calc(4px + 0.7em);
+    margin-right: calc(5px + 0.2em);
+    border-left: calc(5px + 0.1em) solid #f79005;
+}
+
+
+/*right*/
+.mhd_content_right{
+    background-color: white;
+    height: 100px;
+    flex: 1;
+    margin-left: 20px;
+
+}
+.mhd_content_right_general{
+    background-color: whitesmoke;
+
+
+    width: 100%;
+}
+.mhd_content_right_form{
+    padding: 30px;
+
+    background-color: whitesmoke;
+}
+.mhd_content_right_form>span::before{
+    content: "";
+    display: inline-block;
+    position: relative;
+    top: calc(-0.1 * 1em);
+    vertical-align: middle;
+    height: calc(4px + 0.7em);
+    margin-right: calc(5px + 0.2em);
+    border-left: calc(5px + 0.1em) solid #f79005;
+}
+
+.mhd_content_right_news{
+    margin-top: 10px;
+    background-color: whitesmoke;
+}
+.mhd_content_right_news_form{
+    padding: 30px;
+}

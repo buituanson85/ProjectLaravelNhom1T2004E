@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chọn xe</title>
+    <title>@yield('title')</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     {{--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">--}}
@@ -14,6 +14,13 @@
     <link rel="stylesheet" href="{{ asset('Frontend/assets/css/home.css') }}">
     <link rel="stylesheet" href="{{ asset('Frontend/assets/css/css_nav.css') }}">
     <link rel="stylesheet" href="{{ asset('Frontend/assets/css/launch.css') }}">
+    <link rel="stylesheet" href="{{ asset('Frontend/assets/css/camnang.css') }}">
+    <link rel="stylesheet" href="{{ asset('Frontend/assets/css/end.css') }}">
+    <link rel="stylesheet" href="{{ asset('Frontend/assets/css/policy.css') }}">
+    <link rel="stylesheet" href="{{ asset('Frontend/assets/css/mauhopdong.css') }}">
+    <link rel="stylesheet" href="{{ asset('Frontend/assets/css/policy_incident.css') }}">
+    <link rel="stylesheet" href="{{ asset('Frontend/assets/css/policy_insurance.css') }}">
+    <link rel="stylesheet" href="{{ asset('Frontend/assets/css/pilicy_service.css') }}">
     <!--    datetime-->
     <link rel="stylesheet" href="{{ asset('Frontend/assets/css/jquery.datetimepicker.min.css') }}" />
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
@@ -43,7 +50,7 @@
         <div class="nav-list-right">
             <ul class="nav-list-right-1">
                 <li><a href="" class="the_a">Về chúng tôi</a></li>
-                <li><a href="#" class="the_a" >Hỗ trợ</a></li>
+                <li><a href="{{ route('pages.tutorial') }}" class="the_a" >Hỗ trợ</a></li>
                 <li><a href="" class="the_a">Khuyến mãi</a></li>
                 <li>
                     @if(Route::has('login'))
@@ -117,16 +124,16 @@
         </div>
         <div class="over-part">
             <p>Chính sách</p>
-            <p><a href="" class="the_a_two">Chính sách bảo mật thông tin</a></p>
-            <p><a href="" class="the_a_two">Quy chế hoạt động</a></p>
-            <p><a href="" class="the_a_two">Sự cố và khiếu nại</a></p>
-            <p><a href="" class="the_a_two">Chính sách và hoàn huỷ</a></p>
+            <p><a href="{{ route('pages.baomat') }}" class="the_a_two">Chính sách bảo mật thông tin</a></p>
+            <p><a href="{{ route('pages.service') }}" class="the_a_two">Quy chế hoạt động</a></p>
+            <p><a href="{{ route('pages.khieunai') }}" class="the_a_two">Sự cố và khiếu nại</a></p>
+            <p><a href="{{ route('pages.hoanhuy') }}" class="the_a_two">Chính sách và hoàn huỷ</a></p>
         </div>
         <div class="over-part">
             <p>Hỗ trợ</p>
-            <p><a href="" class="the_a_two">Hướng dẫn thuê xe</a></p>
-            <p><a href="" class="the_a_two">Hợp đồng thuê xe tự lái</a></p>
-            <p><a href="" class="the_a_two">Cẩm nang thuê xe tự lái</a></p>
+            <p><a href="{{ route('pages.tutorial') }}" class="the_a_two">Hướng dẫn thuê xe</a></p>
+            <p><a href="{{ route('pages.hopdong') }}" class="the_a_two">Hợp đồng thuê xe tự lái</a></p>
+            <p><a href="{{ route('pages.camnang') }}" class="the_a_two">Cẩm nang thuê xe tự lái</a></p>
             <p><a href="" class="the_a_two">Câu hỏi thường gặp</a></p>
             {{--            <p><a href="">Chung xe blog</a></p>--}}
         </div>
