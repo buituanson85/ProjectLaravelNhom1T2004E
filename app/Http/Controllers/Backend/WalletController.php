@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SendPayMonneyWaiting;
 use App\Models\Backend\Bankking;
 use App\Models\Backend\HistoryMonney;
 use App\Models\Backend\Wallet;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class WalletController extends Controller
@@ -50,7 +53,7 @@ class WalletController extends Controller
             //thêm vào lịch sử giao dịch
             $history = new HistoryMonney();
             $history->trading_code = Str::random(8);
-            $history->send_monney = "- ".$monney_send." VNĐ";
+            $history->send_monney = $monney_send;
             $history->note = $wallet->note;
             $history->wallet_id = $wallet->id;
             $history->status = "pending";
@@ -58,6 +61,7 @@ class WalletController extends Controller
         }else{
             return redirect()->back()->with('error','Tài khoản không đủ tiền');
         }
+        $request->session()->flash('success', 'Rút tiền thành công!');
         return redirect(route('dashboards.withdrawal'));
     }
 
@@ -88,7 +92,7 @@ class WalletController extends Controller
         //thêm vào lịch sử giao dịch
         $history = new HistoryMonney();
         $history->trading_code = Str::random(8);
-        $history->send_monney = "+ ".$banking->monney." VNĐ";
+        $history->send_monney = $banking->monney;
         $history->note = $banking->note."+ Gửi tiền từ ngân hàng".$banking->bank;
         $history->wallet_id = $wallet->id;
 
@@ -119,7 +123,7 @@ class WalletController extends Controller
         //thêm vào lịch sử giao dịch
         $history = new HistoryMonney();
         $history->trading_code = Str::random(8);
-        $history->send_monney = "+ ".$banking->monney." VNĐ";
+        $history->send_monney = $banking->monney;
         $history->note = $banking->note."+ Gửi tiền từ ngân hàng".$banking->bank;
         $history->wallet_id = $wallet->id;
         $history->save();
@@ -148,7 +152,7 @@ class WalletController extends Controller
         //thêm vào lịch sử giao dịch
         $history = new HistoryMonney();
         $history->trading_code = Str::random(8);
-        $history->send_monney = "+ ".$send_monney." VNĐ";
+        $history->send_monney = $send_monney;
         $history->note = "tiền khách hàng thanh toán qua thẻ";
         $history->wallet_id = $wallet->id;
         $history->save();
@@ -179,12 +183,38 @@ class WalletController extends Controller
         //thêm vào lịch sử giao dịch
         $history = new HistoryMonney();
         $history->trading_code = Str::random(8);
-        $history->send_monney = "+ ".$request->monney." VNĐ";
+        $history->send_monney = $request->monney;
         $history->note = " Gửi tiền ";
         $history->wallet_id = $wallet->id;
         $history->save();
 
         $request->session()->flash('success', 'Nạp tiền thành công!');
         return redirect()->back()->with('success','Nạp tiền thành công');
+    }
+    public function payMoneyWaiting(Request $request,$id){
+        $history = HistoryMonney::find($id);
+        $history->status = "accept";
+
+        $wallet = Wallet::find($history->wallet_id);
+        $user = User::find($wallet->partner_id);
+
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
+        $email = $user->email;
+        $date = "Date: ".''.$now;
+        $histories = [
+            'name' => $user->name,
+            'phone' => $user->phone,
+            'email' => $user->email,
+            'trading_code' => $history->account,
+            'account' => $wallet->account,
+            'monney_pay' => $history->send_monney,
+            'monney' => $wallet->monney,
+            'date' => $date
+        ];
+
+        Mail::to($email)->send(new SendPayMonneyWaiting($histories));
+        $history->save();
+        $request->session()->flash('success', 'Chuyển tiền thành công!');
+        return redirect(route('dashboards.walletpartners'));
     }
 }

@@ -59,7 +59,7 @@
                                                 {{ $index }}
                                             </td>
                                             <td>{{ $banking->account }}</td>
-                                            <td>{{ $banking->monney }}</td>
+                                            <td>+ {{ $banking->monney }} VNĐ</td>
                                             <td>{{ $banking->note }}</td>
                                             <td>
                                                 @if($banking->account == "00100208980")

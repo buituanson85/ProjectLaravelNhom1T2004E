@@ -33,6 +33,7 @@
                                 </div>
                             </div>
                             <div class="card-body p-0">
+                                @include('partials.alert')
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -59,24 +60,25 @@
                                                 {{ $index }}
                                             </td>
                                             <td>{{ $history->trading_code }}</td>
-                                            <td>{{ $history->send_monney }}</td>
+                                            <td>- {{ $history->send_monney }} VNĐ</td>
                                             <td>{{ $history->wallet->account }}</td>
                                             <td>{{ $history->wallet->user->name }}</td>
                                             <td>{{ $history->note }}</td>
                                             <td>
-                                                <div id="paypal-button-{{ $history->id }}"></div>
+                                                <div id="paypal-button_{{ $history->id }}" onclick="thanhtoan()"></div>
+                                                <form id="pay-form"  action="{{ route('dashboards.paymoneywaiting', $history->id ) }}" method="get">
+                                                    @csrf
+                                                </form>
 {{--                                                <a href="" class="badge badge-warning">{{ $history->status }}</a>--}}
                                             </td>
                                             <td>{{ $history->created_at }}</td>
                                         </tr>
                                         <script src="https://www.paypalobjects.com/api/checkout.js"></script>
-                                        @php
-                                        $total = (float)($history->send_monney);
 
-                                        echo $total;
-                                        @endphp
-                                        <input type="text" id="vn_to_usd" value="">
+                                        <input type="hidden" id="vn_to_usd_{{ $history->id }}" value="{{ round($history->send_monney/32000,2) }}">
                                         <script>
+                                            var usd = document.getElementById("vn_to_usd_{{ $history->id }}").value;
+                                            console.log(usd)
                                             paypal.Button.render({
                                                 // Configure environment
                                                 env: 'sandbox',
@@ -100,7 +102,7 @@
                                                     return actions.payment.create({
                                                         transactions: [{
                                                             amount: {
-                                                                total: '100',
+                                                                total: `${usd}`,
                                                                 currency: 'USD'
                                                             }
                                                         }]
@@ -111,10 +113,14 @@
                                                     return actions.payment.execute().then(function() {
                                                         // Show a confirmation message to the buyer
                                                         window.alert('Xác nhận thanh toán thành công!');
+                                                        thanhtoan();
                                                     });
                                                 }
-                                            }, '#paypal-button-{{ $history->id }}');
-
+                                            }, '#paypal-button_{{ $history->id }}');
+                                            function thanhtoan() {
+                                                event.preventDefault();
+                                                document.getElementById('pay-form').submit();
+                                            }
                                         </script>
                                     @endforeach
                                     </tbody>

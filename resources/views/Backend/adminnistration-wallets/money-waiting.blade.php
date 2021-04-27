@@ -59,7 +59,7 @@
                                                 {{ $index }}
                                             </td>
                                             <td>{{ $wallet->account }}</td>
-                                            <td>{{ $wallet->monney_confirm }}</td>
+                                            <td>+ {{ $wallet->monney_confirm }} VNĐ</td>
                                             <td>{{ $wallet->monney }}</td>
                                             <td>{{ $wallet->user->name }}</td>
                                             <td>

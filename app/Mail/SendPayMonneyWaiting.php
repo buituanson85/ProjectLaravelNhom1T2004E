@@ -7,18 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SendCreatePartner extends Mailable
+class SendPayMonneyWaiting extends Mailable
 {
     use Queueable, SerializesModels;
-    public $users;
+    public $histories;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($users)
+    public function __construct($histories)
     {
-        $this->users = $users;
+        $this->histories = $histories;
     }
 
     /**
@@ -28,6 +28,6 @@ class SendCreatePartner extends Mailable
      */
     public function build()
     {
-        return $this->subject('Thông tin tài khoản đối tác.')->view('Mail.Send-create-partner');
+        return $this->subject('Xác nhận rút tiền thành công.')->view('Mail.Send-pay-monney');
     }
 }

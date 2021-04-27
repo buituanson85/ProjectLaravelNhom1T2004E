@@ -123,6 +123,7 @@ Route::middleware(['auth:sanctum', 'verified','authadmin'])->group(function (){
         Route::get('/dashboards/send-wallet-two/{id}',[WalletController::class,'sendWalletTwo'])->name('dashboards.sendwallettwo');
         Route::get('/dashboards/money-waiting',[WalletController::class,'moneyWaiting'])->name('dashboards.moneywaiting');
         Route::get('/dashboards/send-money-waiting/{id}',[WalletController::class,'sendMoneyWaiting'])->name('dashboards.sendmoneywaiting');
+        Route::get('/dashboards/pay-money-waiting/{id}',[WalletController::class,'payMoneyWaiting'])->name('dashboards.paymoneywaiting');
 
         //Nạp tiền thủ công.
 
