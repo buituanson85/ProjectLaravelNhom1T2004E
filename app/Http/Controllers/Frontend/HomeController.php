@@ -26,4 +26,22 @@ class HomeController extends Controller
     public function promotion(){
         return view('Frontend.promotion');
     }
+    public function camnang(){
+        return view('Frontend.camnang');
+    }
+    public function hoanhuy(){
+        return view('Frontend.hoanhuy');
+    }
+    public function hopdong(){
+        return view('Frontend.hopdong');
+    }
+    public function khieunai(){
+        return view('Frontend.khieunai');
+    }
+    public function baomat(){
+        return view('Frontend.baomat');
+    }
+    public function service(){
+        return view('Frontend.service');
+    }
 }

@@ -14,7 +14,7 @@ class UserController extends Controller
     {
         $name = $request->name;
         $allRole = Role::all();
-
+        $users = User::with('roles')->get();
         if (isset($name)){
             $users = User::where([
                 ['name','like','%'.$name.'%'],
@@ -22,7 +22,8 @@ class UserController extends Controller
             ])->orderBy('id','DESC')->paginate(5);
             $users->appends($request->all());
         }else{
-            $users = User::where('utype','=',"ADM")->orderBy('id','DESC')->paginate(5);
+            $users = User::with('roles')->where('utype','=',"ADM")->orderBy('id','DESC')->paginate(5);
+            $users->appends($request->all());
         }
 
         return view('Backend.administration.users.index')->with(array('users'=>$users));

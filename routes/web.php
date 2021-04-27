@@ -64,6 +64,12 @@ Route::post('/pages/store-partners',[PartnerController::class,'storePartners'])-
 Route::get('/pages/tutorial', [HomeController::class,'tutorial'])->name('pages.tutorial');
 Route::get('/pages/abountus', [HomeController::class,'abountus'])->name('pages.abountus');
 Route::get('/pages/promotion', [HomeController::class,'promotion'])->name('pages.promotion');
+Route::get('/pages/camnang', [HomeController::class,'camnang'])->name('pages.camnang');
+Route::get('/pages/hoanhuy', [HomeController::class,'hoanhuy'])->name('pages.hoanhuy');
+Route::get('/pages/hopdong', [HomeController::class,'hopdong'])->name('pages.hopdong');
+Route::get('/pages/khieunai', [HomeController::class,'khieunai'])->name('pages.khieunai');
+Route::get('/pages/baomat', [HomeController::class,'baomat'])->name('pages.baomat');
+Route::get('/pages/service', [HomeController::class,'service'])->name('pages.service');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function (){
 //pages
