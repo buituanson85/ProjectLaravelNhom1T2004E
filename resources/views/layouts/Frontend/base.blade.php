@@ -49,7 +49,7 @@
         </div>
         <div class="nav-list-right">
             <ul class="nav-list-right-1">
-                <li><a href="" class="the_a">Về chúng tôi</a></li>
+                <li><a href="{{ route('pages.abountus') }}" class="the_a">Về chúng tôi</a></li>
                 <li><a href="{{ route('pages.tutorial') }}" class="the_a" >Hỗ trợ</a></li>
                 <li><a href="" class="the_a">Khuyến mãi</a></li>
                 <li>
@@ -118,7 +118,7 @@
         </div>
         <div class="over-part">
             <p>Giới thiệu</p>
-            <p><a href="" class="the_a_two">Về chúng tôi</a></p>
+            <p><a href="{{ route('pages.abountus') }}" class="the_a_two">Về chúng tôi</a></p>
             <p style="font-size: 20px;font-weight: 600;text-transform: uppercase"> Chứng nhận</p>
             <img src="{{ asset('Frontend/assets/images/bocongthuong.png') }}" style="width: 150px;height: 60px" alt="">
         </div>
