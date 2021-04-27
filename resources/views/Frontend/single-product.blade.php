@@ -205,9 +205,28 @@
                                 <div class="row pl-2">
                                     <div class="col-md-8">Thời gian thuê</div>
                                     <div class="col-md-4" id="price">
-                                        1 Ngày
+
                                     </div>
                                 </div>
+                                <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+                                <script type="text/javascript">
+                                    function displayVals() {
+                                        var start_time = $( "#start_time" ).val();
+                                        var end_time = $( "#end_time" ).val();
+                                        var d = new Date(start_time);
+                                        var n = d.getTime();
+                                        var x = new Date(end_time);
+                                        var y = x.getTime();
+                                        var z = (y - n)/(1000*3600*24);
+
+                                        document.getElementById("price").innerHTML = z;
+
+                                        $("#total_time").html((end_time-start_time)+" ngày");
+                                    }
+                                    $("input").change( displayVals );
+
+                                    displayVals();
+                                </script>
                             </div>
                         </div>
                         <hr style="width: 90%">

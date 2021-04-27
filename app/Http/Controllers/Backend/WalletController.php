@@ -43,24 +43,29 @@ class WalletController extends Controller
         $user_id = User::find(\auth()->user()->id);
         $wallet = Wallet::where('partner_id',$user_id->id)->first();
         $monney_send = $request->send_monney;
-        $total = $wallet->monney - $monney_send;
-        if ($total >= 500000){
-            //trừ tài khoản ví.
-            $wallet->monney = $total;
-            $wallet->note = "Rút tiền";
-            $wallet->save();
+        if ($monney_send >=50000){
+            $total = $wallet->monney - $monney_send;
+            if ($total >= 500000){
+                //trừ tài khoản ví.
+                $wallet->monney = $total;
+                $wallet->note = "Rút tiền";
+                $wallet->save();
 
-            //thêm vào lịch sử giao dịch
-            $history = new HistoryMonney();
-            $history->trading_code = Str::random(8);
-            $history->send_monney = $monney_send;
-            $history->note = $wallet->note;
-            $history->wallet_id = $wallet->id;
-            $history->status = "pending";
-            $history->save();
+                //thêm vào lịch sử giao dịch
+                $history = new HistoryMonney();
+                $history->trading_code = Str::random(8);
+                $history->send_monney = $monney_send;
+                $history->note = $wallet->note;
+                $history->wallet_id = $wallet->id;
+                $history->status = "pending";
+                $history->save();
+            }else{
+                return redirect()->back()->with('error','Tài khoản không đủ tiền');
+            }
         }else{
-            return redirect()->back()->with('error','Tài khoản không đủ tiền');
+            return redirect()->back()->with('error','Số tiền rút vui lòng lớn hơn 50000');
         }
+
         $request->session()->flash('success', 'Rút tiền thành công!');
         return redirect(route('dashboards.withdrawal'));
     }

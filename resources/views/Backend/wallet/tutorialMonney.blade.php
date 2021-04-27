@@ -76,6 +76,11 @@
                                 </div>
                                 <div class="row pt-3 pl-3">
                                     <div class="col-md-12">
+                                        <span> - Số tiền nạp vào tài khoản ví lớn hơn hoặc bằng 200.000 VNĐ</span>
+                                    </div>
+                                </div>
+                                <div class="row pt-3 pl-3">
+                                    <div class="col-md-12">
                                         <span> - Trong đa số các trường hợp,số tiền sẽ xuất hiện trong ví của quý đối tác trong tối đa 15ph sau khi chuyển tiền thành công.</span>
                                     </div>
                                 </div>
