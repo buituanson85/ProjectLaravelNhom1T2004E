@@ -70,14 +70,14 @@
                                                     <span class="badge badge-secondary">Đợi hoàn thiện hồ sơ</span>
                                                 @elseif($product->status == "pending")
                                                     <span class="badge badge-warning">Đợi phản hồi</span>
-                                                @elseif($product->status == "ready")
+                                                @elseif($product->status == "ready" || $product->status == "unready")
                                                     <span class="badge badge-primary">Sẵn sàng</span>
                                                 @else
                                                     <span class="badge badge-danger">Bị từ chối hồ sơ</span>
                                                 @endif
                                             </td>
                                             <td>
-                                                @if($product->status == "ready")
+                                                @if($product->status == "ready" || $product->status == "unready")
                                                     @if($product->confirm == 0)
                                                         <a href="{{ route('dashboards.lockstatustpartner', $product->id) }}"><span class="badge badge-secondary">Offline</span></a>
                                                     @elseif($product->confirm == 1)

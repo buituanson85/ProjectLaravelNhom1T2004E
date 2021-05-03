@@ -84,6 +84,18 @@
                                             {{ $product->range }}
                                         </div>
                                     </div>
+
+                                    @if($product->category_id == 1)
+                                        <div class="row pt-2">
+                                            <div class="col-md-6">
+                                                <span style="font-weight: 500">Biển số xe:</span>
+                                            </div>
+                                            <div class="col-md-5">
+                                                {{ $product->biensoxe }}
+                                            </div>
+                                        </div>
+                                    @else
+                                    @endif
                                 </div>
                             </div>
 
@@ -262,18 +274,6 @@
                                         <button style="margin: 5px" type="submit" href="" class="btn btn-success"><i class="fas fa-eject"></i> Phương tiện sẵn sàng</button>
                                     </form>
                                 @endif
-{{--                                @if(\Illuminate\Support\Facades\Auth::user()->roles->where('id', 1)->first() != null)--}}
-{{--                                    @if($product->status == 'pending')--}}
-{{--                                        <form id="acceptProduct" action="{{ route('product.acceptProduct', $product->id) }}" method="post">--}}
-{{--                                         @csrf--}}
-{{--                                            <button  style="margin: 5px" type="submit" href="" class="btn btn-success"><i class="fas fa-eject"></i> Chấp nhận hồ sơ phương tiện</button>--}}
-{{--                                        </form>--}}
-{{--                                        <form id="refuseProduct" action="{{ route('product.refuseProduct', $product->id) }}" method="post">--}}
-{{--                                         @csrf--}}
-{{--                                            <button onclick="alertify.defaults.theme.ok = 'btn btn-primary';"  style="margin: 5px" type="submit" href="" class="btn btn-danger"><i class="fas fa-remove"></i> Từ chối hồ sơ phương tiện</button>--}}
-{{--                                        </form>--}}
-{{--                                    @endif--}}
-{{--                                @endif--}}
                             </div>
 
                     </div>

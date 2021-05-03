@@ -127,7 +127,8 @@ class VehiclesController extends Controller
 
     public function showProduct($id){
         $product = Product::find($id);
-        return view('Backend.Vehicles.show-product', compact('product'));
+        $galaxies = Galaxy::where('product_id', $product->id)->get();
+        return view('Backend.Vehicles.show-product', compact('product','galaxies'));
     }
 
     public function destroy(Request $request,$id){

@@ -89,6 +89,18 @@
                                         {{ $order->product->range }}
                                     </div>
                                 </div>
+
+                                @if($order->product->category_id == 1)
+                                    <div class="row pt-2">
+                                        <div class="col-md-6">
+                                            <span style="font-weight: 500">Biển số xe:</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            {{ $order->product->biensoxe }}
+                                        </div>
+                                    </div>
+                                @else
+                                @endif
                             </div>
                         </div>
 
@@ -255,7 +267,7 @@
                             <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                                 <div class="d-flex justify-content-between">
                                     <strong class="text-gray-dark">Tổng tiền:</strong>
-                                    <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{number_format(($order->product->price) * $total_day) . ' VNĐ'}}</a>
+                                    <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{number_format($order->order->price_total) . ' VNĐ'}}</a>
                                 </div>
                             </div>
                         </div>

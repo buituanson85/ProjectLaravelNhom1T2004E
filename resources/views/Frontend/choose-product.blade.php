@@ -174,7 +174,7 @@
                             {{--                    </div>--}}
 
                         </div>
-                        <button class="btn btn-primary" style="position: absolute;top: 350px; left: 230px">Tìm Kiếm</button>
+                        <button class="btn btn-primary" style="position: absolute;top: 370px; left: 230px">Tìm Kiếm</button>
                     </form>
                     <div class="detail-choose-right-choose-button-choose" style="position: absolute;top: 110px;right: 200px;width: 150px">
                         <button onclick="list()" class="form-control"><i class="fas fa-list" ></i></button>

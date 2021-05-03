@@ -1,5 +1,5 @@
 @extends('layouts.Frontend.base')
-@section('title', 'Home Pages')
+@section('title', 'Chi tiết phương tiện')
 @section('content')
 
     <div class="container-fluid banner-product">
@@ -11,7 +11,12 @@
                             <img width="100%" src="{{ $product->image }}" alt="">
                         </div>
                         <div class="col-md-6">
-                            <h3 style="color: #127d81;font-size: 24px">{{ $product->name }}</h3>
+                            <h3 style="color: #127d81;font-size: 24px">{{ $product->name }}&nbsp;&nbsp;
+                                @if($product->category_id == 1)
+                                    <span style="font-size: 14px;" class="badge badge-success">BSX:{{ $product->biensoxe }}</span>
+                                @else
+                                @endif
+                            </h3>
                             <span style="font-size: 16px">HOẶC TƯƠNG ĐƯƠNG</span>
                             <p>
                                 <i class="fa fa-star" aria-hidden="true" style="color: yellow"></i>
@@ -23,13 +28,10 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <p style="font-size: 16px;"><img src="{{ asset('Frontend/assets/icon/483497.svg') }}" width="20" alt="">&nbsp;&nbsp;
-                                        @if($product->engine == "gasoline")
-                                            Xăng
-                                        @else
-                                            Dầu
-                                        @endif</p>
+                                        {{ $product->engine }}
+                                    </p>
                                     <p style="font-size: 16px;"><img src="{{ asset('Frontend/assets/icon/3190249.svg') }}" width="20" alt="">&nbsp;&nbsp;{{ $product->capacity }}</p>
-                                    <p style="font-size: 16px;"><img src="{{ asset('Frontend/assets/icon/60473.svg') }}" width="20" alt="">&nbsp;&nbsp;{{ $product->gear }}</p>
+                                    <p style="font-size: 16px;"><img src="{{ asset('Frontend/assets/icon/canso.png') }}" width="20" alt="">&nbsp;&nbsp;{{ $product->gear }}</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p style="font-size: 16px;"><img src="{{ asset('Frontend/assets/icon/566234.svg') }}" width="20" alt="">&nbsp;&nbsp;{{ $product->seat }}</p>
@@ -148,11 +150,11 @@
                                 <div class="row">
                                     <div class="col-md-6" style="padding-right: 0!important;text-align: center">
                                         <input class="form-control" style="background-color: #ffffff;border: none;
-                                        border-radius: 5px;width: 160px"  type="date" id="start_time" name="start_time">
+                                        border-radius: 5px;width: 160px;font-size: 14px"  type="date" id="start_time" name="start_time" required>
                                     </div>
                                     <div class="col-md-6" style="padding-left: 0!important;text-align: center">
                                         <input class="form-control" style="background-color: #ffffff;border: none;
-                                        border-radius: 5px; width: 160px"  type="date" id="end_time" name="end_time">
+                                        border-radius: 5px; width: 160px;font-size: 14px"  type="date" id="end_time" name="end_time" required>
                                     </div>
                                 </div>
                             </div>
@@ -165,7 +167,7 @@
                                 <h6>Dịch vụ bảo hiểm</h6>
                                 <div class="row">
 
-                                    <div class="col-md-10" style="padding-left: 12!important;">
+                                    <div class="col-md-10 pl-3">
                                         <label class="label-control">Bảo Hiểm Xe&nbsp;<span id="product_insurrance" value="{{$product->insurrance}}" style="color: #29a366;font-weight: 700">(+{{ number_format($product->insurrance) }}₫)</span></label>
                                     </div>
                                 </div>
@@ -187,23 +189,23 @@
                             <div class="col-md-12" style="padding-left: 40px;width: 100%">
                                 <h6>CHI TIẾT GIÁ</h6>
                                 <div class="row pl-2">
-                                    <div class="col-md-8">Đơn giá</div>
-                                    <div class="col-md-4">{{ number_format($product->price) }}&nbsp;đ</div>
+                                    <div class="col-md-7">Đơn giá</div>
+                                    <div class="col-md-5">{{ number_format($product->price) }}&nbsp;VNĐ</div>
                                 </div>
                                 @php
 
                                     @endphp
                                 <div class="row pl-2">
-                                    <div  class="col-md-8">Thời gian thuê</div>
-                                    <div class="col-md-4" id="total_time" name="total_time"></div>
+                                    <div  class="col-md-7">Thời gian thuê</div>
+                                    <div class="col-md-5" id="total_time" name="total_time"></div>
                                 </div>
                             </div>
                         </div>
                         <hr style="width: 90%">
                         <div class="row pl-4" style="width: 100%;padding: 10px 0">
 
-                            <div class="col-md-8"><h6 style="color: #2cb8af">TỔNG</h6></div>
-                            <div id="price_2" class="col-md-4"><span style="color: #2cb8af;font-weight: 700"></span></div>
+                            <div class="col-md-6"><h6 style="color: #2cb8af">TỔNG</h6></div>
+                            <div id="price_2" class="col-md-6"><span style="color: #2cb8af;font-weight: 700"></span></div>
                         </div>
 
                         <form action="{{route('pages.showinfos',$product->id)}}" method="POST" style="width: 100%;padding-left: 25px;padding-top: 10px;padding-bottom: 20px">
@@ -239,6 +241,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script type="text/javascript">
         function displayVals() {
+
             var start_time = $( "#start_time" ).val();
             var end_time = $( "#end_time" ).val();
             var receive_Method=$( "#receiveMethod" ).val();
@@ -247,7 +250,7 @@
             var n = d.getTime();
             var x = new Date(end_time);
             var y = x.getTime();
-            var z = (y - n)/(1000*3600*24);
+            var z = (y - n)/(1000*3600*24) + 1;
 
             var day1 = d.getDate();
             var day2 = x.getDate();
@@ -259,8 +262,8 @@
             var year2 = x.getFullYear();
 
             var total = z*{{ $product->price }}+{{$product->insurrance}};
-
             // var total=z.$("#product_price").val()+$("#product_insurrance").val();
+            total = Number((total).toFixed(1)).toLocaleString()
 
             document.getElementById("total_time").innerHTML = z+" ngày";
 
@@ -268,7 +271,7 @@
 
             document.getElementById("total_price").value = total;
 
-            document.getElementById("price_2").innerHTML = total+" đ";
+            document.getElementById("price_2").innerHTML = total+" VNĐ";
 
             document.getElementById("start_time2").value = year1+"-"+month1+"-"+day1;
 
@@ -280,7 +283,14 @@
         $("input").change( displayVals );
 
         displayVals();
-
+        // function ins1000Sep(val) {
+        //     val = val.split(".");
+        //     val[0] = val[0].split("").reverse().join("");
+        //     val[0] = val[0].replace(/(\d{3})/g, "$1,");
+        //     val[0] = val[0].split("").reverse().join("");
+        //     val[0] = val[0].indexOf(",") == 0 ? val[0].substring(1) : val[0];
+        //     return val.join(".");
+        // }
     </script>
 
 

@@ -72,6 +72,17 @@
                                             {{ $product->range }}
                                         </div>
                                     </div>
+                                    @if($product->category_id == 1)
+                                    <div class="row pt-2">
+                                        <div class="col-md-6">
+                                            <span style="font-weight: 500">Biển số xe:</span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            {{ $product->biensoxe }}
+                                        </div>
+                                    </div>
+                                    @else
+                                    @endif
                                 </div>
                             </div>
 
@@ -82,8 +93,10 @@
                             @csrf
 {{--                            <input type="hidden" id="partner_id" name="partner_id" value="{{ $user->id }}">--}}
                             <div class="card-body">
-
-                                <div class="row">
+                                <div class="row p-3">
+                                    <span class="pb-3" style="font-size: 16px;font-weight: 700">Thông số kỹ thuật:</span>
+                                </div>
+                                <div class="row pb-3">
                                     <div class="col-md-4">
                                         <div class="row">
                                             <div class="col-md-12">
@@ -215,7 +228,23 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <hr width="100%">
+                                <div class="row p-3">
+                                    <span style="font-size: 16px;font-weight: 700">Ảnh phương tiện:</span>
+                                </div>
+                                <div class="row ">
+                                    @foreach($galaxies as $galaxy)
+                                    <div class="col-3">
+                                        <div class="thumbnail">
+                                            <a href="#">
+                                                <div style="height: 120px;width: 150px">
+                                                    <img src="{{ $galaxy->image }}" alt="" style="width:100%">
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
                             </div>
 
                             <div class="card-footer">

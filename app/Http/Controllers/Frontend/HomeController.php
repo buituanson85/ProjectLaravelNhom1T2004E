@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Backend\Category;
 use App\Models\Backend\City;
 use App\Models\Backend\File;
+use App\Models\Backend\Galaxy;
+use App\Models\Backend\NoteOrder;
+use App\Models\Frontend\Order;
+use App\Models\Frontend\OrderDetails;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -21,7 +25,67 @@ class HomeController extends Controller
     }
 
     public function lichsuthuexe(){
-        return view('Frontend.profiles.lichsuthuexe');
+        $orders = null;
+        $get_orders = Order::all();
+        $array_id = [];
+        foreach ($get_orders as $order) {
+            if ($order->customer_id == Auth::user()->id) {
+                $array_id[] = $order->id;
+            }
+        }
+
+        $orders = Order::where([
+            ['status','!=','cancelled'],
+            ['status','!=','delete'],
+            ['status','!=','completed']
+        ])->findMany($array_id);
+        return view('Frontend.profiles.lichsuthuexe')->with(['orders'=>$orders]);
+    }
+
+    public function lsthuexe(){
+        $orders = null;
+        $get_orders = Order::all();
+        $array_id = [];
+        foreach ($get_orders as $order) {
+            if ($order->customer_id == Auth::user()->id) {
+                $array_id[] = $order->id;
+            }
+        }
+
+        $orders = Order::where([
+            ['status','!=','pending'],
+            ['status','!=','paid'],
+            ['status','!=','accept']
+        ])->findMany($array_id);
+        return view('Frontend.profiles.lsthuexe')->with(['orders'=>$orders]);
+    }
+    public function deleteOrder(Request $request,$id){
+        $order = Order::where('order_id', $id)->first();
+        $order->status = 'delete';
+        //lưu lịch sử xóa
+        $noteorder = new NoteOrder();
+        $noteorder->note = "Khách hàng xóa";
+        $noteorder->order_id = $order->id;
+        $noteorder->partner_id = $order->orderdetails->product->partner_id;
+        $order->save();
+        $noteorder->save();
+
+        $request->session()->flash('success', 'Mở phương tiện thành công!');
+        return redirect()->back();
+    }
+
+    public function chitietdonhang($id){
+        $get_order = Order::where('order_id','like', $id)->first();
+        $order = OrderDetails::find($get_order->id);
+        $galaxies = Galaxy::where('product_id', $order->product->id)->get();
+        return view('Frontend.profiles.chitietdonhang')->with(['order'=>$order,'galaxies'=>$galaxies]);
+    }
+
+    public function ctdonhang($id){
+        $get_order = Order::where('order_id','like', $id)->first();
+        $order = OrderDetails::find($get_order->id);
+        $galaxies = Galaxy::where('product_id', $order->product->id)->get();
+        return view('Frontend.profiles.ctdonhang')->with(['order'=>$order,'galaxies'=>$galaxies]);
     }
 
     public function customerProfiles(){
@@ -40,6 +104,23 @@ class HomeController extends Controller
         $user->name = $request->name;
         $user->phone = $request->phone;
         $user->address = $request->address;
+        if ($request ->image != null){
+            $image = base64_encode(file_get_contents($_FILES['image']['tmp_name']));
+
+            $options = array('http' =>array(
+                'method' => "POST",
+                'header' => "Authorization: Bearer 3597bf9393d8155003c84329d6205961426482fc\n".
+                    "Content-Type: application/x-www-form-urlencoded",
+                'content' => $image
+            ));
+            $context = stream_context_create($options);
+            $imgurURL = "https://api.imgur.com/3/image";
+
+            $response = file_get_contents($imgurURL, false, $context);
+            $response = json_decode($response);
+            $msg = $response->data->link;
+            $user -> profile_photo_path = $msg;
+        }
         $user->save();
 
         return redirect()->back()->with('success', 'Đổi thông tin thành công');
@@ -283,7 +364,5 @@ class HomeController extends Controller
         return view('Frontend.Child.service');
     }
 
-    public function abc(){
-        return view('Frontend.abc');
-    }
+
 }

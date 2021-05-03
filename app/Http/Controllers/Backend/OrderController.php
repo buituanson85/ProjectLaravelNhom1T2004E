@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Send_compled_order;
+use App\Mail\Send_partner_accept_order;
 use App\Mail\Send_Product_Order;
 use App\Mail\Sendpendingconfirmorder;
+use App\Models\Backend\HistoryMonney;
 use App\Models\Backend\NoteOrder;
 use App\Models\Backend\Product;
+use App\Models\Backend\Wallet;
 use App\Models\Frontend\OrderDetails;
 use App\Models\User;
 use Carbon\Carbon;
@@ -15,15 +19,12 @@ use Illuminate\Http\Request;
 use App\Models\Frontend\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use PDF;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $orders = Order::where([
@@ -32,21 +33,6 @@ class OrderController extends Controller
             ['status','!=','paid'],
             ['confirm','!=', 0]
         ])->get();
-//        $orders = null;
-//        $get_orders = Order::all();
-//
-//        if (Auth::user()->roles->where('id', 1)->first() != null) {
-//            $orders = Order::all();
-//        } else {
-//            $array_id = [];
-//            foreach ($get_orders as $order) {
-//                if ($order->orderdetails->product->partner_id == Auth::user()->id) {
-//                    $array_id[] = $order->id;
-//                }
-//            }
-//
-//            $orders = Order::findMany($array_id);
-////        }
 
         return view('Backend.orders.index')->with(['orders'=>$orders]);
     }
@@ -116,22 +102,12 @@ class OrderController extends Controller
 //        $orders = Order::where('status','pending')->orwhere('status','accept')->orwhere('status','paid')->get();
         return view('Backend.orders.historyorderpartner')->with(['orders'=>$orders]);
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $new_order = new Order();
@@ -142,17 +118,19 @@ class OrderController extends Controller
         $new_order->customer_id = Auth::user()->id;
         $new_order->payment_id = $request->payment_id;
         $new_order->price_total = $request->price_total;
-        $new_order->status = "pending";
 
+        $new_order->status = "pending";
 
         $new_order->save();
 
         $new_order_detail = new OrderDetails();
         $new_order_detail->order_id = $new_order->id;
         $new_order_detail-> product_id = $request->product_id;
+        $new_order_detail-> note = $request->note;
         $new_order_detail->product_price_total = $new_order->price_total;
         $new_order_detail->product_received_date = $request->product_receive_date;
         $new_order_detail->product_pay_date = $request->product_pay_date;
+        $new_order_detail->payments = $request->receive_Method;
 
         $product = Product::find($request->product_id);
         $partner_id = User::find($product->partner_id);
@@ -160,7 +138,7 @@ class OrderController extends Controller
         $new_order_detail->save();
 
         $now = \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
-        $email = 'nguyenduykhuong696@gmail.com';
+        $email = Auth::user()->email;
         $name = Auth::user()->name;
         $date = "Date: ".''.$now;
         $products = [
@@ -188,24 +166,14 @@ class OrderController extends Controller
 
 
         $request->session()->flash('success','Bạn đã thuê xe thành công!!!');
-        return view('Frontend.info-customer',compact('product'));
+        return view('Frontend.hoanthanh',compact('new_order','new_order_detail'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-
         $get_order = Order::where('order_id','like', $id)->first();
         $order = OrderDetails::find($get_order->id);
-//        $this->authorize('view', $order);
 
-//        $product = $order->product();
-//        dd($product);
         return view('Backend.orders.show')->with(['order'=>$order]);
     }
 
@@ -215,24 +183,11 @@ class OrderController extends Controller
         return view('Backend.orders.show-orders-delete-cancelled')->with(['order'=>$order]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
@@ -241,6 +196,22 @@ class OrderController extends Controller
     public function acceptOrder(Request $request, $id){
         $order = Order::where('order_id', $id)->first();
         $order->status = 'accept';
+
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
+        $name = $order->user->name;
+        $email = $order->user->email;
+        $date = "Date: ".''.$now;
+        $orders = [
+            'name' => $name,
+            'ma' => $order->order_id,
+            'date' => $date,
+            'partner' => $order->orderdetails->product->user->name,
+            'phone' =>$order->orderdetails->product->user->phone,
+            'address'=>$order->orderdetails->product->user->address,
+            'email'=>$order->orderdetails->product->user->email
+        ];
+
+        Mail::to($email)->send(new Send_partner_accept_order($orders));
         $order->save();
         $order_details = OrderDetails::find($order->id);
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
@@ -250,6 +221,72 @@ class OrderController extends Controller
         $order = Order::where('order_id', $id)->first();
         $order->status = 'paid';
         $order->confirm = 1;
+        //tat hien thi phuong tien
+        $product = Product::find($order->orderdetails->product->id);
+        $product->status = "unready";
+        //tru tien vi
+        $user_id = User::find(\auth()->user()->id);
+        $wallet = Wallet::where('partner_id',$user_id->id)->first();
+        $monney = 0.05*($order->price_total);
+        $total = $wallet->monney - $monney;
+        if ($order->payment_id == 1){
+            //trừ tài khoản ví.
+            $wallet->monney = $total;
+            $wallet->note = "Trừ 5% đơn hơn hàng - ".$order->order_id;
+            $wallet->save();
+
+            //thêm vào lịch sử giao dịch
+            $history = new HistoryMonney();
+            $history->trading_code = Str::random(8);
+            $history->send_monney = $monney;
+            $history->note = $wallet->note;
+            $history->wallet_id = $wallet->id;
+            $history->status = "accept";
+            $history->save();
+        }else{
+            //trừ tài khoản ví.
+            $wallet->monney = $total;
+            $wallet->monney_confirm = $order->price_total;
+            $wallet->note = "Trừ 5% đơn hơn hàng - ".$order->order_id;
+            $wallet->save();
+
+            //thêm vào lịch sử giao dịch
+            $history = new HistoryMonney();
+            $history->trading_code = Str::random(8);
+            $history->send_monney = $monney;
+            $history->note = $wallet->note;
+            $history->wallet_id = $wallet->id;
+            $history->status = "accept";
+            $history->save();
+        }
+
+        $order->save();
+        $product->save();
+        $order_details = OrderDetails::find($order->id);
+        return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
+    }
+
+    public function completedOrder(Request $request,$id){
+        $order = Order::where('order_id', $id)->first();
+        $order->status = 'completed';
+
+        $now = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
+        $name = $order->user->name;
+        $email = $order->user->email;
+        $date = "Date: ".''.$now;
+        $orders = [
+            'name' => $name,
+            'ma' => $order->order_id,
+            'date' => $date
+        ];
+
+        //tat hien thi phuong tien
+        $product = Product::find($order->orderdetails->product->id);
+        $product->status = "ready";
+
+        Mail::to($email)->send(new Send_compled_order($orders));
+
+        $product->save();
         $order->save();
         $order_details = OrderDetails::find($order->id);
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
@@ -445,11 +482,5 @@ class OrderController extends Controller
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
     }
 
-    public function completedOrder(Request $request,$id){
-        $order = Order::where('order_id', $id)->first();
-        $order->status = 'completed';
-        $order->save();
-        $order_details = OrderDetails::find($order->id);
-        return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
-    }
+
 }

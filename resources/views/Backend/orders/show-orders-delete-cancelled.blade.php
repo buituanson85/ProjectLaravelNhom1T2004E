@@ -89,6 +89,18 @@
                                             {{ $order->product->range }}
                                         </div>
                                     </div>
+
+                                    @if($order->product->category_id == 1)
+                                        <div class="row pt-2">
+                                            <div class="col-md-6">
+                                                <span style="font-weight: 500">Biển số xe:</span>
+                                            </div>
+                                            <div class="col-md-5">
+                                                {{ $order->product->biensoxe }}
+                                            </div>
+                                        </div>
+                                    @else
+                                    @endif
                                 </div>
                             </div>
 

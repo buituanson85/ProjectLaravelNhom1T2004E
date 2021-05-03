@@ -28,13 +28,13 @@
                     <div class="col-8 " >
                         <div class="choice_vehicle" style="display: flex;">
                             <div class="choice_vehicle_radio-button" style=" border-radius: 5px;)">
-                                <input type="radio" name="vehicle" id="car" checked>
+                                <input type="radio" name="vehicle" id="car">
                                 <label for="car" style="font-size: 14px" >
-                                    <a href="{{ route('pages.lichsuthuexe') }}" style="color: #ffffff">Đơn hàng</a>
+                                    <a href="{{ route('pages.lichsuthuexe') }}">Đơn hàng</a>
                                 </label>
-                                <input type="radio" name="vehicle" id="motor" >
-                                <label for="motor" style="font-size: 14px">
-                                    <a href="{{ route('pages.lsthuexe') }}">Lịch sử</a>
+                                <input type="radio" name="vehicle" id="motor" checked>
+                                <label for="motor" style="font-size: 14px" >
+                                    <a href="{{ route('pages.lsthuexe') }}" style="color: #ffffff">Lịch sử</a>
                                 </label>
                             </div>
                         </div>
@@ -80,12 +80,9 @@
                                                     @elseif($order->status == "completed")
                                                         <a class="badge badge-primary" style="background-color: pink">Kết thúc chuyến</a>
                                                 @endif
-                                                <td><a href="{{route('pages.chitietdonhang', $order->order_id)}}"><span class="btn btn-sm btn-secondary" style="background-color: greenyellow;border: none;color: black"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
+                                                <td><a href="{{route('pages.ctdonhang', $order->order_id)}}"><span class="btn btn-sm btn-secondary" style="background-color: greenyellow;border: none;color: black"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
                                                 <td>
-                                                    @if($order->status == "pending")
-                                                        <a href="{{ route('pages.deleteOrder',$order->order_id) }}" class="btn btn-sm btn-danger">Xóa</a>
-                                                    @else
-                                                    @endif
+                                                    <a href="{{ route('pages.deleteOrder',$order->order_id) }}" class="btn btn-sm btn-danger">Xóa</a>
                                                 </td>
                                             </tr>
                                         @empty
@@ -135,3 +132,4 @@
         });
     </script>
 @endsection
+

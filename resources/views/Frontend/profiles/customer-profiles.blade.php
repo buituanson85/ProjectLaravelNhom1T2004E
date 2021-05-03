@@ -28,12 +28,14 @@
                         <div class="info-right" style="height: auto">
                             <p style="text-align: center;color: cadetblue;font-weight: 600;font-size: 20px;padding-top: 30px">THÔNG TIN CÁ NHÂN</p>
                             <div class="container">
-                                <div class="row">
+                                <form method="post" action="{{ route('capnhatprofile') }}" enctype="multipart/form-data">
+                                    @csrf
+                                <div class="row p-0">
                                     <div class="col-3" style="padding-top: 10px">
                                         <div class="info-right-input-img">
-                                            <input type="file" id="image" name="image" class="input-file_ava ng-pristine ng-valid ng-touched" files-model="" ng-model="project.fileList">
+                                            <input type="file" id="images" name="images" class="input-file_ava ng-pristine ng-valid ng-touched" files-model="" ng-model="project.fileList">
                                             <label for="files_ava">
-                                                <img src="{{ $user->profile_photo_path }}" style="width: 150px;height: 150px;border-radius: 10px; border: 1px solid cadetblue  " alt="">
+                                                <img src="{{ $user->profile_photo_path }}" style="width: 130px;height: 130px;border-radius: 10px; border: 1px solid cadetblue  " alt="">
 
                                                 <output id="list_ava">
 
@@ -43,37 +45,36 @@
                                     </div>
                                     @include('partials.alert')
                                     <div class="col-9" style="margin-top: -20px">
-                                        <form method="post" action="{{ route('capnhatprofile') }}" enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="form-group row">
-                                                <label for="name" class="col-sm-4 col-form-label" style="font-weight: 600">Họ và tên</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}">
-                                                </div>
+                                        <div class="form-group row">
+                                            <label for="name" class="col-sm-4 col-form-label" style="font-weight: 600">Họ và tên</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}">
                                             </div>
-                                            <div class="form-group row">
-                                                <label for="email" class="col-sm-4 col-form-label" style="font-weight: 600">Email</label>
-                                                <div class="col-sm-8">
-                                                    <input type="email" class="form-control" id="email" name="email"  value="{{ $user->email }}" readonly>
-                                                </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="email" class="col-sm-4 col-form-label" style="font-weight: 600">Email</label>
+                                            <div class="col-sm-8">
+                                                <input type="email" class="form-control" id="email" name="email"  value="{{ $user->email }}" readonly>
                                             </div>
-                                            <div class="form-group row">
-                                                <label for="phone" class="col-sm-4 col-form-label" style="font-weight: 600">Số điện thoại</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="phone" name="phone" value="{{ $user->phone }}">
-                                                </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="phone" class="col-sm-4 col-form-label" style="font-weight: 600">Số điện thoại</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="phone" name="phone" value="{{ $user->phone }}">
                                             </div>
+                                        </div>
 
-                                            <div class="form-group row pb-3">
-                                                <label for="phone" class="col-sm-4 col-form-label" style="font-weight: 600">Địa chỉ</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="address" name="address" value="{{ $user->address }}">
-                                                </div>
+                                        <div class="form-group row pb-3">
+                                            <label for="phone" class="col-sm-4 col-form-label" style="font-weight: 600">Địa chỉ</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="address" name="address" value="{{ $user->address }}">
                                             </div>
-                                            <button  type="submit" class="form_submit_info" style="background-color: cadetblue; padding: 10px;border-radius: 5px;color: white;font-weight: 600; margin-left: 250px; margin-top: -30px"><i class="fas fa-edit"></i> Chỉnh sửa</button>
-                                        </form>
-
+                                        </div>
+                                        <button  type="submit" class="form_submit_info" style="background-color: cadetblue; padding: 10px;border-radius: 5px;color: white;font-weight: 600; margin-left: 250px; margin-top: -30px"><i class="fas fa-edit"></i> Chỉnh sửa</button>
                                     </div>
+                                </div>
+                                </form>
+                                <div class="row">
                                     @if(!isset($file))
                                         <form action="{{ route('taianhgalaxy') }}" method="post" enctype="multipart/form-data">
                                             @csrf
@@ -160,7 +161,7 @@
                                                         <div class="upload_blxmt">
                                                             <input type="file" id="imgae_1" name="image_1" class="input-file_blxmt ng-pristine ng-valid ng-touched" files-model="" ng-model="project.fileList">
                                                             <label for="files_blxmt">
-                                                        <img src="{{ $file->cmt_before }}" class="add-image_blxmt2">
+                                                                <img src="{{ $file->cmt_before }}" class="add-image_blxmt2">
                                                                 <output id="list_blxmt"></output>
                                                             </label>
                                                         </div>

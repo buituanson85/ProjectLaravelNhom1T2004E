@@ -47,46 +47,24 @@
                 <table align="center" style="width:100%;max-width:670px;background:#ffffff;padding-top:40px;padding-left:40px;padding-right:40px;padding-bottom:40px">
                     <tbody>
                     <tr>
-                        <td style="color:#0a73b7;font-family:Arial,sans-serif;font-size:24px;text-align:center;font-weight:bold">THÔNG TIN XÁC NHẬN ĐƠN HÀNG</td>
+                        <td style="color:#0a73b7;font-family:Arial,sans-serif;font-size:24px;text-align:center;font-weight:bold">THÔNG TIN ĐƠN HÀNG {{ $orders['ma'] }}</td>
                     </tr>
                     <tr><td style="padding-bottom:30px;color:#f7a51c;font-family:Arial,sans-serif;font-size:18px;text-align:center;font-weight:bold;font-style:italic"></td>
                     </tr><tr>
-                        <td style="padding:0 10px 20px 10px;color:#373636;font-family:Arial,sans-serif;font-size:16px;line-height:20px"><p>Xin chào {{ $products['name'] }}!</p><p>Cảm ơn bạn đã sử dụng dịch của chúng tôi! yêu cầu của bạn đã được hệ thống ghi nhận và chuyển sang bộ phận điều xe để sắp xếp. Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất!!</p>
-                            <br><br>THÔNG TIN KHÁCH HÀNG
+                        <td style="padding:0 10px 20px 10px;color:#373636;font-family:Arial,sans-serif;font-size:16px;line-height:20px"><p>Xin chào {{ $orders['name'] }}!</p><p>Đơn hàng {{ $orders['ma'] }} chủ xe đã nhận đơn.Chủ xe sẽ liên hệ với bạn sớm nhất có thể,để việc ký kết hợp đồng diễn ra nhanh gọn bạn vui lòng cập nhật đầy đủ các thông tin trong hồ sơ cá nhân!
+                                <br><br>THÔNG TIN CHỦ PHƯƠNG TIỆN.
                             </p>
-
+                            <p style="color: red;font-size: 16px">{{ $orders['date'] }}</p>
                             <ul>
-                                <li>Tên khách hàng: <b>{{ $products['name'] }}</b></li>
-                                <li>Email: <b><a href="mailto:{{ $products['email'] }}">{{ $products['email'] }}</a></b></li>
-
-                            </ul>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding:0 10px 20px 10px;color:#373636;font-family:Arial,sans-serif;font-size:16px;line-height:20px">
-                            <br><br>THÔNG TIN PHƯƠNG TIỆN
-                            </p>
-                            <p style="color: red;font-size: 16px">{{ $products['date'] }}</p>
-                            <ul>
-                                <li>Tên phương tiện: <b>{{ $products['product_name'] }}</b></li>
-                                <li>Ảnh phương tiện: <b><img width="100" href="{{asset($products['product_image']) }}" alt="Ảnh sản phẩm"/></b></li>
-                                <li>Mã đơn hàng: <b>{{ $products['order_id'] }}</b></li>
-                                <li>Hãng xe: <b>{{ $products['product_brand'] }}</b></li>
-                                <li>Loại phương tiện: <b>{{ $products['product_category'] }}</b></li>
-                                <li>Động cơ: <b>{{ $products['product_engine'] }}</b></li>
-                                <li>Chỗ ngồi kiểu: <b>{{ $products['product_seat'] }}</b></li>
-                                <li>Số lượng chở: <b>{{ $products['product_capacity'] }}</b></li>
-                                <li>Loại Gear: <b>{{ $products['product_gear'] }}</b></li>
-                                <li>Lượng tiêu thụ xăng: <b>{{ $products['product_consumption'] }}</b></li>
-                                <li>Trạng thái đơn hàng: <b>{{ $products['product_status'] }}</b></li>
-                                <li>Nơi nhận phương tiện: <b>{{ $products['product_district'] }}</b></li>
-                                <li>Chủ xe: <b>{{ $products['product_partner']}}</b></li>
+                                <li>Tên chủ phương tiện: <b>{{ $orders['partner'] }}</b></li>
+                                <li>Email: <b><a href="mailto:{{ $orders['email'] }}">{{ $orders['email'] }}</a></b></li>
+                                <li>Số điện thoại: <b>{{ $orders['phone'] }}</b></li>
+                                <li>Địa chỉ: <b>{{ $orders['address'] }}</b></li>
                             </ul>
                             <p>Nếu cần thêm thông tin, vui lòng
                                 liên hệ Đường dây nóng <b style="color:#0000ff">1900 636585 – 090 450 9596</b> hoặc
                                 truy cập <a href="https://chungxe.vn/support/car_rental" target="_blank" data-saferedirecturl="#">trang Hỗ
-                                    trợ </a></p><p><i>Thân mến!</i></p><p>ChungxeFake</p>
+                                    trợ </a></p><p><i>Thân mến!</i></p><p>Chungxe</p>
                         </td>
                     </tr>
                     </tbody>
