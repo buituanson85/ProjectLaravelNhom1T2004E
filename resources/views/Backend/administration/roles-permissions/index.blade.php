@@ -53,11 +53,11 @@
                                             @endforeach
                                         </td>
                                         <td><span class="tag tag-success">{{ $role->created_at }}</span></td>
-                                        @if($role->name === "Admin")
+{{--                                        @if($role->name === "Admin")--}}
 
-                                        @else
+{{--                                        @else--}}
                                         <td><a href="{{ route('roles-permissions.show', $role->id) }}"><span class="btn btn-sm btn-info"><i class="fa fa-edit"></i>&nbsp;Thêm permission</span></a></td>
-                                        @endif
+{{--                                        @endif--}}
                                         <td>
                                             @if($role->name === "Admin")
 

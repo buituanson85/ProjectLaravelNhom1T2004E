@@ -12,10 +12,10 @@
         </div>
     </section>
 
-    <section style="background-color: #f2f4f7">
+    <section style="background-color: #f2f4f7;padding-top: 10px">
         <div class="container">
             <div class="row pl-5" style="padding: 30px 0">
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <div class="card">
                         <div class="card-header">
                             <div class="text-center">
@@ -26,6 +26,7 @@
                             <div class="container-fluid">
                                 <div class="row justify-content-center custom-margin">
                                     <div class="col-md-12">
+                                        @include('partials.alert')
                                         <form name="frm-login" method="post" action="{{route('login')}}">
                                             @csrf
                                             <div class="form-group row">
@@ -90,7 +91,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="row pl-2">
                         <div class="col-md-12">
                             <img width="100%" src="{{ asset('Frontend/assets/images/pexels-photo-862734.jpg') }}" alt="">

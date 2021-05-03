@@ -138,5 +138,8 @@
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="bootbox.js" level="application" />
     <orderEntry type="library" name="checkout" level="application" />
+    <orderEntry type="library" name="html5shiv" level="application" />
+    <orderEntry type="library" name="respond" level="application" />
+    <orderEntry type="library" name="ionicons" level="application" />
   </component>
 </module>

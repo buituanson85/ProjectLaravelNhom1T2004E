@@ -59,6 +59,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function orderdetails(){
         return $this->hasOne('App\Models\Frontend\OrderDetails');
     }
+
+    public function noteorder(){
+        return $this->hasOne('App\Models\Frontend\NoteOrder','order_id');
+    }
     /**
      * The attributes that should be hidden for arrays.
      *

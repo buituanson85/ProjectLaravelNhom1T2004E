@@ -8,6 +8,7 @@ use App\Models\Backend\Category;
 use App\Models\Backend\City;
 use App\Models\Backend\District;
 use App\Models\Backend\Product;
+use App\Models\Frontend\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -252,5 +253,25 @@ class ChooseProduct extends Controller
 //        $product_id = $request->product_id;
         $product = Product::find($id);
         return view('Frontend.single-product', compact('product'));
+    }
+
+    public function showInfo(Request $request,$id){
+        $product = Product::find($id);
+        $allPayment = Payment::all();
+        $total_price = $request->total_price;
+        $total_time_send = $request->total_time_send;
+        $start_time = $request->start_time2;
+        $end_time = $request->end_time2;
+        $receive_method=$request->receive_Method;
+
+        return view('Frontend.info-customer')->with([
+            'product'=>$product,
+            'total_price'=>$total_price,
+            'total_time_send'=>$total_time_send,
+            'start_time'=>$start_time,
+            'end_time'=>$end_time,
+            'receive_method'=>$receive_method,
+            'allPayment'=>$allPayment,
+        ]);
     }
 }

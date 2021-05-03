@@ -1,0 +1,63 @@
+.content{
+
+}
+.info-right,.info-left{
+    border-radius: 5px;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+.info-left-general{
+
+    padding: 20px;
+
+}
+
+.info-left-general:hover{
+    background-color: ghostwhite;
+
+}
+
+.info-left-general a{
+    color: cadetblue;
+    text-decoration: none;
+    padding: 40px;
+    transition: background .35s ease;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+}
+.info-left-general-active{
+    background-color: cadetblue;
+    opacity: 1;
+    padding: 20px;
+}
+.info-left-general-active a{
+    color: white;
+    text-decoration: none;
+    padding: 40px;
+    transition: background .35s ease;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+}
+.info-left-general a:hover {
+
+    color: cadetblue;
+}
+
+
+
+
+.choice_vehicle_radio-button input{
+    display: none;
+}
+.choice_vehicle_radio-button label{
+    padding: 12px 15px;
+    width: 100px;
+    background-color: white;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+.choice_vehicle_radio-button input[type=radio]:checked+label {
+    background-color: #107d82;
+    opacity: 0.8;
+    color: #fff;
+}

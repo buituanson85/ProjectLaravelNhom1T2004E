@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\GalaxyController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PartnerController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\ProductController;
@@ -14,7 +15,6 @@ use App\Http\Controllers\Backend\WalletController;
 use App\Http\Controllers\Frontend\ChooseProduct;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\RegisterController;
-use App\Http\Controllers\OrderController;
 
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -75,7 +75,16 @@ Route::get('/pages/service', [HomeController::class,'service'])->name('pages.ser
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function (){
 //pages
+    Route::get('pages/customer-profiles',[HomeController::class,'customerProfiles'])->name('pages.customerprofiles');
+    Route::get('pages/lichsuthuexe',[HomeController::class,'lichsuthuexe'])->name('pages.lichsuthuexe');
+    Route::get('pages/doimatkhau',[HomeController::class,'doimatkhau'])->name('pages.doimatkhau');
+    Route::post('pages/doimatkhau-store',[HomeController::class,'doimatkhauStore'])->name('doimatkhaustore');
+    Route::post('pages/capnhatprofile',[HomeController::class,'capnhatprofile'])->name('capnhatprofile');
+    Route::post('pages/taianhgalaxy',[HomeController::class,'taianhgalaxy'])->name('taianhgalaxy');
+    Route::post('pages/capnhatgalaxy',[HomeController::class,'capnhatgalaxy'])->name('capnhatgalaxy');
 
+    //Khương
+    Route::post('/pages/show-info/{id}',[ChooseProduct::class,'showInfo'])->name('pages.showinfos');
 });
 
 //for admin
@@ -141,6 +150,14 @@ Route::middleware(['auth:sanctum', 'verified','authadmin'])->group(function (){
         Route::get('/dashboards/brands/delete_brand/{id}',[App\Http\Controllers\Backend\BrandController::class, 'destroy'])->name('brand.delete');
 
         Route::resource('/dashboards/customers',CustomerController::class);
+        //order
+        Route::resource('/dashboards/dashboards-orders',OrderController::class);
+        Route::get('/dashboards/confirm-orders',[OrderController::class,'confirmOrders'])->name('dashboards.confirmorders');
+        Route::get('/dashboards/orders-delete-cancelled',[OrderController::class,'ordersDeleteCancelled'])->name('dashboards.ordersdeletecancelled');
+        Route::get('/dashboards/show-orders-delete-cancelled/{id}',[OrderController::class,'showOrdersDeleteCancelled'])->name('dashboards.showordersdeletecancelled');
+
+        Route::get('/dashboards/order-confirm-order/{id}',[OrderController::class,'orderConfirmOrder'])->name('order.confirmOrder');
+
     });
     //Support
     Route::middleware(['auth:sanctum', 'verified','authsupport'])->group(function (){
@@ -208,16 +225,29 @@ Route::middleware(['auth:sanctum', 'verified','authadmin'])->group(function (){
         Route::get('/dashboards/withdrawal',[WalletController::class,'withdrawal'])->name('dashboards.withdrawal');
         Route::post('/dashboards/withdrawalMonney',[WalletController::class,'withdrawalMonney'])->name('dashboards.withdrawalmonney');
 
+        //đơn hàng.
+        Route::get('/dashboards/partner-orders',[OrderController::class,'partnerOrders'])->name('dashboards.partnerorders');
+        Route::get('dashboards/partner-orders-show/{id}',[OrderController::class,'partnerOrdersShow'])->name('dashboards.partnerordersshow');
+        Route::get('/dashboards/history-order-partner',[OrderController::class,'historyOrderPartner'])->name('dashboards.historyorderpartner');
+        //xác nhận đơn hàng
+        Route::post('/dashboards/order/acceptOrder/{order_id}', [OrderController::class,'acceptOrder'])->name('order.acceptOrder');
+        Route::post('/dashboards/order/refuseOrder/{order_id}', [OrderController::class,'refuseOrder'])->name('order.refuseOrder');
+        Route::post('/dashboards/order/refuseOrderss', [OrderController::class,'refuseOrders'])->name('order.refuseOrderss');
+        Route::post('/dashboards/order/deleteOrderss', [OrderController::class,'deleteOrders'])->name('order.deleteOrderss');
+        Route::post('/dashboards/order/completedOrder/{order_id}', [OrderController::class,'completedOrder'])->name('order.completedOrder');
+
+        Route::post('/dashboards/order/paidOrder/{order_id}', [OrderController::class,'paidOrder'])->name('order.paidOrder');
+        Route::post('/dashboards/order/deletedOrder/{order_id}', [OrderController::class,'deletedOrder'])->name('order.deletedOrder');
+
+        Route::get('/dashboards/order/printOrder/{order_id}', [OrderController::class,'printOrder'])->name('order.printOrder');
+
     });
 });
 
-
-
+//order
+//Route::resource('/dashboards/order',OrderController::class);
 //order
 Route::resource('/dashboards/order',OrderController::class);
-Route::post('/dashboards/order/acceptOrder/{order_id}', [OrderController::class,'acceptOrder'])->name('order.acceptOrder');
-Route::post('/dashboards/order/refuseOrder/{order_id}', [OrderController::class,'refuseOrder'])->name('order.refuseOrder');
-Route::get('/dashboards/order/printOrder/{order_id}', [OrderController::class,'printOrder'])->name('order.printOrder');
 
 
 

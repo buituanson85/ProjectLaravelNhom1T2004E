@@ -10,12 +10,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@yield('title')</title>
-    <meta name="description" content="Sufee Admin - HTML5 Admin Template">
+    <meta name="description" content="Chung xe Admin">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-
-
 
     <link rel="apple-touch-icon" href="{{ asset('Backend/images/admin.jpg') }}">
     <link rel="shortcut icon" href="{{ asset('Backend/images/favicon.ico') }}">
@@ -28,26 +24,22 @@
     <link rel="stylesheet" href="{{ asset('Backend/vendors/flag-icon-css/css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('Backend/vendors/selectFX/css/cs-skin-elastic.css') }}">
     <link rel="stylesheet" href="{{ asset('Backend/vendors/jqvmap/dist/jqvmap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('Backend/vendors/jqvmap/dist/jqvmap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('Backend/assets/css/slider_single_product.css') }}">
+    {{--    <link rel="stylesheet" type="text/css" href="{{ asset('Backend/assets/css/bulma.min.css') }}">--}}
+    {{--    <link rel="stylesheet" type="text/css" href="{{ asset('Backend/assets/css/dataTables.bulma.min.css') }}">--}}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+{{--    Alertify--}}
+<!-- CSS -->
+    <link rel="stylesheet" href="{{ asset('Backend/vendors/alertifyjs/css/alertify.css') }}"/>
+    <!-- Default theme -->
+    <link rel="stylesheet" href="{{ asset('Backend/vendors/alertifyjs/css/themes/default.css') }}"/>
+    <!-- Semantic UI theme -->
+    <link rel="stylesheet" href="{{ asset('Backend/vendors/alertifyjs/css/themes/semantic.css') }}"/>
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="{{ asset('Backend/vendors/alertifyjs/css/themes/bootstrap.css') }}"/>
 
 
-{{--    link huy--}}
-    <link href="{{asset('Backend/template/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
-    <!-- Font Awesome Icons -->
-{{--    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />--}}
-    <!-- Ionicons -->
-{{--    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />--}}
-    <!-- Theme style -->
-    <link href="{{asset('Backend/template/dist/css/AdminLTE.min.css')}}" rel="stylesheet" type="text/css" />
-
-{{--    <link href="{{asset('Backend/jvectormap/jquery-jvectormap-1.2.2.css')}}" rel="stylesheet" type="text/css" />--}}
-{{--    <link href="{{asset('Backend/daterangepicker/daterangepicker-bs3.css')}}" rel="stylesheet" type="text/css" />--}}
-
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.css"/>
-
-
-
-{{--    end--}}
     <link rel="stylesheet" href="{{ asset('Backend/assets/css/style.css') }}">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
@@ -81,20 +73,21 @@
 @yield('content')
 
 <!-- Right Panel -->
-
-<script src="{{ asset('Backend/vendors/jquery/dist/jquery.min.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+{{--<script src="{{ asset('Backend/vendors/jquery/dist/jquery.min.js') }}"></script>--}}
 <script src="{{ asset('Backend/vendors/popper.js/dist/umd/popper.min.js') }}"></script>
-<script src="{{ asset('Backend/vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="{{ asset('Backend/assets/js/main.js') }}"></script>
 
 <script src="{{ asset('Backend/vendors/chart.js/dist/Chart.bundle.min.js') }}"></script>
-<script src="{{ asset('Backend/assets/js/dashboard.js') }}"></script>
-<script src="{{ asset('Backend/assets/js/widgets.js') }}"></script>
+{{--<script src="{{ asset('Backend/assets/js/dashboard.js') }}"></script>--}}
+{{--<script src="{{ asset('Backend/assets/js/widgets.js') }}"></script>--}}
 <script src="{{ asset('Backend/vendors/jqvmap/dist/jquery.vmap.min.js') }}"></script>
-<script src="{{ asset('Backend/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js') }}"></script>
+{{--<script src="{{ asset('Backend/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js') }}"></script>--}}
 <script src="{{ asset('Backend/vendors/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
 <script src="{{ asset('Backend/assets/js/slider_single_product.js') }}"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.js"></script>
+
 
 <script>
     (function($) {

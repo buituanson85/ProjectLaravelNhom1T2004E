@@ -1,5 +1,5 @@
 @extends('layouts.Backend.base')
-@section('title', 'Danh sách đơn hàng')
+@section('title', 'Đơn hàng')
 @section('content')
 
     <div id="right-panel" class="right-panel">
@@ -14,7 +14,9 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ URL::to('/dashboards/order') }}">Đơn hàng</a></span>
+                        <span style="float: left"><a href="{{ route('dashboards.partnerorders') }}">Đơn hàng</a></span>
+                        <span style="float: left;margin: 0 5px">/</span>
+                        <span style="float: left"><a href="{{ route('dashboards.historyorderpartner') }}">Lịch sử đơn hàng</a></span>
                     </div>
                 </div>
             </div>
@@ -25,9 +27,10 @@
                     <div class="card">
                         <div class="card-header">
 
-                            <h3 class="card-title">Danh sách đơn hàng</h3>
+                            <h3 class="card-title">Đơn hàng chờ xác nhận</h3>
 
                             <div class="card-tools">
+                                <a href="{{ route('dashboards.partnerorders') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i>Đơn hàng</a>
                             </div>
                         </div>
                         <div class="card-body table-responsive p-0">
@@ -64,7 +67,7 @@
                                         <td>{{ number_format($order->price_total, 0) }}</td>
                                         <td>
                                             @if($order->status == "pending")
-                                            <a class="badge badge-warning">Chờ nhận chuyến</a>
+                                                <a class="badge badge-warning">Chờ nhận chuyến</a>
                                             @elseif($order->status == "accept")
                                                 <a class="badge badge-success">Đã nhận chuyến</a>
                                             @elseif($order->status == "paid")
@@ -75,16 +78,21 @@
                                                 <a class="badge badge-danger">Hủy chuyến</a>
                                             @elseif($order->status == "completed")
                                                 <a class="badge badge-primary" style="background-color: pink">Kết thúc chuyến</a>
-                                            @endif
-                                        <td><a href="{{route('dashboards-orders.show', $order->order_id)}}"><span class="btn btn-sm btn-secondary" style="background-color: greenyellow;border: none;color: black"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
+                                        @endif
+                                        <td><a href="{{route('dashboards.partnerordersshow', $order->order_id)}}"><span class="btn btn-sm btn-secondary" style="background-color: greenyellow;border: none;color: black"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
                                         <td>
-                                            @if($order->status == "pending")
+                                            @if($order->status == "accept")
                                                 <form action="{{ route('dashboards-orders.destroy',$order->id) }}" method="post">
                                                     @csrf
                                                     @method('delete')
-                                                    <button class="btn btn-sm btn-danger"><i class="fa fa-edit"></i>&nbsp;Xóa</button>
+                                                    <button class="btn btn-sm btn-danger"><i class="fa fa-edit"></i>&nbsp;Hủy</button>
                                                 </form>
-                                            @else
+                                            @elseif($order->status == "pending")
+                                                <form action="{{ route('dashboards-orders.destroy',$order->id) }}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="btn btn-sm btn-secondary"><i class="fa fa-edit"></i>&nbsp;Cancel</button>
+                                                </form>
                                             @endif
                                         </td>
                                     </tr>
@@ -133,4 +141,6 @@
         });
     </script>
 @endsection
+
+
 

@@ -1,4 +1,11 @@
 <div class="">
+    @if ($message = Session::get('passwordsuccess'))
+        <script type="text/javascript">
+            $.notify("Đổi mật khẩu thành công");
+        </script>
+
+    @endif
+
     @if ($message = Session::get('success'))
 
     <div class="alert alert-success alert-block">
@@ -66,6 +73,7 @@
     </div>
 
     @endif
+
 
 
 </div>

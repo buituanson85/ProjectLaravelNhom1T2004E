@@ -34,7 +34,7 @@
 }
 
 .product_detail{
-    display: flex;
+    /*display: flex;*/
 }
 .product_detail_type{
     flex: 1;

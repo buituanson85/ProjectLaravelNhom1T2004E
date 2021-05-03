@@ -204,7 +204,7 @@
 
 
                 <div style="text-align: center;margin: 20px 0">
-                    <a href="" style="padding: 15px;border-radius: 10px 15px;color: white; background-color: lightseagreen">Xem chi tiết</a>
+                    <a href="{{ route('pages.tutorial') }}" style="padding: 15px;border-radius: 10px 15px;color: white; background-color: lightseagreen">Xem chi tiết</a>
                 </div>
             </div>
             <div class="communicate">

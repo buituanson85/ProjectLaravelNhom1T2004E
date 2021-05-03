@@ -1,0 +1,119 @@
+.content{
+
+}
+.info-right,.info-left{
+    border-radius: 5px;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+.info-left-general{
+
+    padding: 20px;
+
+}
+
+.info-left-general:hover{
+    background-color: ghostwhite;
+
+}
+
+.info-left-general a{
+    color: cadetblue;
+    text-decoration: none;
+    padding: 40px;
+    transition: background .35s ease;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+}
+.info-left-general-active{
+    background-color: cadetblue;
+    padding: 20px;
+}
+.info-left-general-active a{
+    color: white;
+    text-decoration: none;
+    padding: 40px;
+    transition: background .35s ease;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+}
+.info-left-general a:hover{
+
+    color: cadetblue;
+
+}
+.form_submit_info:hover{
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,0.11)!important;
+}
+
+.Banglai,.CMT,.SHK{
+    padding: 15px;
+}
+
+.upload_cmtmt,
+.upload_cmtms,
+.upload_blxms,
+.upload_blxmt,
+.upload_shk{
+    position: relative;
+    display: inline-block;
+}
+
+.upload_cmtmt label,
+.upload_cmtms label,
+.upload_blxms label,
+.upload_blxmt label,
+.upload_shk label{
+    color: #5F626A;
+    cursor: pointer;
+    width: 250px;
+    height: 150px;
+    position: relative;
+    display: block;
+    border: 3px dashed #5F626A;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: background ease .5s;
+    pointer-events: none; /*This for FF*/
+}
+
+.input-file_ava,
+.input-file_cmtmt,
+.input-file_cmtms,
+.input-file_blxmt,
+.input-file_blxms,
+.input-file_shk{
+    opacity: 0; /*This*/
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+
+}
+
+.add-image_cmtmt,
+.add-image_cmtms,
+.add-image_blxms,
+.add-image_blxmt,
+.add-image_shk{
+    display: block;
+    width: 100%;
+    margin: 30px auto;
+    text-align: center;
+    font-size: 16px;
+    font-family: sans-serif;
+    padding-top: 30px;
+}
+
+.add-image_cmtmt2,
+.add-image_cmtms2,
+.add-image_blxms2,
+.add-image_blxmt2,
+.add-image_shk2{
+    display: block;
+    width: 100%;
+    /*margin: 30px auto;*/
+    text-align: center;
+    font-size: 16px;
+    font-family: sans-serif;
+    /*padding-top: 30px;*/
+}

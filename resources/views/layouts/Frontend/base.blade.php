@@ -21,6 +21,9 @@
     <link rel="stylesheet" href="{{ asset('Frontend/assets/css/policy_incident.css') }}">
     <link rel="stylesheet" href="{{ asset('Frontend/assets/css/policy_insurance.css') }}">
     <link rel="stylesheet" href="{{ asset('Frontend/assets/css/pilicy_service.css') }}">
+    <link rel="stylesheet" href="{{ asset('Frontend/assets/css/info-customer.css') }}">
+    <link rel="stylesheet" href="{{ asset('Frontend/assets/css/profile.css') }}">
+    <link rel="stylesheet" href="{{ asset('Frontend/assets/css/lichsuthuexe.css') }}">
     <!--    datetime-->
     <link rel="stylesheet" href="{{ asset('Frontend/assets/css/jquery.datetimepicker.min.css') }}" />
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
@@ -35,7 +38,6 @@
 </head>
 <body>
 <div class="header">
-
     <div class="container-fluid nav-list">
         <div class="nav-list-left">
             <div class="nav-list-left-logo">
@@ -73,8 +75,10 @@
                                     {{ Auth::user()->name }}
                                 </span>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item the_a" href="#">Profile</a>
-                                    <a class="dropdown-item the_a" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                                    <a class="dropdown-item the_a" href="{{ route('pages.lichsuthuexe') }}">Lịch sử thuê xe</a>
+                                    <a class="dropdown-item the_a" href="{{ route('pages.customerprofiles') }}">Thông tin cá nhân</a>
+                                    <a class="dropdown-item the_a" href="{{ route('pages.doimatkhau') }}">Đổi mật khẩu</a>
+                                    <a class="dropdown-item the_a" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Đăng xuất</a>
                                     <form id="logout-form"  action="{{ route('logout') }}" method="post">
                                         @csrf
                                     </form>
@@ -83,10 +87,10 @@
                 </li>
                 @else
                     <li>
-                        <a class="the_a" href="{{ route('login') }}">Login</a>
+                        <a class="the_a" href="{{ route('login') }}">Đăng nhập</a>
                     </li>
                     <li>
-                        <a class="the_a" href="{{ route('register') }}">Register</a>
+                        <a class="the_a" href="{{ route('register') }}">Đăng ký</a>
                     </li>
                 @endif
                 @endif
@@ -165,11 +169,10 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="{{ asset('Frontend/assets/js/google-map.js') }}"></script>
+<script src="{{ asset('Frontend/assets/js/notify.min.js') }}"></script>
+<script type="text/javascript">
 
-{{--<script type="text/javascript">--}}
-{{--    $("#dateTake").datetimepicker();--}}
-{{--    $("#datePay").datetimepicker();--}}
-{{--</script>--}}
+</script>
 <script>
     function bando() {
         document.querySelector(".hihi").style.display ="none";

@@ -22,7 +22,7 @@ class CreateOrdersTable extends Migration
             $table->enum('status',['pending','accept','paid','cancelled','completed']);
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
+//            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
             $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

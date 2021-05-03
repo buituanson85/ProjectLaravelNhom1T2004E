@@ -28,6 +28,7 @@
                                     <h3 class="card-title">Danh sách loại danh mục</h3>
 
                                     <div class="card-tools">
+                                        <a href="{{ route('cate.create') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i>Thêm loại danh mục mới</a>
                                     </div>
                                 </div>
                                 <div class="col-md-8 mt-4">

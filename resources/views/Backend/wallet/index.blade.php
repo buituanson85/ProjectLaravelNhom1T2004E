@@ -83,7 +83,7 @@
                                                 <span style="font-size: 16px;font-weight: 300">Có thể rút:</span>
                                             </div>
                                             <div class="col-md-6 text-right">
-                                                {{ number_format($wallet->monney- 50000) }} VNĐ
+                                                {{ number_format($wallet->monney- 500000) }} VNĐ
                                             </div>
                                         </div>
                                     </div>

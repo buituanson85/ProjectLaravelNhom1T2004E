@@ -37,24 +37,6 @@ class VehiclesController extends Controller
             $users->appends($request->all());
         }
 
-//        if (isset($name)){
-//            $users = DB::table('users')
-//                ->join('user_role', 'user_role.user_id','=','users.id')
-//                ->join('roles','roles.id','=','user_role.role_id')
-//                ->select('users.*')
-//                ->where('roles.name','Partner')->where('users.name','like','%'.$name.'%')->orderBy('id','DESC')->paginate(5);
-//            $users->appends($request->all());
-//        }else{
-//            $users = DB::table('users')
-//                ->join('user_role', 'user_role.user_id','=','users.id')
-//                ->join('roles','roles.id','=','user_role.role_id')
-//                ->select('users.*')
-//                ->where('roles.name','Partner')
-////                ->whereNotIn('roles.name','Admin')
-//                ->orderBy('id','DESC')->paginate(5);
-//            $users->appends($request->all());
-////            $users = User::with('roles')->paginate(5);
-//        }
         return view('Backend.Vehicles.index')->with(array('users'=>$users));
     }
 

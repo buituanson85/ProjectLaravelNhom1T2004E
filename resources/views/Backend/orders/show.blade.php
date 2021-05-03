@@ -15,9 +15,9 @@
                 <div class="page-title" style="margin-top: 10px">
                     <span style="float: left">Dashboard</span>
                     <span style="float: left;margin: 0 5px">/</span>
-                    <span style="float: left"><a href="{{ URL::to('/dashboards/order')}}">Đơn hàng</a></span>
+                    <span style="float: left"><a href="{{ route('dashboards-orders.index')}}">Đơn hàng</a></span>
                     <span style="float: left;margin: 0 5px">/</span>
-                    <span style="float: left"><a href="{{ route('order.show', $order->order->order_id) }}">Chi tiết</a></span>
+                    <span style="float: left"><a href="{{ route('dashboards-orders.show', $order->order->order_id) }}">Chi tiết</a></span>
                 </div>
             </div>
         </div>
@@ -30,7 +30,20 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-8">
-                                <h6 class="card-title">Mã số đơn hàng: {{ $order->order->order_id }} <span class="badge badge-warning">{{$order->order->status}}</span>
+                                <h6 class="card-title">Mã số đơn hàng: {{ $order->order->order_id }}
+                                        @if($order->order->status == "pending")
+                                            <span class="badge badge-warning">Chờ nhận chuyến</span>
+                                        @elseif($order->order->status == "accept")
+                                            <span class="badge badge-success">Đã nhận chuyến</span>
+                                        @elseif($order->order->status == "paid")
+                                            <span class="badge badge-primary">Bắt đầu chuyến</span>
+                                        @elseif($order->order->status == "cancelled")
+                                            <span class="badge badge-secondary">Không nhận chuyến</span>
+                                        @elseif($order->order->status == "delete")
+                                            <span class="badge badge-danger">Hủy chuyến</span>
+                                        @elseif($order->order->status == "completed")
+                                            <span class="badge badge-primary" style="background-color: pink">Kết thúc chuyến</span>
+                                        @endif
                                 </h6>
                                 <div class="card-tools">
                                     <div class="image-preview" id="imagePreview">
@@ -92,7 +105,7 @@
                                     <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{$order->order->user->name}} </a>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <a href="" data-toggle="modal" data-target=".bd-example-modal-lg">Bấm để xem thông tin chi tiết khách hàng</a>
+                                    <a href="" data-toggle="modal" data-target=".bd-example-modal-lg" class="badge badge-secondary">Bấm để xem thông tin chi tiết khách hàng</a>
                                 </div>
                             </div>
                         </div>
@@ -250,21 +263,7 @@
 
                     </div>
                     <div class="card-footer form-inline">
-                        <a href="{{ route('order.index') }}" class="btn btn-primary" style="margin: 5px"><i class="fas fa-backward"></i> Quay lại</a>
-                        @if($order->order->status == 'pending')
-                            <form id="acceptOrder" action="{{ route('order.acceptOrder', $order->order->order_id) }}" method="post">
-                                @csrf
-                                <button type="submit" class="btn btn-warning" style="margin: 5px"><i class="fas fa-eject"></i> Đồng ý cho thuê</button>
-                            </form>
-                            <form id="refuseOrder" action="{{ route('order.refuseOrder', $order->order->order_id) }}" method="post">
-                                @csrf
-                                <button type="submit" class="btn btn-danger" style="margin: 5px"><i class="fas fa-backspace"></i> Từ chối cho thuê</button>
-                            </form>
-                        @elseif($order->order->status == 'accept' || $order->order->status == 'paid')
-                            <form action="{{ route('order.printOrder',$order->order->order_id) }}" method="GET" target="_blank">
-                                <button href="" class="btn btn-warning" style="margin: 5px"><i class="fas fa-save"></i> In hợp đồng</button>
-                            </form>
-                        @endif
+                        <a href="{{ route('dashboards-orders.index') }}" class="btn btn-primary">Quay lại</a>
                     </div>
                 </div>
             </div>

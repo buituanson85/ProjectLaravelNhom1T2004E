@@ -28,6 +28,7 @@
                                     <h3 class="card-title">Danh sách thành phố</h3>
 
                                     <div class="card-tools">
+                                        <a href="{{ route('city.create') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i>Thêm thành phố mới</a>
                                     </div>
                                 </div>
                                 <div class="col-md-8 mt-4">
