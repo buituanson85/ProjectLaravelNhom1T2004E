@@ -1,5 +1,5 @@
 @extends('layouts.Backend.base')
-@section('title', 'Đối tác')
+@section('title', 'Khách hàng')
 @section('content')
     <div id="right-panel" class="right-panel">
 
@@ -13,7 +13,7 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('products.index') }}">Danh sách đối tác</a></span>
+                        <span style="float: left"><a href="{{ route('products.index') }}">Danh sách khách hàng</a></span>
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                                                                     <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                                                                 </div>
                                                                 <div class="col-md-9">
-                                                                    <input type="text" name="name" id="name" value="" placeholder="Tên đối tác" class="form-control input-md">
+                                                                    <input type="text" name="name" id="name" value="" placeholder="Tên khách hàng" class="form-control input-md">
                                                                 </div>
                                                             </div>
                                                         </div>

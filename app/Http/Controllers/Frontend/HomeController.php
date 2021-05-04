@@ -24,39 +24,39 @@ class HomeController extends Controller
         return view('Frontend.home',compact('categories','cities'));
     }
 
-    public function lichsuthuexe(){
-        $orders = null;
-        $get_orders = Order::all();
-        $array_id = [];
-        foreach ($get_orders as $order) {
-            if ($order->customer_id == Auth::user()->id) {
-                $array_id[] = $order->id;
-            }
-        }
+    public function lichsuthuexe(Request $request){
 
         $orders = Order::where([
+            ['customer_id', Auth::user()->id],
             ['status','!=','cancelled'],
             ['status','!=','delete'],
             ['status','!=','completed']
-        ])->findMany($array_id);
+        ])->orderBy('id','desc')->paginate(5);
+        $orders->appends($request->all());
         return view('Frontend.profiles.lichsuthuexe')->with(['orders'=>$orders]);
     }
 
-    public function lsthuexe(){
-        $orders = null;
-        $get_orders = Order::all();
-        $array_id = [];
-        foreach ($get_orders as $order) {
-            if ($order->customer_id == Auth::user()->id) {
-                $array_id[] = $order->id;
-            }
+    public function lsthuexe(Request $request){
+        $name = $request->name;
+        if (isset($name)){
+            $orders = Order::where([
+                ['customer_id', Auth::user()->id],
+                ['order_id','like', '%'.$name.'%'],
+                ['status','!=','pending'],
+                ['status','!=','paid'],
+                ['status','!=','accept']
+            ])->orderBy('id','desc')->paginate(5);
+            $orders->appends($request->all());
+        }else{
+            $orders = Order::where([
+                ['customer_id', Auth::user()->id],
+                ['status','!=','pending'],
+                ['status','!=','paid'],
+                ['status','!=','accept']
+            ])->orderBy('id','desc')->paginate(5);
+            $orders->appends($request->all());
         }
 
-        $orders = Order::where([
-            ['status','!=','pending'],
-            ['status','!=','paid'],
-            ['status','!=','accept']
-        ])->findMany($array_id);
         return view('Frontend.profiles.lsthuexe')->with(['orders'=>$orders]);
     }
     public function deleteOrder(Request $request,$id){
@@ -364,5 +364,8 @@ class HomeController extends Controller
         return view('Frontend.Child.service');
     }
 
+    public function cauhoi(){
+        return view('Frontend.Child.cauhoi');
+    }
 
 }

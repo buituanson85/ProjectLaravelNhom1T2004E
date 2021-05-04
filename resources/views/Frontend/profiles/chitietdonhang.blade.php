@@ -100,13 +100,15 @@
                                                                 <h4>Thông tin chung</h4>
                                                             </div>
                                                             <div class="col-12">
-                                                                <div class="col-8" style="margin-top: 20px">
-                                                                    <p class="text-dark">Email: {{$order->product->user->email}}</p>
-                                                                    <p class="text-dark">Phone: {{$order->product->user->phone}}</p>
-                                                                    <p class="text-dark">Address: {{$order->product->user->address}}</p>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                    <img class="img-thumbnail"  style="max-width: 100%; max-height: 100%; display: block; overflow: hidden" src="{{$order->product->user->profile_photo_path}}">
+                                                                <div class="row">
+                                                                    <div class="col-8" style="margin-top: 20px">
+                                                                        <p class="text-dark">Email: {{$order->product->user->email}}</p>
+                                                                        <p class="text-dark">Phone: {{$order->product->user->phone}}</p>
+                                                                        <p class="text-dark">Address: {{$order->product->user->address}}</p>
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <img class="img-thumbnail"  width="200" height="100" src="{{$order->product->user->profile_photo_path}}">
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <hr width="100%">
@@ -173,11 +175,11 @@
                                                                 <h4>Ảnh phương tiện</h4>
                                                             </div>
                                                             @foreach($galaxies as $galaxy)
-                                                            <div class="col-3">
+                                                            <div class="col-3 pt-3">
                                                                 <div class="thumbnail">
                                                                     <a href="#">
                                                                         <div style="height: 105px">
-                                                                            <img src="{{ $galaxy->image }}" alt="" style="width:100%">
+                                                                            <img src="{{ $galaxy->image }}" alt="" width="150" height="80">
                                                                         </div>
                                                                     </a>
                                                                 </div>
@@ -228,6 +230,15 @@
                                                 <div class="d-flex justify-content-between">
                                                     <strong class="text-gray-dark">Giá thuê xe/ngày:</strong>
                                                     <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{number_format($order->product->price, 0). ' VNĐ' }}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex text-muted pt-3">
+                                            <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                                                <div class="d-flex justify-content-between">
+                                                    <strong class="text-gray-dark">Tiền bảo hiểm:</strong>
+                                                    <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{ number_format($order->product->insurrance, 0). ' VNĐ' }}</a>
                                                 </div>
                                             </div>
                                         </div>

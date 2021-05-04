@@ -1,5 +1,5 @@
 @extends('layouts.Backend.base')
-@section('title', 'Create Product')
+@section('title', 'Danh sách phương tiện')
 @section('content')
 
     <div id="right-panel" class="right-panel">
@@ -9,12 +9,14 @@
     <!-- Header-->
 
         <div class="breadcrumbs">
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('products.index') }}">Chi tiết phương tiện</a></span>
+                        <span style="float: left"><a href="{{ route('dashboards.tableproducts', $product->partner_id) }}">Danh sách phương tiện</a></span>
+                        <span style="float: left;margin: 0 5px">/</span>
+                        <span style="float: left"><a href="{{ route('dashboards.showproduct', $product->id) }}">Chi tiết phương tiện</a></span>
                     </div>
                 </div>
             </div>
@@ -82,6 +84,14 @@
                                         </div>
                                     </div>
                                     @else
+                                        <div class="row pt-2">
+                                            <div class="col-md-6">
+                                                <span style="font-weight: 500">Số lượng(tồn):</span>
+                                            </div>
+                                            <div class="col-md-5">
+                                                {{ $product->quantity }}&#160;Xe
+                                            </div>
+                                        </div>
                                     @endif
                                 </div>
                             </div>
@@ -234,11 +244,11 @@
                                 </div>
                                 <div class="row ">
                                     @foreach($galaxies as $galaxy)
-                                    <div class="col-3">
+                                    <div class="col-3 pt-3">
                                         <div class="thumbnail">
                                             <a href="#">
                                                 <div style="height: 120px;width: 150px">
-                                                    <img src="{{ $galaxy->image }}" alt="" style="width:100%">
+                                                    <img src="{{ $galaxy->image }}" alt="" width="200" height="120">
                                                 </div>
                                             </a>
                                         </div>
@@ -248,7 +258,7 @@
                             </div>
 
                             <div class="card-footer">
-                                <a href="{{ route('products.index') }}" class="btn btn-primary"><i class="fas fa-save"></i> Danh sách đối tác</a>
+                                <a href="{{ route('dashboards.tableproducts', $product->partner_id) }}" class="btn btn-primary"><i class="fas fa-save"></i> Quay lại</a>
                             </div>
                         </form>
                     </div>

@@ -40,8 +40,25 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="card-header text-center">
-                                    <span style="font-size: 20px;font-weight: 600">ĐƠN HÀNG ĐANG DIỄN RA</span>
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-5 pt-2">
+                                            <span style="font-size: 18px;font-weight: 700">ĐƠN HÀNG ĐÃ KẾT THÚC</span>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <form action="{{ route('pages.lsthuexe') }}" class="p-0">
+                                                @csrf
+                                                <div class="row">
+                                                    <div class="col-md-9">
+                                                        <input type="text" name="name" id="name" value="" placeholder="Mã đơn hàng" class="form-control input-sm">
+                                                    </div>
+                                                    <div class="col-md-3 pt-1">
+                                                        <button type="submit" class="btn btn-sm btn-primary">Tìm kiếm</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="card-body" style="background-color: #ffffff;font-size: 14px">
                                     <table class="table table-hover text-nowrap" id="product_table" >
@@ -80,7 +97,7 @@
                                                     @elseif($order->status == "completed")
                                                         <a class="badge badge-primary" style="background-color: pink">Kết thúc chuyến</a>
                                                 @endif
-                                                <td><a href="{{route('pages.ctdonhang', $order->order_id)}}"><span class="btn btn-sm btn-secondary" style="background-color: greenyellow;border: none;color: black"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
+                                                <td><a href="{{route('pages.ctdonhang', $order->order_id)}}"><span class="btn btn-sm btn-secondary" style="background-color: greenyellow;border: none;color: black;font-size: 14px"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
                                                 <td>
                                                     <a href="{{ route('pages.deleteOrder',$order->order_id) }}" class="btn btn-sm btn-danger">Xóa</a>
                                                 </td>
@@ -92,9 +109,10 @@
                                         @endforelse
                                         </tbody>
                                     </table>
+                                    {!! $orders->render('pagination::bootstrap-4') !!}
                                 </div>
                                 <div class="card-footer">
-                                    <a href="/" class="btn btn-primary">Về trang chủ</a>
+                                    <a href="/" class="btn btn-sm btn-primary">Về trang chủ</a>
                                 </div>
                             </div>
                         </div>

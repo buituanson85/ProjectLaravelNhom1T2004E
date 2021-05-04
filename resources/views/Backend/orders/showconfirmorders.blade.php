@@ -15,9 +15,9 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('dashboards.ordersdeletecancelled')}}">Đơn hàng từ chối và hủy</a></span>
+                        <span style="float: left"><a href="{{ route('dashboards-orders.index')}}">Đơn hàng</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('dashboards.showordersdeletecancelled', $order->order->order_id) }}">Chi tiết</a></span>
+                        <span style="float: left"><a href="{{ route('dashboards-orders.show', $order->order->order_id) }}">Chi tiết</a></span>
                     </div>
                 </div>
             </div>
@@ -53,13 +53,13 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <h6 style="padding-left: 60px;font-size: 18px;font-weight: 700">Thông tin đơn hàng</h6>
+                                    <h6 style="padding-left: 60px;font-size: 18px;font-weight: 700">Thông tin phương tiện</h6>
                                     <div class="row pt-2">
                                         <div class="col-md-6">
                                             <span style="font-weight: 500">Thương hiệu:</span>
                                         </div>
                                         <div class="col-md-5">
-                                            {{ $order->product->brand->name }}
+                                            {{ $order->product->brand->name }}.
                                         </div>
                                     </div>
 
@@ -68,7 +68,7 @@
                                             <span style="font-weight: 500">Khu vực đăng ký:</span>
                                         </div>
                                         <div class="col-md-5">
-                                            {{ $order->product->district->name }}
+                                            {{ $order->product->district->name }}.
                                         </div>
                                     </div>
 
@@ -77,7 +77,7 @@
                                             <span style="font-weight: 500">Loại xe:</span>
                                         </div>
                                         <div class="col-md-5">
-                                            {{ $order->product->category->name }}
+                                            {{ $order->product->category->name }}.
                                         </div>
                                     </div>
 
@@ -86,7 +86,7 @@
                                             <span style="font-weight: 500">Kiểu xe:</span>
                                         </div>
                                         <div class="col-md-5">
-                                            {{ $order->product->range }}
+                                            {{ $order->product->range }}.
                                         </div>
                                     </div>
 
@@ -96,7 +96,7 @@
                                                 <span style="font-weight: 500">Biển số xe:</span>
                                             </div>
                                             <div class="col-md-5">
-                                                {{ $order->product->biensoxe }}
+                                                {{ $order->product->biensoxe }}.
                                             </div>
                                         </div>
                                     @else
@@ -105,7 +105,7 @@
                                                 <span style="font-weight: 500">Số lượng thuê:</span>
                                             </div>
                                             <div class="col-md-5">
-                                                {{ $order->quantity }}&#160;Xe
+                                                {{ $order->quantity }}&#160;Xe.
                                             </div>
                                         </div>
                                     @endif
@@ -154,7 +154,7 @@
                                                 <div class="col-12" style="margin-top: 40px">
                                                     <h4>Giấy tờ tùy thân</h4>
                                                 </div>
-                                                <div class="col-3 pt-3">
+                                                <div class="col-3">
                                                     <div class="thumbnail">
                                                         @if((isset($order->order->user->file->cmt_before)) && ($order->order->user->file->cmt_before != null))
                                                             <a href="{{$order->order->user->file->cmt_before}}" target="_blank">
@@ -171,7 +171,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-3 pt-3">
+                                                <div class="col-3">
                                                     <div class="thumbnail">
                                                         @if((isset($order->order->user->file->cmt_after)) && ($order->order->user->file->cmt_after != null))
                                                             <a href="{{$order->order->user->file->cmt_after}}" target="_blank">
@@ -188,7 +188,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-3 pt-3">
+                                                <div class="col-3">
                                                     <div class="thumbnail">
                                                         @if((isset($order->order->user->file->license_before)) && ($order->order->user->file->license_before != null))
                                                             <a href="{{$order->order->user->file->license_before}}" target="_blank">
@@ -205,7 +205,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-3 pt-3">
+                                                <div class="col-3">
                                                     <div class="thumbnail">
                                                         @if((isset($order->order->user->file->license_after)) && ($order->order->user->file->license_after != null))
                                                             <a href="{{$order->order->user->file->license_after}}" target="_blank">
@@ -246,7 +246,7 @@
                                 <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                                     <div class="d-flex justify-content-between">
                                         <strong class="text-gray-dark">Ngày giao xe:</strong>
-                                        <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{date("d-m-Y",strtotime($order->product_pay_date))}} </a>
+                                        <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{ date("d-m-Y",strtotime($order->product_pay_date))}} </a>
                                     </div>
                                 </div>
                             </div>
@@ -255,7 +255,7 @@
                                 <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                                     <div class="d-flex justify-content-between">
                                         <strong class="text-gray-dark">Số ngày thuê:</strong>
-                                        <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{$total_day = (strtotime($order->product_pay_date) - strtotime($order->product_received_date))/86400 + 1 }}</a>
+                                        <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{$total_day = (strtotime($order->product_pay_date) - strtotime($order->product_received_date))/86400 + 1 }} &#160;Ngày</a>
                                     </div>
                                 </div>
                             </div>
@@ -270,12 +270,21 @@
                                 </div>
                             </div>
 
+                            <div class="d-flex text-muted pt-3">
+                                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                                    <div class="d-flex justify-content-between">
+                                        <strong class="text-gray-dark">Bảo hiểm:</strong>
+                                        <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{ number_format( $order->product->insurrance, 0). ' VNĐ' }}</a>
+                                    </div>
+                                </div>
+                            </div>
+
 
                             <div class="d-flex text-muted pt-3">
                                 <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                                     <div class="d-flex justify-content-between">
                                         <strong class="text-gray-dark">Tổng tiền:</strong>
-                                        <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{number_format(($order->product->price) * $total_day) . ' VNĐ'}}</a>
+                                        <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{number_format($order->order->price_total) . ' VNĐ'}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -283,14 +292,7 @@
 
                         </div>
                         <div class="card-footer form-inline">
-                            <a href="{{ route('dashboards.ordersdeletecancelled') }}" class="btn btn-primary">Quay lại</a>
-                            @if($order->order->confirm == 0)
-                            <form id="confirmOrder" action="{{ route('order.confirmOrder', $order->order->order_id) }}" method="post">
-                                @csrf
-                                <button type="submit" class="btn btn-success" style="margin: 5px"><i class="fas fa-eject"></i> Đã xử lý</button>
-                            </form>
-                            @else
-                            @endif
+                            <a href="{{ route('dashboards-orders.index') }}" class="btn btn-primary">Quay lại</a>
                         </div>
                     </div>
                 </div>
@@ -303,12 +305,12 @@
 @section('addjs')
     <script src="{{ asset('Backend/vendors/alertifyjs/alertify.js') }}"></script>
     <script>
-        jQuery('#confirmOrder').submit(function (e){
+        jQuery('#acceptOrder').submit(function (e){
             e.preventDefault();
-            alertify.confirm('Bạn đã xử lý đơn hàng này',
+            alertify.confirm('Bạn có chấp thuận với đơn hàng này',
                 function(){
-                    alertify.success('Xử lý thành công');
-                    jQuery('#confirmOrder')[0].submit();
+                    alertify.success('Chấp thuận thành công');
+                    jQuery('#acceptOrder')[0].submit();
                 }).set({"title":"Thông báo"});
         });
         jQuery('#refuseOrder').submit(function (e){

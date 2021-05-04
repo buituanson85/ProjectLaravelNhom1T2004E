@@ -118,7 +118,9 @@ class VehiclesController extends Controller
     public function tableProducts(Request $request,$id){
         $products = Product::where([
             ['partner_id', $id],
-            ['status', 'ready']
+            ['status','!=', 'refused'],
+            ['status','!=', 'pending'],
+            ['status','!=', 'unavailable']
         ])->orderBy('id','DESC')->paginate(5);
         $products->appends($request->all());
         $user = User::find($id);
@@ -152,8 +154,18 @@ class VehiclesController extends Controller
     }
 
     public function confirmProduct(Request $request){
-        $products = Product::where('status', 'pending')->orderBy('id','DESC')->paginate(5);
-        $products->appends($request->all());
+        $name = $request->name;
+        if (isset($name)){
+            $products = Product::where([
+                ['status', 'pending'],
+                ['name','like', '%'.$name.'%']
+            ])->orderBy('id','DESC')->paginate(5);
+            $products->appends($request->all());
+        }else{
+            $products = Product::where('status', 'pending')->orderBy('id','DESC')->paginate(5);
+            $products->appends($request->all());
+        }
+
         return view('Backend.confirm-products.index',compact('products'));
     }
 

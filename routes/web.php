@@ -75,7 +75,7 @@ Route::get('/pages/hopdong', [HomeController::class,'hopdong'])->name('pages.hop
 Route::get('/pages/khieunai', [HomeController::class,'khieunai'])->name('pages.khieunai');
 Route::get('/pages/baomat', [HomeController::class,'baomat'])->name('pages.baomat');
 Route::get('/pages/service', [HomeController::class,'service'])->name('pages.service');
-
+Route::get('/pages/cauhoi', [HomeController::class,'cauhoi'])->name('pages.cauhoi');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function (){
 //pages
@@ -160,10 +160,12 @@ Route::middleware(['auth:sanctum', 'verified','authadmin'])->group(function (){
         //order
         Route::resource('/dashboards/dashboards-orders',OrderController::class);
         Route::get('/dashboards/confirm-orders',[OrderController::class,'confirmOrders'])->name('dashboards.confirmorders');
+        Route::get('/dashboards/show-confirm-orders/{id}',[OrderController::class,'showConfirmOrders'])->name('dashboards.showconfirmorders');
+
         Route::get('/dashboards/orders-delete-cancelled',[OrderController::class,'ordersDeleteCancelled'])->name('dashboards.ordersdeletecancelled');
         Route::get('/dashboards/show-orders-delete-cancelled/{id}',[OrderController::class,'showOrdersDeleteCancelled'])->name('dashboards.showordersdeletecancelled');
 
-        Route::get('/dashboards/order-confirm-order/{id}',[OrderController::class,'orderConfirmOrder'])->name('order.confirmOrder');
+        Route::post('/dashboards/order-confirm-order/{id}',[OrderController::class,'orderConfirmOrder'])->name('order.confirmOrder');
 
     });
     //Support

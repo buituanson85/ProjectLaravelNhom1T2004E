@@ -54,7 +54,7 @@
                                             <span style="font-weight: 500">Thương hiệu:</span>
                                         </div>
                                         <div class="col-md-5">
-                                            {{ $product->brand->name }}
+                                            {{ $product->brand->name }}.
                                         </div>
                                     </div>
 
@@ -72,7 +72,7 @@
                                             <span style="font-weight: 500">Loại xe:</span>
                                         </div>
                                         <div class="col-md-5">
-                                            {{ $product->category->name }}
+                                            {{ $product->category->name }}.
                                         </div>
                                     </div>
 
@@ -81,7 +81,7 @@
                                             <span style="font-weight: 500">Kiểu xe:</span>
                                         </div>
                                         <div class="col-md-5">
-                                            {{ $product->range }}
+                                            {{ $product->range }}.
                                         </div>
                                     </div>
                                     @if($product->category_id == 1)
@@ -90,16 +90,16 @@
                                                 <span style="font-weight: 500">Biển số xe:</span>
                                             </div>
                                             <div class="col-md-5">
-                                                {{ $product->biensoxe }}
+                                                {{ $product->biensoxe }}.
                                             </div>
                                         </div>
                                     @else
                                         <div class="row pt-2">
                                             <div class="col-md-6">
-                                                <span style="font-weight: 500">Số lượng:</span>
+                                                <span style="font-weight: 500">Số lượng đăng ký:</span>
                                             </div>
                                             <div class="col-md-5">
-                                                {{ $product->quantity }}
+                                                {{ $product->quantity }}&#160; Xe.
                                             </div>
                                         </div>
                                     @endif
@@ -251,15 +251,15 @@
                                 <div class="col-md-12">
                                     <div class="row" style="padding: 30px 0">
                                         <div class="col-md-3">
-                                            <span style="font-size: 16px;font-weight: 600">Ảnh phương tiện</span>
+                                            <span style="font-size: 18px;font-weight: 700">Ảnh phương tiện</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row">
                                         @foreach($galaxies as $galaxy)
-                                            <div class="col-md-3">
-                                                <img src="{{ $galaxy->image }}" alt="">
+                                            <div class="col-md-3 pt-3">
+                                                <img src="{{ $galaxy->image }}" alt="" width="200" height="120">
                                             </div>
                                         @endforeach
                                     </div>

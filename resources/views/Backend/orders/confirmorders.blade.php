@@ -14,25 +14,20 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('dashboards-orders.index') }}">Đơn hàng</a></span>
-                        <span style="float: left;margin: 0 5px">/</span>
                         <span style="float: left"><a href="{{ route('dashboards.confirmorders') }}">Đơn hàng chờ xác nhận</a></span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="breadcrumbs">
-            <div class="row pt-5">
+            <div class="row pt-5 m-0">
                 <div class="col-md-10 offset-md-1">
                     <div class="card">
                         <div class="card-header">
 
                             <h3 class="card-title">Đơn hàng chờ xác nhận</h3>
-
-                            <div class="card-tools">
-                            </div>
                         </div>
-                        <div class="card-body table-responsive p-0">
+                        <div class="card-body">
                             @include('partials.alert')
                             <table class="table table-hover text-nowrap" id="product_table" >
                                 <thead>
@@ -78,34 +73,33 @@
                                             @elseif($order->status == "completed")
                                                 <a class="badge badge-primary" style="background-color: pink">Kết thúc chuyến</a>
                                         @endif
-                                        <td><a href="{{route('dashboards-orders.show', $order->order_id)}}"><span class="btn btn-sm btn-secondary" style="background-color: greenyellow;border: none;color: black"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
+                                        <td><a href="{{route('dashboards.showconfirmorders', $order->order_id)}}"><span class="btn btn-sm btn-secondary" style="background-color: greenyellow;border: none;color: black"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
                                         <td>
                                             @if($order->status == "pending")
                                                 <form action="{{ route('dashboards-orders.destroy',$order->id) }}" method="post">
                                                     @csrf
                                                     @method('delete')
                                                     <input type="hidden" id="create_at-{{ $order->id }}" value="{{ $order->created_at }}">
-                                                    <div id="price_{{ $order->id }}"></div>
-                                                    <div id="time_{{ $order->id }}"></div>
+                                                    <div id="price_{{ $order->id }}" style="display: none"></div>
+                                                    <div id="time_{{ $order->id }}" style="display: none"></div>
                                                     <button class="btn btn-sm btn-danger" id="id-{{ $order->id }}" name="deleteConfirm" style="display:none;"><i class="fa fa-edit"></i>&nbsp;Xóa</button>
                                                 </form>
                                             @else
                                             @endif
                                                 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
                                                 <script type="text/javascript">
-                                                $(document).ready(function(){
+
                                                     var create_at_{{ $order->id }} = $( "#create_at-{{ $order->id }}" ).val();;
                                                     var d_{{ $order->id }} = new Date(create_at_{{ $order->id }});
                                                     var n_{{ $order->id }} = d_{{ $order->id }}.getTime();
                                                     var x = new Date();
                                                     var y = x.getTime();
                                                     var z = (y - n_{{ $order->id }})/(1000*60);
-                                                    var times = (30 - z)*1000;
+                                                    var times = (30 - z)*60*1000;
                                                     document.getElementById("price_{{ $order->id }}").innerHTML = z;
                                                     document.getElementById("time_{{ $order->id }}").innerHTML = times;
                                                     setTimeout(function(){
-                                                        document.getElementById("id-{{ $order->id }}").style.display = 'block';}, times);
-                                                });
+                                                    document.getElementById("id-{{ $order->id }}").style.display = 'block';}, times);
 
                                             </script>
                                         </td>

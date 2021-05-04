@@ -13,16 +13,16 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('dashboards.profile') }}">Photofile Khách hàng</a></span>
+                        <span style="float: left"><a href="{{ route('customers.index') }}">Khách hàng</a></span>
+                        <span style="float: left;margin: 0 5px">/</span>
+                        <span style="float: left"><a href="{{ route('customers.show', $user->id) }}">Hồ sơ khách hàng</a></span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="breadcrumbs">
             <div class="alert-danger"></div>
-            <form class="form-horizontal" method="POST" action="{{ route('dashboards.updateprofile') }}" enctype="multipart/form-data">
-                @csrf
-                <section style="padding: 60px 20px;">
+            <section style="padding: 60px 20px;">
                     <div class="">
                         <div class="row">
                             <div class="col-md-3">
@@ -41,7 +41,7 @@
                                 <div class="card">
                                     @include('partials.alert')
                                     <div class="card-header">
-                                        <h4>Profile</h4>
+                                        <h4>Hồ sơ</h4>
                                     </div>
                                     <div class="card-body">
                                         <div>
@@ -135,12 +135,81 @@
                                                         </div>
 
                                                         <div class="form-group pt-3">
-                                                            <a href="{{ route('customers.index') }}" class="btn btn-primary"><i class="fas fa-user-edit"></i> Backs</a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-12">
-                                                        <div class="form-group button">
-{{--                                                            <button type="submit" class="btn btn-primary"><i class="fas fa-user-edit"></i> Cập nhật Profile</button>--}}
+                                                    <hr width="100%">
+                                                    <div class="col-md-12 pt-3">
+                                                        <h4>Giấy tờ tùy thân</h4>
+                                                    </div>
+                                                    <div class="col-md-12 pt-3">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="thumbnail">
+                                                                    @if((isset( $user->file->cmt_before )) && ( $user->file->cmt_before != null ))
+                                                                        <a href="{{ $user->file->cmt_before }}" target="_blank">
+                                                                            <div style="height: 105px">
+                                                                                <img src="{{ $user->file->cmt_before }}" alt="" style="width:100%">
+                                                                            </div>
+                                                                            <div class="caption text-center pt-5">
+                                                                                <p>Chứng minh thư <br/>(mặt trước)</p>
+                                                                            </div>
+                                                                        </a>
+                                                                    @else
+                                                                        <div style="height: 105px; padding-top: 40px" class="text-center">Chứng minh thư <br/> mặt trước: <b>Thiếu</b></div>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="thumbnail">
+                                                                    @if((isset( $user->file->cmt_after )) && ( $user->file->cmt_after != null ))
+                                                                        <a href="{{ $user->file->cmt_after }}" target="_blank">
+                                                                            <div style="height: 105px">
+                                                                                <img src="{{ $user->file->cmt_after }}" alt="" style="width:100%">
+                                                                            </div>
+                                                                            <div class="caption text-center pt-5">
+                                                                                <p>Chứng minh thư <br/>(mặt sau)</p>
+                                                                            </div>
+                                                                        </a>
+                                                                    @else
+                                                                        <div style="height: 105px; padding-top: 40px" class="text-center">Chứng minh thư <br/> mặt sau: <b>Thiếu</b></div>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="thumbnail">
+                                                                    @if((isset( $user->file->license_before )) && ( $user->file->license_before != null ))
+                                                                        <a href="{{ $user->file->license_before }}" target="_blank">
+                                                                            <div style="height: 105px">
+                                                                                <img src="{{ $user->file->license_before }}" alt="" style="width:100%">
+                                                                            </div>
+                                                                            <div class="caption text-center pt-5">
+                                                                                <p>Giấy phép lái xe <br/>(mặt trước)</p>
+                                                                            </div>
+                                                                        </a>
+                                                                    @else
+                                                                        <div style="height: 105px; padding-top: 40px" class="text-center">Giấy phép lái xe  <br/> mặt trước: <b>Thiếu</b></div>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="thumbnail">
+                                                                    @if((isset( $user->file->license_after )) && ( $user->file->license_after != null ))
+                                                                        <a href="{{ $user->file->license_after }}" target="_blank">
+                                                                            <div style="height: 105px">
+                                                                                <img src="{{ $user->file->license_after }}" alt="" style="width:100%">
+                                                                            </div>
+                                                                            <div class="caption text-center pt-5">
+                                                                                <p>Giấy phép lái xe <br/>(mặt <sau></sau>)</p>
+                                                                            </div>
+                                                                        </a>
+                                                                    @else
+                                                                        <div style="height: 105px; padding-top: 40px" class="text-center">Giấy phép lái xe <br/> mặt sau: <b>Thiếu</b></div>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -148,12 +217,14 @@
 
                                         </div>
                                     </div>
+                                    <div class="card-header">
+                                        <a href="{{ route('customers.index') }}" class="btn btn-primary"><i class="fas fa-user-edit"></i> Backs</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
-            </form>
         </div>
 
 

@@ -25,10 +25,31 @@
                         <div class="card">
                             <div class="card-header ui-sortable-handle" style="cursor: move">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="card-tools">
-                                            <span style="font-size: 16px;font-weight: 600">Lịch sử giao dịch:</span>
+                                            <span style="font-size: 18px;font-weight: 700">Danh sách giao dịch:</span>
                                         </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <form action="{{ route('dashboards.walletpartners') }}" class="form-horizontal">
+                                            @csrf
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <input type="text" name="name" id="name" value="" placeholder="Số tài khoản" class="form-control input-md">
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +87,7 @@
                                             <td>{{ $history->note }}</td>
                                             <td>
                                                 <div id="paypal-button_{{ $history->id }}" onclick="thanhtoan()"></div>
-                                                <form id="pay-form"  action="{{ route('dashboards.paymoneywaiting', $history->id ) }}" method="get">
+                                                <form id="pay-form_{{ $history->id }}"  action="{{ route('dashboards.paymoneywaiting', $history->id ) }}" method="get">
                                                     @csrf
                                                 </form>
 {{--                                                <a href="" class="badge badge-warning">{{ $history->status }}</a>--}}
@@ -119,7 +140,7 @@
                                             }, '#paypal-button_{{ $history->id }}');
                                             function thanhtoan() {
                                                 event.preventDefault();
-                                                document.getElementById('pay-form').submit();
+                                                document.getElementById('pay-form_{{ $history->id }}').submit();
                                             }
                                         </script>
                                     @endforeach

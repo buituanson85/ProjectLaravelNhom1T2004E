@@ -138,7 +138,7 @@
             <p><a href="{{ route('pages.tutorial') }}" class="the_a_two">Hướng dẫn thuê xe</a></p>
             <p><a href="{{ route('pages.hopdong') }}" class="the_a_two">Hợp đồng thuê xe tự lái</a></p>
             <p><a href="{{ route('pages.camnang') }}" class="the_a_two">Cẩm nang thuê xe tự lái</a></p>
-            <p><a href="" class="the_a_two">Câu hỏi thường gặp</a></p>
+            <p><a href="{{ route('pages.cauhoi') }}" class="the_a_two">Câu hỏi thường gặp</a></p>
             {{--            <p><a href="">Chung xe blog</a></p>--}}
         </div>
     </div>

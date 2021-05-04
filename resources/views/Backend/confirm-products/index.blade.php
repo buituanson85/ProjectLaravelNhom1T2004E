@@ -25,31 +25,29 @@
                         <div class="card">
                             <div class="card-header ui-sortable-handle" style="cursor: move">
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="card-tools">
-{{--                                            <a href="{{ route('partners.create') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Create Product</a>--}}
-                                        </div>
+                                    <div class="col-md-4">
+                                        <span style="font-size: 16px;font-weight: 700;">DANH SÁCH ĐĂNG KÝ PHƯƠNG TIỆN</span>
                                     </div>
-                                    <div class="col-md-9">
-                                        {{--                                        <form action="{{ route('partners.index') }}" class="form-horizontal">--}}
-                                        {{--                                            @csrf--}}
-                                        {{--                                            <div class="row">--}}
-                                        {{--                                                <div class="col-md-12">--}}
-                                        {{--                                                    <div class="form-group">--}}
-                                        {{--                                                        <div class="col-md-12">--}}
-                                        {{--                                                            <div class="row">--}}
-                                        {{--                                                                <div class="col-md-9">--}}
-                                        {{--                                                                    <input type="text" name="name" id="name" value="" placeholder="Users Name" class="form-control input-md">--}}
-                                        {{--                                                                </div>--}}
-                                        {{--                                                                <div class="col-md-3">--}}
-                                        {{--                                                                    <button type="submit" class="btn btn-primary">Search</button>--}}
-                                        {{--                                                                </div>--}}
-                                        {{--                                                            </div>--}}
-                                        {{--                                                        </div>--}}
-                                        {{--                                                    </div>--}}
-                                        {{--                                                </div>--}}
-                                        {{--                                            </div>--}}
-                                        {{--                                        </form>--}}
+                                    <div class="col-md-8">
+                                        <form action="{{ route('dashboards.confirmproduct') }}" class="form-horizontal">
+                                            @csrf
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <input type="text" name="name" id="name" value="" placeholder="Name" class="form-control input-md">
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

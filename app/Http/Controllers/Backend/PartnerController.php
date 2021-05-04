@@ -25,8 +25,18 @@ class PartnerController extends Controller
 {
     public function index(Request $request){
         $user = auth()->user();
-        $products = Product::where('partner_id', $user->id)->orderBy('id','DESC')->paginate(10);
-        $products->appends($request->all());
+        $name = $request->name;
+        if (isset($name)){
+            $products = Product::where([
+                ['partner_id', $user->id],
+                ['name','like', '%'.$name.'%']
+            ])->orderBy('id','DESC')->paginate(5);
+            $products->appends($request->all());
+        }else{
+            $products = Product::where('partner_id', $user->id)->orderBy('id','DESC')->paginate(5);
+            $products->appends($request->all());
+        }
+
         return view('Backend.administration-partner.index',compact('products'));
     }
 
@@ -258,6 +268,17 @@ class PartnerController extends Controller
     }
 
     public function confirmPartner(Request $request){
+        $name = $request->name;
+        if (isset($name)){
+            $partners = Partner::where([
+                ['status','outofstock'],
+                ['name','like','%'.$name.'%']
+            ])->orderBy('id','DESC')->paginate(5);
+            $partners->appends($request->all());
+        }else{
+            $partners = Partner::where('status','outofstock')->orderBy('id','DESC')->paginate(5);
+            $partners->appends($request->all());
+        }
         $partners = Partner::where('status','outofstock')->orderBy('id','DESC')->paginate(5);
         $partners->appends($request->all());
         return view('Backend.administration-partner.table-confirm-register-partner', compact('partners'));

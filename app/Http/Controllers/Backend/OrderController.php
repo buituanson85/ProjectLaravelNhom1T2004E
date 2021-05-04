@@ -25,6 +25,7 @@ use PDF;
 class OrderController extends Controller
 {
 
+    //hiển thị lịch sử đơn hàng
     public function index()
     {
         $orders = Order::where([
@@ -32,28 +33,35 @@ class OrderController extends Controller
             ['status','!=','accept'],
             ['status','!=','paid'],
             ['confirm','!=', 0]
-        ])->get();
+        ])->orderBy('id','desc')->get();
 
         return view('Backend.orders.index')->with(['orders'=>$orders]);
     }
+    //hiển thị danh sách các đơn hàng có trạng thái pending
     public function confirmOrders(){
-        $orders = Order::where('status','pending')->get();
+        $orders = Order::where('status','pending')->orderBy('id','desc')->get();
         return view('Backend.orders.confirmorders')->with(['orders'=>$orders]);
     }
 
+    public function showConfirmOrders($id){
+        $get_order = Order::where('order_id','like', $id)->first();
+        $order = OrderDetails::find($get_order->id);
+        return view('Backend.orders.showconfirmorders')->with(['order'=>$order]);
+    }
+    //hiển thị danh sách các đơn hàng bị từ chối và hủy có confirm bằng 1
     public function ordersDeleteCancelled(){
         $orders = Order::where([
             ['status','!=','pending'],
             ['status','!=','accept'],
             ['status','!=','paid'],
             ['confirm','!=', 1]
-        ])->get();
+        ])->orderBy('id','desc')->get();
         return view('Backend.orders.orders-delete-cancelled')->with(['orders'=>$orders]);
     }
 
     public function orderConfirmOrder(Request $request,$id){
         $order = Order::where('order_id', $id)->first();
-        $order->confirm = 0;
+        $order->confirm = 1;
         $order->save();
         $order_details = OrderDetails::find($order->id);
         return view('Backend.orders.show-orders-delete-cancelled')->with(['order'=>$order_details]);
@@ -524,6 +532,4 @@ class OrderController extends Controller
         $order_details = OrderDetails::find($order->id);
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
     }
-
-
 }

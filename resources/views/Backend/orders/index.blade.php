@@ -14,23 +14,19 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ URL::to('/dashboards/order') }}">Đơn hàng</a></span>
+                        <span style="float: left"><a href="{{ URL::to('/dashboards/order') }}">Lịch sử đơn hàng</a></span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="breadcrumbs">
-            <div class="row pt-5">
+            <div class="row pt-5 m-0">
                 <div class="col-md-10 offset-md-1">
                     <div class="card">
                         <div class="card-header">
-
                             <h3 class="card-title">Danh sách đơn hàng</h3>
-
-                            <div class="card-tools">
-                            </div>
                         </div>
-                        <div class="card-body table-responsive p-0">
+                        <div class="card-body">
                             @include('partials.alert')
                             <table class="table table-hover text-nowrap" id="product_table" >
                                 <thead>
@@ -42,7 +38,6 @@
                                     <th>Tổng giá</th>
                                     <th>Trạng thái</th>
                                     <th>Chi tiết</th>
-                                    <th>Xóa</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -77,16 +72,6 @@
                                                 <a class="badge badge-primary" style="background-color: pink">Kết thúc chuyến</a>
                                             @endif
                                         <td><a href="{{route('dashboards-orders.show', $order->order_id)}}"><span class="btn btn-sm btn-secondary" style="background-color: greenyellow;border: none;color: black"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
-                                        <td>
-                                            @if($order->status == "pending")
-                                                <form action="{{ route('dashboards-orders.destroy',$order->id) }}" method="post">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button class="btn btn-sm btn-danger"><i class="fa fa-edit"></i>&nbsp;Xóa</button>
-                                                </form>
-                                            @else
-                                            @endif
-                                        </td>
                                     </tr>
                                 @empty
                                     <tr>

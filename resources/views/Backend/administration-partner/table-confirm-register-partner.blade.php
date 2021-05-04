@@ -25,13 +25,30 @@
                         <div class="card">
                             <div class="card-header ui-sortable-handle" style="cursor: move">
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="card-tools">
-                                            <a href="#" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Danh sách đăng ký</a>
+                                            <span style="font-size: 18px;font-weight: 600">Danh sách đăng ký đối tác</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-9">
-
+                                    <div class="col-md-8">
+                                        <form action="{{ route('pages.confirmpartner') }}" class="form-horizontal">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <input type="text" name="name" id="name" value="" placeholder="Nhập tên đối tác" class="form-control input-md">
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +66,6 @@
                                         <th>Nội dung</th>
                                         <th>Action</th>
                                         <th>Xóa</th>
-                                        <th>Ngày gửi</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -84,7 +100,6 @@
                                                     <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>&nbsp;Delete</button>
                                                 </form>
                                             </td>
-                                            <td>{{ $partner->created_at }}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>

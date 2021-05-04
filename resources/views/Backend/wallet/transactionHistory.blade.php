@@ -1,5 +1,5 @@
 @extends('layouts.Backend.base')
-@section('title', 'Đối tác')
+@section('title', 'Ví đối tác')
 @section('content')
     <div id="right-panel" class="right-panel">
 
@@ -13,7 +13,9 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('products.index') }}">Ví đối tác</a></span>
+                        <span style="float: left"><a href="{{ route('wallet.index') }}">Ví đối tác</a></span>
+                        <span style="float: left;margin: 0 5px">/</span>
+                        <span style="float: left"><a href="{{ route('dashboards.transactionhistory', $wallet_id) }}">Lịch sử giao dịch</a></span>
                     </div>
                 </div>
             </div>
@@ -25,10 +27,31 @@
                         <div class="card">
                             <div class="card-header ui-sortable-handle" style="cursor: move">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="card-tools">
-                                            <span style="font-size: 16px;font-weight: 600">Lịch sử giao dịch:</span>
+                                            <span style="font-size: 18px;font-weight: 700">Lịch sử giao dịch:</span>
                                         </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <form action="{{ route('dashboards.transactionhistory', $wallet_id) }}" class="form-horizontal">
+                                            @csrf
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <input type="text" name="name" id="name" value="" placeholder="Mã giao dịch" class="form-control input-md">
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

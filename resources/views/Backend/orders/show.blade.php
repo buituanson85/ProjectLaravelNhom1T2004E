@@ -53,13 +53,13 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <h6 style="padding-left: 60px;font-size: 18px;font-weight: 700">Thông tin đơn hàng</h6>
+                                <h6 style="padding-left: 60px;font-size: 18px;font-weight: 700">Thông tin phương tiện</h6>
                                 <div class="row pt-2">
                                     <div class="col-md-6">
                                         <span style="font-weight: 500">Thương hiệu:</span>
                                     </div>
                                     <div class="col-md-5">
-                                        {{ $order->product->brand->name }}
+                                        {{ $order->product->brand->name }}.
                                     </div>
                                 </div>
 
@@ -68,7 +68,7 @@
                                         <span style="font-weight: 500">Khu vực đăng ký:</span>
                                     </div>
                                     <div class="col-md-5">
-                                        {{ $order->product->district->name }}
+                                        {{ $order->product->district->name }}.
                                     </div>
                                 </div>
 
@@ -77,7 +77,7 @@
                                         <span style="font-weight: 500">Loại xe:</span>
                                     </div>
                                     <div class="col-md-5">
-                                        {{ $order->product->category->name }}
+                                        {{ $order->product->category->name }}.
                                     </div>
                                 </div>
 
@@ -86,7 +86,7 @@
                                         <span style="font-weight: 500">Kiểu xe:</span>
                                     </div>
                                     <div class="col-md-5">
-                                        {{ $order->product->range }}
+                                        {{ $order->product->range }}.
                                     </div>
                                 </div>
 
@@ -96,16 +96,16 @@
                                             <span style="font-weight: 500">Biển số xe:</span>
                                         </div>
                                         <div class="col-md-5">
-                                            {{ $order->product->biensoxe }}
+                                            {{ $order->product->biensoxe }}.
                                         </div>
                                     </div>
                                 @else
                                     <div class="row pt-2">
                                         <div class="col-md-6">
-                                            <span style="font-weight: 500">Số lượng:</span>
+                                            <span style="font-weight: 500">Số lượng thuê:</span>
                                         </div>
                                         <div class="col-md-5">
-                                            {{ $order->quantity }}&#160;Xe
+                                            {{ $order->quantity }}&#160;Xe.
                                         </div>
                                     </div>
                                 @endif
@@ -161,7 +161,7 @@
                                                         <div style="height: 105px">
                                                             <img src="{{$order->order->user->file->cmt_before}}" alt="" style="width:100%">
                                                         </div>
-                                                        <div class="caption text-center">
+                                                        <div class="caption text-center pt-5">
                                                         <p>Chứng minh thư <br/>(mặt trước)</p>
                                                         </div>
                                                     </a>
@@ -178,7 +178,7 @@
                                                             <div style="height: 105px">
                                                                 <img src="{{$order->order->user->file->cmt_after}}" alt="" style="width:100%">
                                                             </div>
-                                                            <div class="caption text-center">
+                                                            <div class="caption text-center pt-5">
                                                                 <p>Chứng minh thư <br/>(mặt sau)</p>
                                                             </div>
                                                         </a>
@@ -195,7 +195,7 @@
                                                             <div style="height: 105px">
                                                                 <img src="{{$order->order->user->file->license_before}}" alt="" style="width:100%">
                                                             </div>
-                                                            <div class="caption text-center">
+                                                            <div class="caption text-center pt-5">
                                                                 <p>Giấy phép lái xe <br/>(mặt trước)</p>
                                                             </div>
                                                         </a>
@@ -212,7 +212,7 @@
                                                             <div style="height: 105px">
                                                                 <img src="{{$order->order->user->file->license_after}}" alt="" style="width:100%">
                                                             </div>
-                                                            <div class="caption text-center">
+                                                            <div class="caption text-center pt-5">
                                                                 <p>Giấy phép lái xe <br/>(mặt <sau></sau>)</p>
                                                             </div>
                                                         </a>
@@ -246,7 +246,7 @@
                             <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                                 <div class="d-flex justify-content-between">
                                     <strong class="text-gray-dark">Ngày giao xe:</strong>
-                                    <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{date("d-m-Y",strtotime($order->product_pay_date))}} </a>
+                                    <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{ date("d-m-Y",strtotime($order->product_pay_date))}} </a>
                                 </div>
                             </div>
                         </div>
@@ -255,7 +255,7 @@
                             <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                                 <div class="d-flex justify-content-between">
                                     <strong class="text-gray-dark">Số ngày thuê:</strong>
-                                    <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{$total_day = (strtotime($order->product_pay_date) - strtotime($order->product_received_date))/86400 + 1 }}</a>
+                                    <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{$total_day = (strtotime($order->product_pay_date) - strtotime($order->product_received_date))/86400 + 1 }} &#160;Ngày</a>
                                 </div>
                             </div>
                         </div>
@@ -266,6 +266,15 @@
                                 <div class="d-flex justify-content-between">
                                     <strong class="text-gray-dark">Giá thuê xe/ngày:</strong>
                                     <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{number_format($order->product->price, 0). ' VNĐ' }}</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex text-muted pt-3">
+                            <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                                <div class="d-flex justify-content-between">
+                                    <strong class="text-gray-dark">Bảo hiểm:</strong>
+                                    <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{ number_format( $order->product->insurrance, 0). ' VNĐ' }}</a>
                                 </div>
                             </div>
                         </div>

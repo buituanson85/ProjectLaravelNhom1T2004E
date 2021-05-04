@@ -13,7 +13,9 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('products.index') }}">Danh sách xe</a></span>
+                        <span style="float: left"><a href="{{ route('products.index') }}">Danh sách đối tác</a></span>
+                        <span style="float: left;margin: 0 5px">/</span>
+                        <span style="float: left"><a href="{{ route('dashboards.tableproducts', $user->id) }}">Danh sách xe</a></span>
                     </div>
                 </div>
             </div>
@@ -149,6 +151,9 @@
                                     </tbody>
                                 </table>
                                 {!! $products->render('pagination::bootstrap-4') !!}
+                            </div>
+                            <div class="card-footer">
+                                <a class="btn btn-sm btn-primary" href="{{ route('products.index') }}">Quay lại</a>
                             </div>
                         </div>
                     </div>

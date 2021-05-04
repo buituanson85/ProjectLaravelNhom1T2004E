@@ -105,7 +105,7 @@
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <span style="font-size: 12px; font-weight: 250">* Không thể rút 50.000 VNĐ - Phí duy trì tài khoản</span>
+                                        <span style="font-size: 12px; font-weight: 250">* Không thể rút 500.000 VNĐ - Phí duy trì tài khoản</span>
                                     </div>
                                 </div>
                                 <div class="row pt-3">

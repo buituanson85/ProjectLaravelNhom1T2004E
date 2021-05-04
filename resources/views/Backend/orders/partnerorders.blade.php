@@ -1,5 +1,5 @@
 @extends('layouts.Backend.base')
-@section('title', 'Đơn hàng')
+@section('title', 'Đơn hàng chờ xác nhận')
 @section('content')
 
     <div id="right-panel" class="right-panel">
@@ -14,13 +14,13 @@
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('dashboards.partnerorders') }}">Đơn hàng</a></span>
+                        <span style="float: left"><a href="{{ route('dashboards.partnerorders') }}">Đơn hàng chờ xác nhận</a></span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="breadcrumbs">
-            <div class="row pt-5">
+            <div class="row pt-5 m-0">
                 <div class="col-md-10 offset-md-1">
                     <div class="card">
                         <div class="card-header">
@@ -31,7 +31,7 @@
                                 <a href="{{ route('dashboards.historyorderpartner') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i>Lịch sử đơn hàng</a>
                             </div>
                         </div>
-                        <div class="card-body table-responsive p-0">
+                        <div class="card-body">
                             @include('partials.alert')
                             <table class="table table-hover text-nowrap" id="product_table" >
                                 <thead>

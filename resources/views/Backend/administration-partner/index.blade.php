@@ -31,6 +31,25 @@
                                         </div>
                                     </div>
                                     <div class="col-md-9">
+                                        <form action="{{ route('partners.index') }}" class="form-horizontal">
+                                            @csrf
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                <div class="col-md-9">
+                                                                    <input type="text" name="name" id="name" value="" placeholder="Tên phương tiện" class="form-control input-md">
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

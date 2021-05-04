@@ -29,9 +29,20 @@ class WalletController extends Controller
     }
 
     public function transactionHistory(Request $request,$id){
-        $histories = HistoryMonney::where('wallet_id', $id)->orderBy('id','desc')->paginate(6);
-        $histories->appends($request->all());
-        return view('Backend.wallet.transactionHistory',compact('histories'));
+        $name = $request->name;
+        $wallet_id = $id;
+        if (isset($name)){
+            $histories = HistoryMonney::where([
+                ['wallet_id', $id],
+                ['trading_code', 'like', '%'.$name.'%']
+            ])->orderBy('id','desc')->paginate(5);
+            $histories->appends($request->all());
+        }else{
+            $histories = HistoryMonney::where('wallet_id', $id)->orderBy('id','desc')->paginate(5);
+            $histories->appends($request->all());
+        }
+
+        return view('Backend.wallet.transactionHistory',compact('histories','wallet_id'));
     }
 
     public function withdrawal(){
@@ -71,6 +82,8 @@ class WalletController extends Controller
     }
 
     public function walletPartners(Request $request){
+        $name = $request->name;
+
         $histories = HistoryMonney::where('status', "pending")->orderBy('id','desc')->paginate(6);
         $histories->appends($request->all());
         return view('Backend.adminnistration-wallets.wallet-partners',compact('histories'));

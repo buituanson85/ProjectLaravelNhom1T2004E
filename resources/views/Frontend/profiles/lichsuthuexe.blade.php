@@ -80,7 +80,7 @@
                                                     @elseif($order->status == "completed")
                                                         <a class="badge badge-primary" style="background-color: pink">Kết thúc chuyến</a>
                                                 @endif
-                                                <td><a href="{{route('pages.chitietdonhang', $order->order_id)}}"><span class="btn btn-sm btn-secondary" style="background-color: greenyellow;border: none;color: black"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
+                                                <td><a href="{{route('pages.chitietdonhang', $order->order_id)}}"><span class="btn btn-sm btn-secondary" style="background-color: greenyellow;border: none;color: black;font-size: 14px"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
                                                 <td>
                                                     @if($order->status == "pending")
                                                         <a href="{{ route('pages.deleteOrder',$order->order_id) }}" class="btn btn-sm btn-danger">Xóa</a>
@@ -95,9 +95,10 @@
                                         @endforelse
                                         </tbody>
                                     </table>
+                                    {!! $orders->render('pagination::bootstrap-4') !!}
                                 </div>
                                 <div class="card-footer">
-                                    <a href="/" class="btn btn-primary">Về trang chủ</a>
+                                    <a href="/" class="btn btn-sm btn-primary">Về trang chủ</a>
                                 </div>
                             </div>
                         </div>
