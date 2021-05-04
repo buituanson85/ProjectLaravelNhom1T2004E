@@ -131,6 +131,7 @@ class OrderController extends Controller
         $new_order_detail->product_received_date = $request->product_receive_date;
         $new_order_detail->product_pay_date = $request->product_pay_date;
         $new_order_detail->payments = $request->receive_Method;
+        $new_order_detail->quantity = $request->quantity;
 
         $product = Product::find($request->product_id);
         $partner_id = User::find($product->partner_id);
@@ -195,7 +196,25 @@ class OrderController extends Controller
 
     public function acceptOrder(Request $request, $id){
         $order = Order::where('order_id', $id)->first();
+
         $order->status = 'accept';
+        $product = Product::find($order->orderdetails->product->id);
+
+        $product->quantity = $product->quantity - $order->orderdetails->quantity;
+        if ($product->category_id == 2){
+            if ($product->quantity < 0){
+                $request->session()->flash('error', 'Số lượng xe không đủ!');
+                return redirect()->back();
+            }elseif ($product->quantity == 0){
+                $product->status = "unready";
+            }
+        }else{
+            if ($product->status == 'unready'){
+                $request->session()->flash('error', 'Xe đã nhận chuyến hoặc đang trong chuyến!');
+                return redirect()->back();
+            }
+            $product->status = "unready";
+        }
 
         $now = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
         $name = $order->user->name;
@@ -212,6 +231,8 @@ class OrderController extends Controller
         ];
 
         Mail::to($email)->send(new Send_partner_accept_order($orders));
+
+        $product->save();
         $order->save();
         $order_details = OrderDetails::find($order->id);
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
@@ -223,11 +244,20 @@ class OrderController extends Controller
         $order->confirm = 1;
         //tat hien thi phuong tien
         $product = Product::find($order->orderdetails->product->id);
-        $product->status = "unready";
+
+        if($product->category_id == 1){
+            $product->status = "unready";
+        }else{
+            if ($product->quantity == 0){
+                $product->status = "unready";
+            }
+        }
+
         //tru tien vi
         $user_id = User::find(\auth()->user()->id);
         $wallet = Wallet::where('partner_id',$user_id->id)->first();
-        $monney = 0.05*($order->price_total);
+
+        $monney =  0.05*$order->price_total;
         $total = $wallet->monney - $monney;
         if ($order->payment_id == 1){
             //trừ tài khoản ví.
@@ -282,8 +312,12 @@ class OrderController extends Controller
 
         //tat hien thi phuong tien
         $product = Product::find($order->orderdetails->product->id);
-        $product->status = "ready";
 
+        if($product->category_id == 2){
+            $product->quantity = $product->quantity + $order->orderdetails->quantity;
+        }
+
+        $product->status = "ready";
         Mail::to($email)->send(new Send_compled_order($orders));
 
         $product->save();
@@ -303,6 +337,15 @@ class OrderController extends Controller
     public function deletedOrder(Request $request, $id){
         $order = Order::where('order_id', $id)->first();
         $order->status = 'delete';
+
+        //tat hien thi phuong tien
+        $product = Product::find($order->orderdetails->product->id);
+        if($product->category_id == 2){
+            $product->quantity = $product->quantity + $order->orderdetails->quantity;
+        }
+
+        $product->status = "ready";
+        $product->save();
         $order->save();
         $order_details = OrderDetails::find($order->id);
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);

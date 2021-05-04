@@ -60,9 +60,9 @@
             <div class="info_left">
                 <div class="info_left_detail">
                     <div class="info_left_detail_img">
-                        <img src="{{ asset('Frontend/assets/images/mitsubishi-next-generation-mpv-3.jpg') }}" style="width: 100%; height: 100%" alt="">
+                        <img src="{{ $product->image }}" style="width: 100%; height: 100%" alt="">
                     </div>
-                    <h3 style="text-align: center;color: teal">{{$product->name}}</h3>
+                    <h3 style="text-align: center;color: teal">{{ $product->name }}</h3>
                     <p style="text-align: center;color: teal">Hoặc tương đương</p>
                     <div class="product_detail" >
                         <div class="row" style="width: 80%">
@@ -111,24 +111,32 @@
                     <span>
                         <h5 style="text-transform: uppercase">Chi tiết giá</h5>
                         <span style="display: flex; justify-content: space-between">
-                            <p>Đơn giá</p>
+                            <p>Đơn giá:</p>
                             <p style="font-weight: 700">{{ number_format($product->price) }} VNĐ</p>
                         </span>
                         <span style="display: flex; justify-content: space-between">
-                            <p>Thời gian thuê</p>
-                            <p style="font-weight: 700">{{$total_time_send}} ngày</p>
+                            <p>Thời gian thuê:</p>
+                            <p style="font-weight: 700">{{$total_time_send}} Ngày</p>
                         </span>
+
+                        @if($product->category_id == 2)
+                        <span style="display: flex; justify-content: space-between">
+                            <p>Số lượng</p>
+                            <p style="font-weight: 700">{{ $quantity }} Chiếc</p>
+                        </span>
+                        @else
+                        @endif
                     </span>
                     <hr>
                     <span style="display: flex; justify-content: space-between">
                         <p>Bảo hiểm xe</p>
-                        <p style="font-weight: 700">{{$product->insurrance}} VNĐ</p>
+                        <p style="font-weight: 700">{{ number_format($product->insurrance) }} VNĐ</p>
                     </span>
 
                     <hr>
                     <span style="display: flex; justify-content: space-between">
                         <h5 style="text-transform: uppercase;color: teal" >Tổng</h5>
-                        <h5 style="font-weight: 700;color: teal">{{ $total_price }} VNĐ</h5>
+                        <h5 style="font-weight: 700;color: teal">{{ number_format($total_price) }} VNĐ</h5>
                     </span>
 
                 </div>
@@ -151,11 +159,12 @@
                        <div class="col-md-12 pb-5">
                            <form action="{{route('order.store')}}" method="post">
                             @csrf
-                                <input type="hidden" name="price_total" value="{{$total_price}}"/>
-                                <input type="hidden" name="product_id" value="{{$product->id}}"/>
-                                <input type="hidden" name="product_receive_date" value="{{$start_time}}"/>
-                                <input type="hidden" name="product_pay_date" value="{{$end_time}}"/>
-                                <input type="hidden" name="receive_Method" value="{{$receive_method}}"/>
+                                <input type="hidden" name="price_total" value="{{ $total_price }}"/>
+                                <input type="hidden" name="product_id" value="{{ $product->id }}"/>
+                                <input type="hidden" name="product_receive_date" value="{{ $start_time }}"/>
+                                <input type="hidden" name="product_pay_date" value="{{ $end_time }}"/>
+                                <input type="hidden" name="receive_Method" value="{{ $receive_method }}"/>
+                               <input type="hidden" name="quantity" value="{{ $quantity }}"/>
                                <div class="form-group row">
                                    <label for="inputname" class="col-sm-3 col-form-label">Họ và tên</label>
                                    <div class="col-sm-9">

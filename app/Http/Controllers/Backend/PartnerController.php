@@ -42,6 +42,7 @@ class PartnerController extends Controller
     public function store(Request $request){
         $validated = $request->validate([
             'name' => 'required|string',
+            'biensoxe' => 'required',
             'price' => 'required',
             'image' => 'required',
             'insurance' => 'required',
@@ -60,7 +61,6 @@ class PartnerController extends Controller
             'city_id' => 'required'
         ]);
         $product = new Product();
-
         $product->name = $request->name;
 
         if ($request ->image != null){
@@ -99,7 +99,8 @@ class PartnerController extends Controller
         $product->category_id = $request->category_id;
         $product->city_id = $request->city_id;
         $product->partner_id = Auth::user()->getAuthIdentifier();
-
+        $product->biensoxe = $request->biensoxe;
+        $product->quantity = $request->quantity;
         $product->save();
         $request->session()->flash('success', 'Tạo phương tiện thành công!');
         return redirect()->route('partners.index');

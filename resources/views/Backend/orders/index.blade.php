@@ -61,7 +61,7 @@
                                                 Thẻ
                                             @endif
                                         </td>
-                                        <td>{{ number_format($order->price_total, 0) }}</td>
+                                        <td>{{ number_format($order->price_total) }}</td>
                                         <td>
                                             @if($order->status == "pending")
                                             <a class="badge badge-warning">Chờ nhận chuyến</a>

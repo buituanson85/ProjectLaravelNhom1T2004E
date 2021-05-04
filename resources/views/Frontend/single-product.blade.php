@@ -131,6 +131,7 @@
                 </div>
                 <div class="col-md-4" >
                     <div class="row ml-3" style="background: #ffffff;">
+                        @include('partials.alert')
                         <h3 style="padding-top: 20px;padding-left: 20px;color: #127d81;font-size: 24px">GIÁ VÀ THỦ TỤC</h3>
 
                         <div class="row" style="padding-top: 20px; width: 100%">
@@ -150,18 +151,33 @@
                                 <div class="row">
                                     <div class="col-md-6" style="padding-right: 0!important;text-align: center">
                                         <input class="form-control" style="background-color: #ffffff;border: none;
-                                        border-radius: 5px;width: 160px;font-size: 14px"  type="date" id="start_time" name="start_time" required>
+                                        border-radius: 5px;width: 160px;font-size: 14px"  type="date" id="start_time" name="start_time" value="2021-05-03" required>
                                     </div>
                                     <div class="col-md-6" style="padding-left: 0!important;text-align: center">
                                         <input class="form-control" style="background-color: #ffffff;border: none;
-                                        border-radius: 5px; width: 160px;font-size: 14px"  type="date" id="end_time" name="end_time" required>
+                                        border-radius: 5px; width: 160px;font-size: 14px"  type="date" id="end_time" name="end_time" value="2021-05-03" required>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        @if($product->category_id == 2)
+                        <div class="row" style="width: 100%;padding: 10px 0;">
+                            <div class="col-md-12" style="padding-left: 40px;">
+                                <h6>Số lượng(<span style="font-size: 12px"> Tồn: {{ $product->quantity }}chiếc</span>):</h6>
+                                <div class="row">
 
-
+                                    <div class="col-md-10 pl-3">
+                                        <input class="form-control" type="number" min="1" max="{{ $product->quantity }}" name="quantitys" id="quantitys">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @else
+                            <div class="col-md-10 pl-3">
+                                <input class="form-control" type="hidden" value="1" name="quantitys" id="quantitys">
+                            </div>
+                        @endif
                         <div class="row" style="width: 100%;padding: 10px 0;">
                             <div class="col-md-12" style="padding-left: 40px;">
                                 <h6>Dịch vụ bảo hiểm</h6>
@@ -216,6 +232,7 @@
                                 <input type="hidden" name="start_time2" id="start_time2"/>
                                 <input type="hidden" name="end_time2" id="end_time2"/>
                                 <input type="hidden" name="receive_Method" id="receive_Method"/>
+                                <input type="hidden" name="quantity" id="quantity"/>
                                 <button type="submit" class="btn btn-success"
                                         style="width: 100%; padding-right: 20px; background-color: #2cb8af;border-color: #2cb8af">
                                     Đặt Xe</button>
@@ -240,16 +257,37 @@
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script type="text/javascript">
+        $(document).ready(function () {
+            $(function (){
+                var dtToday = new Date();
+                var month = dtToday.getMonth() + 1;
+                var day = dtToday.getDate();
+                var year = dtToday.getFullYear();
+                if (month < 10)
+                    month = '0' +month.toString();
+                if (day < 10)
+                    day = '0' + day.toString();
+                var maxDate = year + '-' + month + '-' + day;
+                $('#start_time').attr('min', maxDate);
+                $('#end_time').attr('min', maxDate);
+                // $('#start_time').attr('min', '2021-05-04');
+            })
+        })
+    </script>
+    <script type="text/javascript">
         function displayVals() {
 
             var start_time = $( "#start_time" ).val();
             var end_time = $( "#end_time" ).val();
-            var receive_Method=$( "#receiveMethod" ).val();
+            var receive_Method =$( "#receiveMethod" ).val();
+            var quantitys =$( "#quantitys" ).val();
 
             var d = new Date(start_time);
             var n = d.getTime();
             var x = new Date(end_time);
             var y = x.getTime();
+
+
             var z = (y - n)/(1000*3600*24) + 1;
 
             var day1 = d.getDate();
@@ -261,9 +299,11 @@
             var year1 = d.getFullYear();
             var year2 = x.getFullYear();
 
-            var total = z*{{ $product->price }}+{{$product->insurrance}};
+            var total = z*{{ $product->price }}*quantitys + {{$product->insurrance}};
             // var total=z.$("#product_price").val()+$("#product_insurrance").val();
-            total = Number((total).toFixed(1)).toLocaleString()
+            var total_con = total;
+            total_con = Number((total_con).toFixed(1)).toLocaleString();
+
 
             document.getElementById("total_time").innerHTML = z+" ngày";
 
@@ -271,30 +311,18 @@
 
             document.getElementById("total_price").value = total;
 
-            document.getElementById("price_2").innerHTML = total+" VNĐ";
+            document.getElementById("price_2").innerHTML = total_con+" VNĐ";
 
             document.getElementById("start_time2").value = year1+"-"+month1+"-"+day1;
 
             document.getElementById("end_time2").value = year2+"-"+month2+"-"+day2;
 
             document.getElementById("receive_Method").value = receive_Method;
-
+            document.getElementById("quantity").value = quantitys;
         }
         $("input").change( displayVals );
 
         displayVals();
-        // function ins1000Sep(val) {
-        //     val = val.split(".");
-        //     val[0] = val[0].split("").reverse().join("");
-        //     val[0] = val[0].replace(/(\d{3})/g, "$1,");
-        //     val[0] = val[0].split("").reverse().join("");
-        //     val[0] = val[0].indexOf(",") == 0 ? val[0].substring(1) : val[0];
-        //     return val.join(".");
-        // }
     </script>
-
-
-
-
 
 @endsection

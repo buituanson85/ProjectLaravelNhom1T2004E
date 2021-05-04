@@ -50,6 +50,30 @@
                                         </div>
 
                                         <div class="form-group row">
+                                            <label class="col-md-3 col-form-label pull-right">Biển số xe:</label>
+                                            <div class="col-md-9">
+                                                <input type="text" name="biensoxe"  id="biensoxe" class="form-control @error('biensoxe') is-invalid @enderror" value="{{ old('biensoxe') }}">
+                                                @error('biensoxe')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-md-3 col-form-label pull-right">Số lượng:</label>
+                                            <div class="col-md-9">
+                                                <input type="number" name="quantity"  id="quantity" class="form-control @error('quantity') is-invalid @enderror" value="{{ old('quantity') }}">
+                                                @error('quantity')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
                                             <label class="col-md-3 col-form-label pull-right">Loại xe:</label>
                                             <div class="col-md-9">
                                                 <select type="number" name="category_id"  id="category_id" class="form-control @error('category_id') is-invalid @enderror" value="{{ old('category_id') }}">

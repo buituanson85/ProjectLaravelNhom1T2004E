@@ -236,7 +236,7 @@
                                             <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                                                 <div class="d-flex justify-content-between">
                                                     <strong class="text-gray-dark">Tổng tiền:</strong>
-                                                    <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{number_format($order->order->price_total) . ' VNĐ'}}</a>
+                                                    <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{ number_format($order->product_price_total) }}&nbsp;VNĐ</a>
                                                 </div>
                                             </div>
                                         </div>

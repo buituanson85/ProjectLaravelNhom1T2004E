@@ -262,7 +262,16 @@ class ChooseProduct extends Controller
         $total_time_send = $request->total_time_send;
         $start_time = $request->start_time2;
         $end_time = $request->end_time2;
-        $receive_method=$request->receive_Method;
+        $receive_method = $request->receive_Method;
+        $quantity = $request->quantity;
+
+        if ($quantity <= 0 ){
+            $request->session()->flash('error', 'Vui lòng nhập số lượng xe lớn hơn không!');
+            return redirect()->back();
+        }elseif ($quantity > $product->quantity){
+            $request->session()->flash('error', 'Số lượng xe hiện tại không đủ yêu cầu!');
+            return redirect()->back();
+        }
 
         return view('Frontend.info-customer')->with([
             'product'=>$product,
@@ -270,6 +279,7 @@ class ChooseProduct extends Controller
             'total_time_send'=>$total_time_send,
             'start_time'=>$start_time,
             'end_time'=>$end_time,
+            'quantity' => $quantity,
             'receive_method'=>$receive_method,
             'allPayment'=>$allPayment,
         ]);
