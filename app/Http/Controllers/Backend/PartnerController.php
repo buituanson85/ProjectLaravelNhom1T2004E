@@ -25,19 +25,167 @@ class PartnerController extends Controller
 {
     public function index(Request $request){
         $user = auth()->user();
-        $name = $request->name;
-        if (isset($name)){
-            $products = Product::where([
-                ['partner_id', $user->id],
-                ['name','like', '%'.$name.'%']
-            ])->orderBy('id','DESC')->paginate(5);
-            $products->appends($request->all());
-        }else{
-            $products = Product::where('partner_id', $user->id)->orderBy('id','DESC')->paginate(5);
-            $products->appends($request->all());
+        $products = Product::where([
+            ['partner_id', $user->id],
+            ['status','!=','refused'],
+            ['status','!=','pending'],
+            ['status','!=','unavailable'],
+        ])->orderBy('id','DESC')->get();
+        return view('Backend.administration-partner.index',compact('products'));
+    }
+
+    public function unpartners(){
+        $user = auth()->user();
+        $products = Product::where([
+            ['partner_id', $user->id],
+            ['status','!=','ready'],
+            ['status','!=','unready']
+        ])->orderBy('id','DESC')->get();
+        return view('Backend.administration-partner.unpartners',compact('products'));
+    }
+
+    public function editphuongtien($id){
+        $product = Product::find($id);
+        $cities = City::where('status','instock')->get();
+        $categories = Category::where('status','instock')->get();
+        $districts = District::where('status','instock')->orderBy('id','DESC')->get();
+        $brands = Brand::where('status','instock')->orderBy('id','DESC')->get();
+        return view("Backend.administration-partner.editproduct")->with(['product' => $product, 'categories' => $categories, 'districts' => $districts, 'brands' => $brands, 'cities' => $cities]);
+    }
+
+    public function updatephuongtien(Request $request,$id){
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'price' => 'required',
+            'insurance' => 'required',
+            'deposit' => 'required',
+            'km' => 'required',
+            'additional' => 'required',
+            'engine' => 'required',
+            'seat' => 'required',
+            'capacity' => 'required',
+            'range' => 'required',
+            'gear' => 'required',
+            'consumption' => 'required',
+            'brand_id' => 'required',
+            'district_id' => 'required',
+            'category_id' => 'required',
+            'city_id' => 'required'
+        ]);
+        $product = Product::find($id);
+        $product->name = $request->name;
+        $get_image = $request->file('image');
+
+        if ($request ->image != null){
+            $image = base64_encode(file_get_contents($_FILES['image']['tmp_name']));
+
+            $options = array('http' =>array(
+                'method' => "POST",
+                'header' => "Authorization: Bearer 3597bf9393d8155003c84329d6205961426482fc\n".
+                    "Content-Type: application/x-www-form-urlencoded",
+                'content' => $image
+            ));
+            $context = stream_context_create($options);
+            $imgurURL = "https://api.imgur.com/3/image";
+
+            $response = file_get_contents($imgurURL, false, $context);
+            $response = json_decode($response);
+            $msg = $response->data->link;
+            $product -> image = $msg;
         }
 
-        return view('Backend.administration-partner.index',compact('products'));
+        $product->price = $request->price;
+        $product->insurrance = $request->insurance;
+        $product->deposit = $request->deposit;
+        $product->km = $request->km;
+        $product->additional = $request->additional;
+        $product->engine = $request->engine;
+        $product->seat = $request->seat;
+        $product->capacity = $request->capacity;
+        $product->range = $request->range;
+        $product->gear = $request->gear;
+        $product->status = 'unavailable';
+        $product->consumption = $request->consumption;
+        $product->district_id = $request->district_id;
+        $product->brand_id = $request->brand_id;
+        $product->category_id = $request->category_id;
+        $product->city_id = $request->city_id;
+
+        $product->update();
+        $request->session()->flash('success', 'Cập nhật phương tiện thành công!');
+        return redirect()->route('partners.index');
+    }
+
+    public function editunphuongtien($id){
+        $product = Product::find($id);
+        $cities = City::where('status','instock')->get();
+        $categories = Category::where('status','instock')->get();
+        $districts = District::where('status','instock')->orderBy('id','DESC')->get();
+        $brands = Brand::where('status','instock')->orderBy('id','DESC')->get();
+        return view("Backend.administration-partner.editunproduct")->with(['product' => $product, 'categories' => $categories, 'districts' => $districts, 'brands' => $brands, 'cities' => $cities]);
+    }
+
+    public function updateunphuongtien(Request $request,$id){
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'price' => 'required',
+            'insurance' => 'required',
+            'deposit' => 'required',
+            'km' => 'required',
+            'additional' => 'required',
+            'engine' => 'required',
+            'seat' => 'required',
+            'capacity' => 'required',
+            'range' => 'required',
+            'gear' => 'required',
+            'consumption' => 'required',
+            'brand_id' => 'required',
+            'district_id' => 'required',
+            'category_id' => 'required',
+            'city_id' => 'required'
+        ]);
+        $product = Product::find($id);
+        $product->name = $request->name;
+        $get_image = $request->file('image');
+
+        if ($request ->image != null){
+            $image = base64_encode(file_get_contents($_FILES['image']['tmp_name']));
+
+            $options = array('http' =>array(
+                'method' => "POST",
+                'header' => "Authorization: Bearer 3597bf9393d8155003c84329d6205961426482fc\n".
+                    "Content-Type: application/x-www-form-urlencoded",
+                'content' => $image
+            ));
+            $context = stream_context_create($options);
+            $imgurURL = "https://api.imgur.com/3/image";
+
+            $response = file_get_contents($imgurURL, false, $context);
+            $response = json_decode($response);
+            $msg = $response->data->link;
+            $product -> image = $msg;
+        }
+
+        $product->price = $request->price;
+        $product->insurrance = $request->insurance;
+        $product->deposit = $request->deposit;
+        $product->km = $request->km;
+        $product->additional = $request->additional;
+        $product->engine = $request->engine;
+        $product->seat = $request->seat;
+        $product->capacity = $request->capacity;
+        $product->range = $request->range;
+        $product->gear = $request->gear;
+        $product->status = 'unavailable';
+        $product->consumption = $request->consumption;
+        $product->district_id = $request->district_id;
+        $product->brand_id = $request->brand_id;
+        $product->category_id = $request->category_id;
+        $product->city_id = $request->city_id;
+
+        $product->update();
+        $request->session()->flash('success', 'Cập nhật phương tiện thành công!');
+        return redirect()->route('dashboards.unpartners');
     }
 
     public function create()
@@ -268,19 +416,7 @@ class PartnerController extends Controller
     }
 
     public function confirmPartner(Request $request){
-        $name = $request->name;
-        if (isset($name)){
-            $partners = Partner::where([
-                ['status','outofstock'],
-                ['name','like','%'.$name.'%']
-            ])->orderBy('id','DESC')->paginate(5);
-            $partners->appends($request->all());
-        }else{
-            $partners = Partner::where('status','outofstock')->orderBy('id','DESC')->paginate(5);
-            $partners->appends($request->all());
-        }
-        $partners = Partner::where('status','outofstock')->orderBy('id','DESC')->paginate(5);
-        $partners->appends($request->all());
+        $partners = Partner::where('status','outofstock')->orderBy('id','DESC')->get();
         return view('Backend.administration-partner.table-confirm-register-partner', compact('partners'));
     }
 

@@ -67,10 +67,10 @@
                     <div class="product_detail" >
                         <div class="row" style="width: 80%">
                             <div class="col-md-6">
-                                <p><i class="fas fa-map-marked-alt"></i> {{$product->district->name}}</p>
+                                <p><i class="fas fa-map-marked-alt"></i> {{ $product->district->name }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p><i class="fas fa-cogs"></i>  {{$product->gear}}</p>
+                                <p><i class="fas fa-cogs"></i>  {{ $product->gear }}</p>
                             </div>
                         </div>
                         <div class="row" style="width: 100%">
@@ -79,11 +79,11 @@
                                 @if($product->engine=="")
                                 <p ><i class="fas fa-gas-pump" ></i> Xăng</p>
                                 @else
-                                <p ><i class="fas fa-gas-pump" ></i> {{$product->engine}}</p>
+                                <p ><i class="fas fa-gas-pump" ></i> {{ $product->engine }}</p>
                                 @endif
                             </div>
                             <div class="col-md-6">
-                                <p><i class="fas fa-tachometer-alt"></i> {{$product->consumption}}</p>
+                                <p><i class="fas fa-tachometer-alt"></i> {{ $product->consumption }}</p>
                             </div>
                         </div>
                         <div class="row" style="width: 100%">
@@ -169,14 +169,14 @@
                                    <label for="inputname" class="col-sm-3 col-form-label">Họ và tên</label>
                                    <div class="col-sm-9">
                                        <input type="text" class="form-control"
-                                       id="inputname" name="inputname" disabled="disabled" value="{{Auth::user()->name}}" placeholder="Họ và tên">
+                                       id="inputname" name="inputname" disabled="disabled" value="{{ Auth::user()->name }}" placeholder="Họ và tên">
                                    </div>
                                </div>
                                <div class="form-group row">
                                 <label for="inputname" class="col-sm-3 col-form-label">Email</label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control"
-                                    id="inputemail" name="inputemail" disabled="disabled" value="{{Auth::user()->email}}">
+                                    id="inputemail" name="inputemail" disabled="disabled" value="{{ Auth::user()->email }}">
                                 </div>
                             </div>
                                <div class="form-group row">

@@ -9,11 +9,6 @@ use Illuminate\Http\Request;
 
 class DistrictController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $all_district = District::all();
@@ -21,23 +16,12 @@ class DistrictController extends Controller
         return view('Backend.districts.index')->with(['all_district'=>$all_district,'city'=>$city]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        $city = City::all();
+        $city = City::where('status','instock')->get();
         return view('Backend.districts.add_new')->with(['city'=>$city]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request,[
@@ -59,37 +43,18 @@ class DistrictController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Request $request,$id)
     {
-        $city = City::all();
+        $city = City::where('status','instock')->get();
         $district = District::find($id);
         return view('Backend.districts.update')->with(['district'=>$district,'city'=>$city]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $this->validate($request,[
@@ -105,17 +70,10 @@ class DistrictController extends Controller
         $district -> city_id = $request ->city;
 
         $district->save();
-        dd($district);
         $request->session()->flash('success','Cập nhật quận huyện thành công');
         return redirect(route('district.index'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request,$id)
     {
         District::find($id)->delete();

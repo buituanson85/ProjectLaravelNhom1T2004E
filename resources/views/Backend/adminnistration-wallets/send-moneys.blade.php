@@ -11,9 +11,9 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('products.index') }}">Nạp tiền</a></span>
+                        <span style="float: left"><a href="{{ route('dashboards.sendmoneys') }}">Nạp Tiền</a></span>
                     </div>
                 </div>
             </div>
@@ -77,7 +77,7 @@
                             <div class="card-footer">
                                 <div class="row pt-3">
                                     <div class="col-md-12">
-                                        <button type="submit" style="width: 100%" class="btn btn-warning">Gửi Tiền</button>
+                                        <button type="submit" style="width: 100%" class="btn btn-warning">Nạp Tiền</button>
                                     </div>
                                 </div>
                             </div>

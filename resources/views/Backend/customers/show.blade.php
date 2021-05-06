@@ -11,7 +11,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
                         <span style="float: left"><a href="{{ route('customers.index') }}">Khách hàng</a></span>
                         <span style="float: left;margin: 0 5px">/</span>

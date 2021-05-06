@@ -36,13 +36,13 @@
                                         @elseif($order->order->status == "accept")
                                             <span class="badge badge-success">Đã nhận chuyến</span>
                                         @elseif($order->order->status == "paid")
-                                            <span class="badge badge-primary">Bắt đầu chuyến</span>
+                                            <span class="badge badge-primary">Đang trong chuyến</span>
                                         @elseif($order->order->status == "cancelled")
                                             <span class="badge badge-secondary">Không nhận chuyến</span>
                                         @elseif($order->order->status == "delete")
                                             <span class="badge badge-danger">Hủy chuyến</span>
                                         @elseif($order->order->status == "completed")
-                                            <span class="badge badge-primary" style="background-color: pink">Kết thúc chuyến</span>
+                                            <span class="badge badge-primary">Kết thúc chuyến</span>
                                         @endif
                                     </h6>
                                     <div class="card-tools">
@@ -295,10 +295,6 @@
                                     @csrf
                                     <button type="submit" class="btn btn-warning" style="margin: 5px"><i class="fas fa-eject"></i> Bắt đầu chuyến</button>
                                 </form>
-{{--                                <form id="deletedOrder" action="{{ route('order.deletedOrder', $order->order->order_id) }}" method="post">--}}
-{{--                                    @csrf--}}
-{{--                                    <button type="submit" class="btn btn-danger" style="margin: 5px"><i class="fas fa-backspace"></i> Hủy chuyến</button>--}}
-{{--                                </form>--}}
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteOrder"><i class="fas fa-backspace"></i>Hủy chuyến</button>
                                 <form action="{{ route('order.printOrder',$order->order->order_id) }}" method="GET" target="_blank">
                                     <button href="" class="btn btn-warning" style="margin: 5px"><i class="fas fa-save"></i> In hợp đồng</button>
@@ -359,7 +355,7 @@
                             </label>
                         </div>
                         <div class="form-group pt-2">
-                            <label for="choice" class="label-control">Lý do khác</label>
+                            <label for="choice" class="label-control">Ghi chú:</label>
                             <textarea type="text" class="form-control" id="note_delete" name="note_delete"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Hủy chuyến</button>
@@ -410,7 +406,7 @@
                             </label>
                         </div>
                         <div class="form-group pt-2">
-                            <label for="choice" class="label-control">Lý do khác</label>
+                            <label for="choice" class="label-control">Ghi chú:</label>
                             <textarea type="text" class="form-control" id="note" name="note"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Từ chối</button>

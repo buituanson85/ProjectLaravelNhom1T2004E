@@ -29,18 +29,8 @@ class WalletController extends Controller
     }
 
     public function transactionHistory(Request $request,$id){
-        $name = $request->name;
         $wallet_id = $id;
-        if (isset($name)){
-            $histories = HistoryMonney::where([
-                ['wallet_id', $id],
-                ['trading_code', 'like', '%'.$name.'%']
-            ])->orderBy('id','desc')->paginate(5);
-            $histories->appends($request->all());
-        }else{
-            $histories = HistoryMonney::where('wallet_id', $id)->orderBy('id','desc')->paginate(5);
-            $histories->appends($request->all());
-        }
+        $histories = HistoryMonney::where('wallet_id', $id)->orderBy('id','desc')->get();
 
         return view('Backend.wallet.transactionHistory',compact('histories','wallet_id'));
     }
@@ -83,15 +73,21 @@ class WalletController extends Controller
 
     public function walletPartners(Request $request){
         $name = $request->name;
-
-        $histories = HistoryMonney::where('status', "pending")->orderBy('id','desc')->paginate(6);
-        $histories->appends($request->all());
+        if (isset($name)){
+            $histories = HistoryMonney::where([
+                ['status', "pending"],
+                ['trading_code', 'like','%'.$name.'%']
+            ])->orderBy('id','desc')->paginate(6);
+            $histories->appends($request->all());
+        }else{
+            $histories = HistoryMonney::where('status', "pending")->orderBy('id','desc')->paginate(6);
+            $histories->appends($request->all());
+        }
         return view('Backend.adminnistration-wallets.wallet-partners',compact('histories'));
     }
 
     public function sendWallet(Request $request){
-        $bankings = Bankking::where('status','pending')->orderBy('id','desc')->paginate(6);
-        $bankings->appends($request->all());
+        $bankings = Bankking::where('status','pending')->orderBy('id','desc')->get();
         return view('Backend.adminnistration-wallets.send-wallet',compact('bankings'));
     }
 
@@ -153,8 +149,7 @@ class WalletController extends Controller
     }
 
     public function moneyWaiting(Request $request){
-        $wallets = Wallet::where('monney_confirm','!=',null)->orderBy('id','desc')->paginate(6);
-        $wallets->appends($request->all());
+        $wallets = Wallet::where('monney_confirm','!=',null)->orderBy('id','desc')->get();
         return view('Backend.adminnistration-wallets.money-waiting', compact('wallets'));
     }
 

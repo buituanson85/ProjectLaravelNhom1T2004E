@@ -1,6 +1,7 @@
 @extends('layouts.Backend.base')
 @section('title', 'Permissions')
 @section('content')
+
     <div id="right-panel" class="right-panel">
 
         <!-- Header-->
@@ -8,61 +9,38 @@
     <!-- Header-->
 
         <div class="breadcrumbs">
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('permissions.index') }}">Permissions</a></span>
+                        <span style="float: left"><a href="{{ route('permissions.index') }}">Danh Sách Permissions</a></span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="breadcrumbs">
-            <div class="pt-5">
+            <div class="row pt-5 m-0">
                 <div class="col-md-10 offset-md-1">
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <h3 class="card-title">Danh sách permission</h3>
-
-                                    <div class="card-tools">
-                                        <a href="{{ route('permissions.create') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Thêm permission</a>
-                                    </div>
+                                    <h3 class="card-title">Danh sách Permissions</h3>
                                 </div>
-                                <div class="col-md-8 mt-4">
-                                    <form action="{{ route('permissions.index') }}" class="form-horizontal">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-9">
-                                                                <input type="text" name="name" id="name" value="" placeholder="Nhập tên permission" class="form-control input-md">
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
+                                <div class="col-md-3"></div>
+                                <div class="col-md-5">
+                                    <a class="btn btn-primary pull-right" href="{{ route('permissions.create') }}"><i class="fas fa-plus-circle"></i>&#160;Thêm permission</a></span>
                                 </div>
                             </div>
                         </div>
-                        <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0">
-
+                        <div class="card-body">
                             @include('partials.alert')
-                            <table class="table table-hover">
+                            <table class="table table-hover text-nowrap" id="product_table" >
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>STT</th>
                                     <th>Tên</th>
-                                    <th>Slug</th>
                                     <th>URL</th>
                                     <th>Thư mục</th>
                                     <th>Date Posted</th>
@@ -72,18 +50,12 @@
                                 </thead>
                                 <tbody>
                                 @php
-                                    $index = $permissions->perPage()*($permissions->currentPage() - 1);
+                                    $index = 0;
                                 @endphp
                                 @forelse ($permissions as $permission)
                                     <tr>
-                                        <td>
-                                            @php
-                                                $index++;
-                                            @endphp
-                                            {{ $index }}
-                                        </td>
-                                        <td>{{ $permission->name }}</td>
-                                        <td>{{ $permission->slug }}</td>
+                                        <td>{{ ++$index }}</td>
+                                        <td style="font-weight: 600">{{ $permission->name }}</td>
                                         <td>{{ $permission->url }}</td>
                                         <td>
                                             @if($permission->parent == 0)
@@ -109,9 +81,7 @@
                                 @endforelse
                                 </tbody>
                             </table>
-                            {!!   $permissions -> render('pagination::bootstrap-4') !!}
                         </div>
-                        <!-- /.card-body -->
                     </div>
                 </div>
             </div>
@@ -121,4 +91,34 @@
     </div><!-- /#right-panel -->
 
 @endsection
+
+@section('addjs')
+    <script type="text/javascript">
+        jQuery(document).ready( function () {
+            jQuery('#product_table').DataTable({
+                "language": {
+                    "lengthMenu": "Hiển thị _MENU_ bản ghi 1 trang",
+                    "zeroRecords": "Không có bản ghi - sorry",
+                    "info": "Trang số _PAGE_ trên tổng số _PAGES_",
+                    "infoEmpty": "Không có dữ liệu",
+                    "infoFiltered": "(Lọc từ _MAX_ bản ghi)",
+                    "paginate": {
+                        "first": "Đầu tiên",
+                        "last": "Cuối cùng",
+                        "next": "Sau",
+                        "previous": "Trước"
+                    },
+                    "search": "Tìm kiếm:",
+                }
+            });
+        } );
+        jQuery(document).ready(function () {
+            jQuery('.dataTables_filter input[type="search"]').css(
+                {'width':'400px','display':'inline-block'}
+            );
+        });
+    </script>
+@endsection
+
+
 

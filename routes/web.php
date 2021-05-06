@@ -92,6 +92,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
     Route::get('pages/lsthuexe/{id}',[HomeController::class,'ctdonhang'])->name('pages.ctdonhang');
     //Khương
     Route::post('/pages/show-info/{id}',[ChooseProduct::class,'showInfo'])->name('pages.showinfos');
+    //order
+    Route::resource('/dashboards/order',OrderController::class);
+    Route::post('/pages/payment-online', [OrderController::class, 'paymentOnline'])->name('pages.paymentonline');
+    Route::get('/pages/payment-vnpay', [OrderController::class,'paymentVnpay'])->name('pages.vnpayreturn');
 });
 
 //for admin
@@ -161,9 +165,14 @@ Route::middleware(['auth:sanctum', 'verified','authadmin'])->group(function (){
         Route::resource('/dashboards/dashboards-orders',OrderController::class);
         Route::get('/dashboards/confirm-orders',[OrderController::class,'confirmOrders'])->name('dashboards.confirmorders');
         Route::get('/dashboards/show-confirm-orders/{id}',[OrderController::class,'showConfirmOrders'])->name('dashboards.showconfirmorders');
+        Route::post('/dashboards/update-confirm-orders/{id}',[OrderController::class,'updateConfirmOrders'])->name('dashboards.updateconfirmorders');
+        Route::post('/dashboards/chitietproductdatho/{id}',[ProductController::class,'chiTietProductDatho'])->name('dashboards.chitietproductdatho');
+        Route::post('/dashboards/updateproductdatho/{id}',[ProductController::class,'updateProductDatho'])->name('dashboards.updateproductdatho');
+
 
         Route::get('/dashboards/orders-delete-cancelled',[OrderController::class,'ordersDeleteCancelled'])->name('dashboards.ordersdeletecancelled');
         Route::get('/dashboards/show-orders-delete-cancelled/{id}',[OrderController::class,'showOrdersDeleteCancelled'])->name('dashboards.showordersdeletecancelled');
+        Route::post('/dashboards/acceptdeletecancelled/{id}',[OrderController::class,'acceptDeleteCancelled'])->name('dashboards.acceptdeletecancelled');
 
         Route::post('/dashboards/order-confirm-order/{id}',[OrderController::class,'orderConfirmOrder'])->name('order.confirmOrder');
 
@@ -211,6 +220,12 @@ Route::middleware(['auth:sanctum', 'verified','authadmin'])->group(function (){
     Route::middleware(['auth:sanctum', 'verified','authpartner'])->group(function (){
         //partner
         Route::resource('/dashboards/partners',PartnerController::class);
+        Route::get('/dashboards/unpartners',[PartnerController::class,'unpartners'])->name('dashboards.unpartners');
+        Route::get('/dashboards/editphuongtien/{id}',[PartnerController::class,'editphuongtien'])->name('dashboards.editphuongtien');
+        Route::post('/dashboards/updatephuongtien/{id}',[PartnerController::class,'updatephuongtien'])->name('dashboards.updatephuongtien');
+        Route::get('/dashboards/editunphuongtien/{id}',[PartnerController::class,'editunphuongtien'])->name('dashboards.editunphuongtien');
+        Route::post('/dashboards/updateunphuongtien/{id}',[PartnerController::class,'updateunphuongtien'])->name('dashboards.updateunphuongtien');
+
         Route::get('/dashboards/partnerunlock/{id}', [PartnerController::class, 'unlockstatustpartner'])->name('dashboards.unlockstatustpartner');
         Route::get('/dashboards/partnerlock/{id}', [PartnerController::class, 'lockstatustpartner'])->name('dashboards.lockstatustpartner');
 
@@ -253,10 +268,9 @@ Route::middleware(['auth:sanctum', 'verified','authadmin'])->group(function (){
     });
 });
 
-//order
-//Route::resource('/dashboards/order',OrderController::class);
-//order
-Route::resource('/dashboards/order',OrderController::class);
+
+
+
 
 
 

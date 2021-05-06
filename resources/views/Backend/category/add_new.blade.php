@@ -9,24 +9,30 @@
     <!-- Header-->
 
         <div class="breadcrumbs">
-            <div class="col-sm-4">
+            <div class="col-md-10">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('cate.create') }}">Thêm mới danh mục</a></span>
+                        <span style="float: left"><a href="{{ route('cate.index') }}">Danh Sách Loại Danh Mục</a></span>
+                        <span style="float: left;margin: 0 5px">/</span>
+                        <span style="float: left"><a href="{{ route('cate.create') }}">Thêm Loại Danh Mục</a></span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="breadcrumbs">
             <div class="pt-5">
-                <div class="col-md-10 offset-md-1">
+                <div class="col-md-8 offset-md-2">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Thêm Mới Danh Mục</h3>
-                            <div class="card-tools">
-                                <a href="{{ route('cate.index') }}" class="btn btn-danger"><i class="fas fa-shield-alt"></i> Danh sách danh mục</a>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 class="card-title">Thêm loại danh mục</h3>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{{ route('cate.index') }}" class="btn btn-danger pull-right"><i class="fas fa-shield-alt"></i> Danh sách danh mục</a>
+                                </div>
                             </div>
                         </div>
                         @include('partials.alert')

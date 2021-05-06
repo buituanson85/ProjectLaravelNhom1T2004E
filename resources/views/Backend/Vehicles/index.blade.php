@@ -11,9 +11,9 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('products.index') }}">Danh sách đối tác</a></span>
+                        <span style="float: left"><a href="{{ route('products.index') }}">Danh Sách Đối Tác</a></span>
                     </div>
                 </div>
             </div>
@@ -23,60 +23,35 @@
                 <div class="col-md-12">
                     <div>
                         <div class="card">
-                            <div class="card-header" style="cursor: move">
+                            <div class="card-header">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <form action="{{ route('products.index') }}" class="form-horizontal">
-                                            @csrf
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <div class="col-md-12">
-                                                            <div class="row">
-                                                                <div class="col-md-3">
-                                                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-                                                                </div>
-                                                                <div class="col-md-9">
-                                                                    <input type="text" name="name" id="name" value="" placeholder="Tên đối tác" class="form-control input-md">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
+                                    <div class="col-md-4">
+                                        <h3 class="card-title" style="font-size: 20px;font-weight: 700">Danh sách đối tác</h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
                                 @include('partials.alert')
-                                <table class="table">
+                                <table class="table table-hover text-nowrap" id="product_table" >
                                     <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th>STT</th>
                                         <th>Tên</th>
                                         <th>utype</th>
                                         <th>Trạng thái</th>
                                         <th>Email</th>
                                         <th>Số điện thoại</th>
-                                        <th>Địa chỉ</th>
                                         <th>Chi tiết</th>
-                                        <th>Ngày đăng</th>
-                                        <th>Delete</th>
+                                        <th>Xóa</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @php
-                                        $index = $users->perPage()*($users->currentPage() - 1);
+                                        $index = 0;
                                     @endphp
                                     @foreach($users as $user)
                                         <tr>
-                                            <td>
-                                                @php
-                                                    $index++;
-                                                @endphp
-                                                {{ $index }}
-                                            </td>
+                                            <td>{{ ++$index }}</td>
                                             <td>{{ $user->name }}</td>
                                             <td>
                                                 <span class="badge badge-primary">{{ $user->utype }}</span>
@@ -90,11 +65,9 @@
                                             </td>
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->phone }}</td>
-                                            <td>{{ $user->address }}</td>
                                             <td>
-                                                <a href="/dashboards/table-products/{{ $user->id }}"><span class="btn btn-sm btn-primary"><i class="fa fa-eye"></i>&nbsp;Chi tiết</span></a>
+                                                <a href="/dashboards/table-products/{{ $user->id }}"><span class="btn btn-sm btn-light"><i class="fa fa-eye"></i>&nbsp;Chi tiết</span></a>
                                             </td>
-                                            <td>{{ $user->created_at }}</td>
                                             <td>
                                                 <form action="{{ route('products.destroy', $user->id) }}" method="post">
                                                     @csrf
@@ -106,8 +79,18 @@
                                     @endforeach
                                     </tbody>
                                 </table>
-                                {!! $users->render('pagination::bootstrap-4') !!}
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 offset-1 pb-5">
+                    <h3 style="font-weight: 700">GHI CHÚ:</h3>
+                    <div class="row pt-3">
+                        <div class="col-md-12">
+                            - Trạng Thái: Sử dụng khi Admin muốn bật(<span class="badge badge-warning">Đang hoạt động</span>) hoặc ẩn(<span class="badge badge-danger">tạm khóa</span>) tài khoản chủ phương tiện.
+                        </div>
+                        <div class="col-md-12 pt-3">
+                            - Nút <span class="btn btn-danger">Delete</span>: Sử dụng khi Đối tác chấm dứt hợp đồng hợp tác thanh lý tài khoảng.
                         </div>
                     </div>
                 </div>
@@ -119,6 +102,33 @@
 
     </div><!-- /#right-panel -->
 
+@endsection
+@section('addjs')
+    <script type="text/javascript">
+        jQuery(document).ready( function () {
+            jQuery('#product_table').DataTable({
+                "language": {
+                    "lengthMenu": "Hiển thị _MENU_ bản ghi 1 trang",
+                    "zeroRecords": "Không có bản ghi - sorry",
+                    "info": "Trang số _PAGE_ trên tổng số _PAGES_",
+                    "infoEmpty": "Không có dữ liệu",
+                    "infoFiltered": "(Lọc từ _MAX_ bản ghi)",
+                    "paginate": {
+                        "first": "Đầu tiên",
+                        "last": "Cuối cùng",
+                        "next": "Sau",
+                        "previous": "Trước"
+                    },
+                    "search": "Tìm kiếm:",
+                }
+            });
+        } );
+        jQuery(document).ready(function () {
+            jQuery('.dataTables_filter input[type="search"]').css(
+                {'width':'400px','display':'inline-block'}
+            );
+        });
+    </script>
 @endsection
 
 

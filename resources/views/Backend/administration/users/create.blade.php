@@ -1,5 +1,5 @@
 @extends('layouts.Backend.base')
-@section('title', 'Create User')
+@section('title', 'Thêm nhân viên')
 @section('content')
 
     <div id="right-panel" class="right-panel">
@@ -9,10 +9,12 @@
     <!-- Header-->
 
         <div class="breadcrumbs">
-            <div class="col-sm-4">
+            <div class="col-md-10">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
+                        <span style="float: left;margin: 0 5px">/</span>
+                        <span style="float: left"><a href="{{ route('users.index') }}">Danh Sách Nhân Viên</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
                         <span style="float: left"><a href="{{ route('users.create') }}">Thêm Nhân Viên</a></span>
                     </div>

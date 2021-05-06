@@ -9,12 +9,12 @@
     <!-- Header-->
 
         <div class="breadcrumbs">
-            <div class="col-sm-8">
+            <div class="col-md-10">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('partners.index') }}">Phương tiện</a></span>
+                        <span style="float: left"><a href="{{ route('partners.index') }}">Danh Sách Phương Tiện</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
                         <span style="float: left"><a href="{{ route('product.show', $product->id) }}">Chi tiết</a></span>
                     </div>
@@ -269,8 +269,11 @@
                             </div>
 
                             <div class="card-footer form-inline">
-
-                                <a  style="margin: 5px" href="{{ route('partners.index') }}" class="btn btn-primary"><i class="fas fa-save"></i> Quay lại</a>
+                                @if($product->status == "ready")
+                                    <a href="{{ route('partners.index') }}"  style="margin: 5px" class="btn btn-primary"><i class="fas fa-save"></i> Quay lại</a>
+                                @else
+                                    <a href="{{ route('dashboards.unpartners') }}"  style="margin: 5px" class="btn btn-primary"><i class="fas fa-save"></i> Quay lại</a>
+                                @endif
                                 @if($product->status == 'pending')
                                     <form  id="removeProduct" action="{{ route('product.removeProduct', $product->id) }}" method="post">
                                         @csrf
@@ -283,7 +286,11 @@
                                     </form>
                                 @endif
                             </div>
-
+                        <script>
+                            function quaylai(){
+                                history.back();
+                            }
+                        </script>
                     </div>
                 </div>
             </div>

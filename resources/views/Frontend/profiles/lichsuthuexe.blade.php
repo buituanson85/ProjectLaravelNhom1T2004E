@@ -72,15 +72,15 @@
                                                     @elseif($order->status == "accept")
                                                         <a class="badge badge-success">Đã nhận chuyến</a>
                                                     @elseif($order->status == "paid")
-                                                        <a class="badge badge-primary">Bắt đầu chuyến</a>
+                                                        <a class="badge badge-primary">Đang trong chuyến</a>
                                                     @elseif($order->status == "cancelled")
                                                         <a class="badge badge-secondary">Không nhận chuyến</a>
                                                     @elseif($order->status == "delete")
                                                         <a class="badge badge-danger">Hủy chuyến</a>
                                                     @elseif($order->status == "completed")
-                                                        <a class="badge badge-primary" style="background-color: pink">Kết thúc chuyến</a>
+                                                        <a class="badge badge-primary">Kết thúc chuyến</a>
                                                 @endif
-                                                <td><a href="{{route('pages.chitietdonhang', $order->order_id)}}"><span class="btn btn-sm btn-secondary" style="background-color: greenyellow;border: none;color: black;font-size: 14px"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
+                                                <td><a href="{{route('pages.chitietdonhang', $order->order_id)}}"><span class="btn btn-sm btn-light"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
                                                 <td>
                                                     @if($order->status == "pending")
                                                         <a href="{{ route('pages.deleteOrder',$order->order_id) }}" class="btn btn-sm btn-danger">Xóa</a>
@@ -100,6 +100,38 @@
                                 <div class="card-footer">
                                     <a href="/" class="btn btn-sm btn-primary">Về trang chủ</a>
                                 </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 offset-1 pb-5 pt-5">
+                        <h3 style="font-weight: 700">GHI CHÚ:</h3>
+                        <div class="row pt-3">
+                            <div class="col-md-12">
+                                - Khách hàng đặt hàng thành công: Chờ chủ phương tiện nhận chuyến<span class="badge badge-warning">Chờ nhận chuyến</span>.
+                            </div>
+                        </div>
+                        <div class="row pt-3">
+                            <div class="col-md-12">
+                                - Trong trường hợp chủ xe từ chối<span class="badge badge-secondary">Từ chối nhận chuyến</span>,Support Admin sẽ liên hệ để thuê xe giúp khách hàng đơn hàng khác hoặc khách hàng chủ động thuê xe khác.<br>
+                            </div>
+                        </div>
+                        <div class="row pt-3">
+                            <div class="col-md-12">
+                                - Chủ xe nhận chuyến: 2 bên tiến hành liên hệ,ký kết hợp đồng,nộp tiền đặt cọc và tiền thuê xe.<span class="badge badge-success">Đã nhận chuyến</span>.
+                            </div>
+                        </div>
+                        <div class="row pt-3">
+                            <div class="col-md-12">
+                                - Chủ xe bắt đầu chuyến: sau khi ký kết hợp đồng,nộp tiền đặt cọc và tiền thuê xe và bàn giao phương tiện chủ xe bắt đầu chuyến.<span class="badge badge-primary">Đang trong chuyến</span>.
+                            </div>
+                        </div>
+                        <div class="row pt-3">
+                            <div class="col-md-12">
+                                - Kết thúc chuyến: sau khi bàn giao lại phương tiện cho chủ xe,nhận lại tiền đặt cọc hợp đồng thuê xe và đơn hàng chấm dứt.<span class="badge badge-primary">Kết thúc chuyến</span>.
                             </div>
                         </div>
                     </div>

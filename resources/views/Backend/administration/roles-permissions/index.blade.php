@@ -11,7 +11,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
                         <span style="float: left"><a href="{{ route('roles-permissions.index') }}">Thêm permissions vào role</a></span>
                     </div>
@@ -33,7 +33,7 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th width="5%">ID</th>
+                                    <th width="5%">STT</th>
                                     <th width="5%">Role</th>
                                     <th width="55%" >Permission</th>
                                     <th width="20%">Date Posted</th>
@@ -46,7 +46,7 @@
                                 @forelse ($roles as $role )
                                     <tr>
                                         <td>{{ $role->id }}</td>
-                                        <td>{{ $role->name }}</td>
+                                        <td style="font-weight: 600">{{ $role->name }}</td>
                                         <td style="line-height: 40px">
                                             @foreach ($role->permissions as $permission )
                                                 <button class="badge badge-warning" role="button"><i class="fas fa-shield-alt"></i> {{ $permission->name }}</button>&nbsp &nbsp

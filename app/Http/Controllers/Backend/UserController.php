@@ -12,17 +12,7 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $name = $request->name;
-        if (isset($name)){
-            $users = User::where([
-                ['name','like','%'.$name.'%'],
-                ['utype','=',"ADM"]
-            ])->orderBy('id','ASC')->paginate(5);
-            $users->appends($request->all());
-        }else{
-            $users = User::where('utype',"ADM")->orderBy('id','ASC')->paginate(5);
-            $users->appends($request->all());
-        }
+        $users = User::where('utype',"ADM")->orderBy('id','ASC')->get();
 
         return view('Backend.administration.users.index')->with(array('users'=>$users));
 

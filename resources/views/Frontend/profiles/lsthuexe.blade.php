@@ -66,7 +66,6 @@
                                         <tr>
                                             <th>STT</th>
                                             <th>Mã đơn hàng</th>
-                                            <th>Khách hàng</th>
                                             <th>Tổng giá</th>
                                             <th>Trạng thái</th>
                                             <th>Chi tiết</th>
@@ -81,7 +80,6 @@
                                             <tr>
                                                 <td>{{ ++$index }}</td>
                                                 <td>{{ $order->order_id }}</td>
-                                                <td>{{ $order->user->name }}</td>
                                                 <td>{{ number_format($order->price_total) }} &#160;VNĐ</td>
                                                 <td>
                                                     @if($order->status == "pending")
@@ -89,15 +87,15 @@
                                                     @elseif($order->status == "accept")
                                                         <a class="badge badge-success">Đã nhận chuyến</a>
                                                     @elseif($order->status == "paid")
-                                                        <a class="badge badge-primary">Bắt đầu chuyến</a>
+                                                        <a class="badge badge-primary">Đang trong chuyến</a>
                                                     @elseif($order->status == "cancelled")
                                                         <a class="badge badge-secondary">Không nhận chuyến</a>
                                                     @elseif($order->status == "delete")
                                                         <a class="badge badge-danger">Hủy chuyến</a>
                                                     @elseif($order->status == "completed")
-                                                        <a class="badge badge-primary" style="background-color: pink">Kết thúc chuyến</a>
+                                                        <a class="badge badge-primary">Kết thúc chuyến</a>
                                                 @endif
-                                                <td><a href="{{route('pages.ctdonhang', $order->order_id)}}"><span class="btn btn-sm btn-secondary" style="background-color: greenyellow;border: none;color: black;font-size: 14px"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
+                                                <td><a href="{{route('pages.ctdonhang', $order->order_id)}}"><span class="btn btn-sm btn-light"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
                                                 <td>
                                                     <a href="{{ route('pages.deleteOrder',$order->order_id) }}" class="btn btn-sm btn-danger">Xóa</a>
                                                 </td>

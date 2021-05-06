@@ -1,25 +1,37 @@
 @extends('layouts.Backend.base')
 @section('title', 'Thêm permissions vào role')
 @section('content')
+    <div id="right-panel" class="right-panel">
 
+        <!-- Header-->
+    @include('layouts.Backend.header')
+    <!-- Header-->
 
-    <section style="padding: 30px 0;">
-        <div class="container-fluid">
-            <div class="row">
-                <ul class="float-left">
-                    <li style="float: left;list-style: none"><a class="longin-a" href="{{ route('dashboard.index') }}">Dashboard</a></li>
-                    <li style="float: left; margin: 0 10px;list-style: none">/</li>
-                    <li style="float: left;list-style: none"><a class="longin-a" href="{{ route('roles-permissions.create') }}">Thêm permissions vào role</a></li>
-                </ul>
+        <div class="breadcrumbs">
+            <div class="col-md-10">
+                <div class="page-header float-left">
+                    <div class="page-title" style="margin-top: 10px">
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
+                        <span style="float: left;margin: 0 5px">/</span>
+                        <span style="float: left"><a href="{{ route('roles-permissions.index') }}">Role Theo Permissions</a></span>
+                        <span style="float: left;margin: 0 5px">/</span>
+                        <span style="float: left"><a href="{{ route('roles-permissions.show',$role->id) }}">Thêm Permissions Vào Role</a></span>
+                    </div>
+                </div>
             </div>
-            <hr>
-            <div class="row pt-5">
-                <div class="col-md-10 offset-md-1">
+        </div>
+        <div class="breadcrumbs">
+            <div class="pt-5">
+                <div class="col-md-8 offset-md-2">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Thêm permission</h3>
-                            <div class="card-tools">
-                                <a href="{{ route('roles-permissions.index') }}" class="btn btn-danger"><i class="fas fa-shield-alt"></i> Danh sách role với permissions</a>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 class="card-title">Thêm permission</h3>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{{ route('roles-permissions.index') }}" class="btn btn-danger pull-right"><i class="fas fa-shield-alt"></i> Danh sách role với permissions</a>
+                                </div>
                             </div>
                         </div>
                         <form method="POST" action="{{ route('roles-permissions.store') }}">
@@ -32,8 +44,8 @@
                                     <input type="text" name="name"  id="name" class="form-control @error('name') is-invalid @enderror" value="{{ $role->name }}" readonly required>
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -66,10 +78,18 @@
                     </div>
                 </div>
             </div>
-
         </div>
-    </section>
+
+
+    </div><!-- /#right-panel -->
+
 @endsection
+
+
+
+
+
+
 
 
 

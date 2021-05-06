@@ -25,18 +25,7 @@ use Illuminate\Support\Str;
 class VehiclesController extends Controller
 {
     public function index(Request $request){
-        $name = $request->name;
-        if (isset($name)){
-            $users = User::where([
-                ['name','like','%'.$name.'%'],
-                ['utype','=',"PTR"]
-            ])->orderBy('id','DESC')->paginate(5);
-            $users->appends($request->all());
-        }else{
-            $users = User::where('utype',"PTR")->orderBy('id','DESC')->paginate(5);
-            $users->appends($request->all());
-        }
-
+        $users = User::where('utype',"PTR")->orderBy('id','DESC')->get();
         return view('Backend.Vehicles.index')->with(array('users'=>$users));
     }
 
@@ -121,8 +110,7 @@ class VehiclesController extends Controller
             ['status','!=', 'refused'],
             ['status','!=', 'pending'],
             ['status','!=', 'unavailable']
-        ])->orderBy('id','DESC')->paginate(5);
-        $products->appends($request->all());
+        ])->orderBy('id','DESC')->get();
         $user = User::find($id);
         return view('Backend.Vehicles.table-products',compact('products', 'user'));
     }
@@ -154,18 +142,7 @@ class VehiclesController extends Controller
     }
 
     public function confirmProduct(Request $request){
-        $name = $request->name;
-        if (isset($name)){
-            $products = Product::where([
-                ['status', 'pending'],
-                ['name','like', '%'.$name.'%']
-            ])->orderBy('id','DESC')->paginate(5);
-            $products->appends($request->all());
-        }else{
-            $products = Product::where('status', 'pending')->orderBy('id','DESC')->paginate(5);
-            $products->appends($request->all());
-        }
-
+        $products = Product::where('status', 'pending')->orderBy('id','DESC')->get();
         return view('Backend.confirm-products.index',compact('products'));
     }
 

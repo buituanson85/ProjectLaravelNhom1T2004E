@@ -8,12 +8,14 @@
     <!-- Header-->
 
         <div class="breadcrumbs">
-            <div class="col-sm-4">
+            <div class="col-md-10">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('permissions.create') }}">Chi tiết nhân viên</a></span>
+                        <span style="float: left"><a href="{{ route('users.index') }}">Danh Sách Nhân Viên</a></span>
+                        <span style="float: left;margin: 0 5px">/</span>
+                        <span style="float: left"><a href="{{ route('users.show', $users->id ) }}">Chi Tiết Nhân Viên</a></span>
                     </div>
                 </div>
             </div>
@@ -24,11 +26,11 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
-                                <div class="col-md-3">
-                                    <span style="font-size: 16px;font-weight: 700">Profile Nhân viên</span>
+                                <div class="col-md-3 pt-5">
+                                    <span style="font-size: 20px;font-weight: 700">Hồ sơ Nhân viên</span>
                                 </div>
-                                <div class="col-md-6 pull-left">
-                                    <img width="100" src="{{ $users->profile_photo_path }} " alt="">
+                                <div class="col-md-9">
+                                    <img width="150" class="img-thumbnail pull-right" src="{{ $users->profile_photo_path }} " alt="">
                                 </div>
                             </div>
                         </div>
@@ -73,6 +75,10 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th scope="row">Địa chỉ</th>
+                                    <td>{{ $users->address }}</td>
+                                </tr>
+                                <tr>
                                     <th scope="row">Created At</th>
                                     <td>{{ $users->created_at }}</td>
                                 </tr>
@@ -82,6 +88,9 @@
                                 </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{{ route('users.index') }}" class="btn btn-primary">Quay lại</a>
                         </div>
                     </div>
                 </div>

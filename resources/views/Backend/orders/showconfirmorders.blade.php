@@ -2,7 +2,6 @@
 @section('title', 'Chi tiết đơn hàng')
 @section('content')
 
-
     <div id="right-panel" class="right-panel">
 
         <!-- Header-->
@@ -13,9 +12,9 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('dashboards-orders.index')}}">Đơn hàng</a></span>
+                        <span style="float: left"><a href="{{ route('dashboards-orders.index')}}">Lịch Sử Đơn Hàng</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
                         <span style="float: left"><a href="{{ route('dashboards-orders.show', $order->order->order_id) }}">Chi tiết</a></span>
                     </div>
@@ -36,13 +35,13 @@
                                         @elseif($order->order->status == "accept")
                                             <span class="badge badge-success">Đã nhận chuyến</span>
                                         @elseif($order->order->status == "paid")
-                                            <span class="badge badge-primary">Bắt đầu chuyến</span>
+                                            <span class="badge badge-primary">Đang trong chuyến</span>
                                         @elseif($order->order->status == "cancelled")
                                             <span class="badge badge-secondary">Không nhận chuyến</span>
                                         @elseif($order->order->status == "delete")
                                             <span class="badge badge-danger">Hủy chuyến</span>
                                         @elseif($order->order->status == "completed")
-                                            <span class="badge badge-primary" style="background-color: pink">Kết thúc chuyến</span>
+                                            <span class="badge badge-primary">Kết thúc chuyến</span>
                                         @endif
                                     </h6>
                                     <div class="card-tools">
@@ -292,7 +291,7 @@
 
                         </div>
                         <div class="card-footer form-inline">
-                            <a href="{{ route('dashboards-orders.index') }}" class="btn btn-primary">Quay lại</a>
+                            <a href="{{ route('dashboards.confirmorders') }}" class="btn btn-primary">Quay lại</a>
                         </div>
                     </div>
                 </div>

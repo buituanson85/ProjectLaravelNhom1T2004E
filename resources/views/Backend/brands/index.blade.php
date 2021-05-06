@@ -11,28 +11,24 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('brand.index') }}">Thương hiệu</a></span>
+                        <span style="float: left"><a href="{{ route('brand.index') }}">Danh Sách Thương Hiệu</a></span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="breadcrumbs">
             <div class="pt-5">
-                <div class="col-md-12">
+                <div class="col-md-10 offset-1">
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <h3 class="card-title">Danh sách thương hiệu</h3>
-
-                                    <div class="card-tools">
-                                        <a href="{{ route('brand.create') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i>Thêm thương hiệu mới</a>
-                                    </div>
                                 </div>
-                                <div class="col-md-8 mt-4">
-
+                                <div class="col-md-6">
+                                    <a href="{{ route('brand.create') }}" class="btn btn-primary pull-right"><i class="fas fa-plus-circle"></i>Thêm thương hiệu</a>
                                 </div>
                             </div>
                         </div>
@@ -40,12 +36,11 @@
                         <div class="card-body">
 
                             @include('partials.alert')
-                            <table id="example" class="display" style="width:100%">
+                            <table id="product_table" class="display" style="width:100%">
                                 <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th>STT</th>
                                     <th>Tên</th>
-                                    <th>Slug</th>
                                     <th>Trạng thái</th>
                                     <th>Craete at</th>
                                     <th>Update at</th>
@@ -54,18 +49,19 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-
+                                @php
+                                    $index = 0;
+                                @endphp
                                 @foreach($all_brand as $brand)
                                     <tr>
-                                        <td>{{$brand->id}}</td>
-                                        <td>{{$brand->name}}</td>
-                                        <td>{{$brand->slug}}</td>
+                                        <td>{{ ++$index }}</td>
+                                        <td style="font-weight: 600">{{$brand->name}}</td>
                                         <td>{{$brand->status}}</td>
                                         <td>{{$brand->created_at}}</td>
                                         <td>{{$brand->updated_at}}</td>
                                         <td>
                                             <a class="btn btn-sm btn-warning"
-                                               href="{{route('brand.edit',$brand->id)}}">Cập nhật</a>
+                                               href="{{route('brand.edit',$brand->id)}}"><i class="fa fa-edit"></i>&nbsp;Cập nhật</a>
                                         </td>
 
                                         <td>
@@ -93,12 +89,29 @@
 @endsection
 
 @section('addjs')
-    <script>
-        jQuery(document).ready(function () {
-            jQuery('#example').DataTable({
-                "order": [[3, "desc"]]
+    <script type="text/javascript">
+        jQuery(document).ready( function () {
+            jQuery('#product_table').DataTable({
+                "language": {
+                    "lengthMenu": "Hiển thị _MENU_ bản ghi 1 trang",
+                    "zeroRecords": "Không có bản ghi - sorry",
+                    "info": "Trang số _PAGE_ trên tổng số _PAGES_",
+                    "infoEmpty": "Không có dữ liệu",
+                    "infoFiltered": "(Lọc từ _MAX_ bản ghi)",
+                    "paginate": {
+                        "first": "Đầu tiên",
+                        "last": "Cuối cùng",
+                        "next": "Sau",
+                        "previous": "Trước"
+                    },
+                    "search": "Tìm kiếm:",
+                }
             });
-
+        } );
+        jQuery(document).ready(function () {
+            jQuery('.dataTables_filter input[type="search"]').css(
+                {'width':'400px','display':'inline-block'}
+            );
         });
     </script>
 @endsection

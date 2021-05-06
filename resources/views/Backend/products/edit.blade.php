@@ -12,11 +12,11 @@
             <div class="col-sm-8">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('product.index') }}">Phương tiện</a></span>
+                        <span style="float: left"><a href="{{ route('product.index') }}">Danh Sách Phương Tiện</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('product.edit', $product->id) }}">Chỉnh sửa phương tiện</a></span>
+                        <span style="float: left"><a href="{{ route('product.edit', $product->id) }}">Chỉnh Sửa Phương Tiện</a></span>
                     </div>
                 </div>
             </div>
@@ -26,9 +26,13 @@
                 <div class="col-md-10 offset-md-1">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h4 class="card-title">Chỉnh sửa phương tiện của bạn</h4>
-                            <div class="card-tools">
-                                <a href="{{ route('product.index') }}" class="btn btn-sm btn-danger"><i class="fas fa-shield-alt"></i>Xem tất cả phương tiện của bạn</a>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 class="card-title">Chỉnh sửa phương tiện của bạn</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{{ route('product.index') }}" class="btn btn-sm btn-danger pull-right"><i class="fas fa-shield-alt"></i>Xem tất cả phương tiện của bạn</a>
+                                </div>
                             </div>
                         </div>
                         <div class="alert-danger"></div>

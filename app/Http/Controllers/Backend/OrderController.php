@@ -18,9 +18,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Models\Frontend\Order;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use PDF;
+use Session;
 
 class OrderController extends Controller
 {
@@ -45,8 +47,25 @@ class OrderController extends Controller
 
     public function showConfirmOrders($id){
         $get_order = Order::where('order_id','like', $id)->first();
-        $order = OrderDetails::find($get_order->id);
+        $order = OrderDetails::where('order_id',$get_order->id)->first();
         return view('Backend.orders.showconfirmorders')->with(['order'=>$order]);
+    }
+
+    public function updateConfirmOrders($id){
+        $get_order = Order::where('order_id','like', $id)->first();
+        $order = OrderDetails::where('order_id',$get_order->id)->first();
+        $start_price = $order->product->price - 100000;
+        $end_price = $order->product->price + 100000;
+        $products = Product::where([
+            ['id', '!=',$order->product->id],
+            ['district_id','=',$order->product->district_id],
+            ['category_id','=',$order->product->category_id],
+            ['category_id','=',$order->product->category_id],
+            ['status','ready'],
+            ['confirm', 1],
+            ['featured', 0]
+        ])->whereBetween('price', [$start_price, $end_price])->orderBy('id','desc')->get();
+        return view('Backend.orders.dathoxe',compact('products','order'));
     }
     //hiển thị danh sách các đơn hàng bị từ chối và hủy có confirm bằng 1
     public function ordersDeleteCancelled(){
@@ -54,6 +73,7 @@ class OrderController extends Controller
             ['status','!=','pending'],
             ['status','!=','accept'],
             ['status','!=','paid'],
+            ['status','!=','completed'],
             ['confirm','!=', 1]
         ])->orderBy('id','desc')->get();
         return view('Backend.orders.orders-delete-cancelled')->with(['orders'=>$orders]);
@@ -63,8 +83,18 @@ class OrderController extends Controller
         $order = Order::where('order_id', $id)->first();
         $order->confirm = 1;
         $order->save();
-        $order_details = OrderDetails::find($order->id);
+        $order_details = OrderDetails::where('order_id',$order->id)->first();
         return view('Backend.orders.show-orders-delete-cancelled')->with(['order'=>$order_details]);
+    }
+
+    public function acceptDeleteCancelled(Request $request,$id){
+        $order = Order::where('order_id', $id)->first();
+        $order->confirm = 1;
+        $order->save();
+        $order_details = OrderDetails::where('order_id',$order->id)->first();
+        $request->session()->flash('success', 'Xác nhận thành công!');
+        return redirect()->back();
+//        return view('Backend.orders.orders-delete-cancelled')->with(['order'=>$order_details]);
     }
 
     public function partnerOrders(){
@@ -82,13 +112,13 @@ class OrderController extends Controller
             ['status','!=','delete'],
             ['status','!=','completed']
         ])->findMany($array_id);
-//        $orders = Order::where('status','pending')->orwhere('status','accept')->orwhere('status','paid')->get();
         return view('Backend.orders.partnerorders')->with(['orders'=>$orders]);
     }
 
     public function partnerOrdersShow($id){
         $get_order = Order::where('order_id','like', $id)->first();
-        $order = OrderDetails::find($get_order->id);
+//        dd($get_order->id);
+        $order = OrderDetails::where('order_id',$get_order->id)->first();
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order]);
     }
 
@@ -106,8 +136,7 @@ class OrderController extends Controller
             ['status','!=','pending'],
             ['status','!=','accept'],
             ['status','!=','paid']
-        ])->findMany($array_id);
-//        $orders = Order::where('status','pending')->orwhere('status','accept')->orwhere('status','paid')->get();
+        ])->orderBy('id','desc')->findMany($array_id);
         return view('Backend.orders.historyorderpartner')->with(['orders'=>$orders]);
     }
 
@@ -122,73 +151,94 @@ class OrderController extends Controller
         $request->validate([
             //
         ]);
-        $new_order->order_id = rand(1,100000000);
-        $new_order->customer_id = Auth::user()->id;
-        $new_order->payment_id = $request->payment_id;
-        $new_order->price_total = $request->price_total;
+        if ( $request->payment_id == 1){
+            $new_order->order_id = Str::random(10);
+            $new_order->customer_id = Auth::user()->id;
+            $new_order->payment_id = $request->payment_id;
+            $new_order->price_total = $request->price_total;
 
-        $new_order->status = "pending";
+            $new_order->status = "pending";
 
-        $new_order->save();
+            $new_order->save();
 
-        $new_order_detail = new OrderDetails();
-        $new_order_detail->order_id = $new_order->id;
-        $new_order_detail-> product_id = $request->product_id;
-        $new_order_detail-> note = $request->note;
-        $new_order_detail->product_price_total = $new_order->price_total;
-        $new_order_detail->product_received_date = $request->product_receive_date;
-        $new_order_detail->product_pay_date = $request->product_pay_date;
-        $new_order_detail->payments = $request->receive_Method;
-        $new_order_detail->quantity = $request->quantity;
+            $new_order_detail = new OrderDetails();
+            $new_order_detail->order_id = $new_order->id;
+            $new_order_detail-> product_id = $request->product_id;
+            $new_order_detail-> note = $request->note;
+            $new_order_detail->product_price_total = $new_order->price_total;
+            $new_order_detail->product_received_date = $request->product_receive_date;
+            $new_order_detail->product_pay_date = $request->product_pay_date;
+            $new_order_detail->payments = $request->receive_Method;
+            $new_order_detail->quantity = $request->quantity;
 
-        $product = Product::find($request->product_id);
-        $partner_id = User::find($product->partner_id);
+            $product = Product::find($request->product_id);
+            $partner_id = User::find($product->partner_id);
 
-        $new_order_detail->save();
+            $new_order_detail->save();
 
-        $now = \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
-        $email = Auth::user()->email;
-        $name = Auth::user()->name;
-        $date = "Date: ".''.$now;
-        $products = [
-            'email'=>$email,
-            'name' => $name,
-            'date' => $date,
-            'order_id'=>$new_order->order_id,
-            'price_total'=> $new_order->price_total,
-            'product_name'=>$product->name,
-            'product_image'=>$product->image,
-            'product_engine'=>$product->engine,
-            'product_seat'=>$product->seat,
-            'product_capacity'=>$product->capacity,
-            'product_range'=>$product->range,
-            'product_gear'=>$product->gear,
-            'product_consumption'=>$product->consumption,
-            'product_status'=>'pending',
-            'product_district'=>$product->district->name,
-            'product_brand'=>$product->brand->name,
-            'product_category'=>$product->category->name,
-            'product_partner'=>$partner_id->name
-        ];
+            $now = \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
+            $email = Auth::user()->email;
+            $name = Auth::user()->name;
+            $date = "Date: ".''.$now;
+            $products = [
+                'email'=>$email,
+                'name' => $name,
+                'date' => $date,
+                'order_id'=>$new_order->order_id,
+                'price_total'=> $new_order->price_total,
+                'product_name'=>$product->name,
+                'product_image'=>$product->image,
+                'product_engine'=>$product->engine,
+                'product_seat'=>$product->seat,
+                'product_capacity'=>$product->capacity,
+                'product_range'=>$product->range,
+                'product_gear'=>$product->gear,
+                'product_consumption'=>$product->consumption,
+                'product_status'=>'pending',
+                'product_district'=>$product->district->name,
+                'product_brand'=>$product->brand->name,
+                'product_category'=>$product->category->name,
+                'product_partner'=>$partner_id->name
+            ];
 
-        Mail::to($email)->send(new Send_Product_Order($products));
+            Mail::to($email)->send(new Send_Product_Order($products));
 
 
-        $request->session()->flash('success','Bạn đã thuê xe thành công!!!');
-        return view('Frontend.hoanthanh',compact('new_order','new_order_detail'));
+            $request->session()->flash('success','Bạn đã thuê xe thành công!!!');
+//            return redirect(route('Frontend.hoanthanh'))->with(['new_order'=>$new_order,'new_order_detail',$new_order_detail]);
+            return view('Frontend.hoanthanh',compact('new_order','new_order_detail'));
+        }else{
+
+            //giản 5% cho đơn hàng online
+            $total = $request->price_total;
+            $price_total = $total - 0.05*$total;
+            //card
+            $cart = Session::get('cart');
+            $cart[] = array(
+                'price_total' => $price_total,
+                'product_id' => $request->product_id,
+                'note' => $request->note,
+                'product_received_date' => $request->product_receive_date,
+                'product_pay_date' => $request->product_pay_date,
+                'quantity' => $request->quantity,
+                'receive_method' => $request->receive_Method
+            );
+            Session::put('cart',$cart);
+            return view('Frontend.vnpay.index',compact('price_total'));
+        }
     }
 
     public function show($id)
     {
         $get_order = Order::where('order_id','like', $id)->first();
-        $order = OrderDetails::find($get_order->id);
+        $order = OrderDetails::where('order_id',$get_order->id)->first();
 
         return view('Backend.orders.show')->with(['order'=>$order]);
     }
 
     public function showOrdersDeleteCancelled($id){
         $get_order = Order::where('order_id','like', $id)->first();
-        $order = OrderDetails::find($get_order->id);
+        $order = OrderDetails::where('order_id',$get_order->id)->first();
         return view('Backend.orders.show-orders-delete-cancelled')->with(['order'=>$order]);
     }
 
@@ -242,7 +292,7 @@ class OrderController extends Controller
 
         $product->save();
         $order->save();
-        $order_details = OrderDetails::find($order->id);
+        $order_details = OrderDetails::where('order_id',$order->id)->first();
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
     }
 
@@ -300,7 +350,7 @@ class OrderController extends Controller
 
         $order->save();
         $product->save();
-        $order_details = OrderDetails::find($order->id);
+        $order_details = OrderDetails::where('order_id',$order->id)->first();
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
     }
 
@@ -321,16 +371,14 @@ class OrderController extends Controller
         //tat hien thi phuong tien
         $product = Product::find($order->orderdetails->product->id);
 
-        if($product->category_id == 2){
-            $product->quantity = $product->quantity + $order->orderdetails->quantity;
-        }
+        $product->quantity = $product->quantity + $order->orderdetails->quantity;
 
         $product->status = "ready";
         Mail::to($email)->send(new Send_compled_order($orders));
 
         $product->save();
         $order->save();
-        $order_details = OrderDetails::find($order->id);
+        $order_details = OrderDetails::where('order_id',$order->id)->first();
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
     }
 
@@ -338,7 +386,7 @@ class OrderController extends Controller
         $order = Order::where('order_id', $id)->first();
         $order->status = 'cancelled';
         $order->save();
-        $order_details = OrderDetails::find($order->id);
+        $order_details = OrderDetails::where('order_id',$order->id)->first();
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
     }
 
@@ -348,14 +396,12 @@ class OrderController extends Controller
 
         //tat hien thi phuong tien
         $product = Product::find($order->orderdetails->product->id);
-        if($product->category_id == 2){
-            $product->quantity = $product->quantity + $order->orderdetails->quantity;
-        }
+        $product->quantity = $product->quantity + $order->orderdetails->quantity;
 
         $product->status = "ready";
         $product->save();
         $order->save();
-        $order_details = OrderDetails::find($order->id);
+        $order_details = OrderDetails::where('order_id',$order->id)->first();
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
     }
 
@@ -366,7 +412,7 @@ class OrderController extends Controller
     }
     public function print_order_details($order_id){
         $order = Order::where('order_id', $order_id)->first();
-        $order_details = OrderDetails::find($order->id);
+        $order_details = OrderDetails::where('order_id',$order->id)->first();
         $payment_method = null;
         if($order->payment_id == 1){
             $payment_method = "Tiền mặt";
@@ -502,7 +548,7 @@ class OrderController extends Controller
         $noteorder->save();
         $order->save();
 
-        $order_details = OrderDetails::find($order->id);
+        $order_details = OrderDetails::where('order_id',$order->id)->first();
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
     }
 
@@ -524,12 +570,155 @@ class OrderController extends Controller
         $noteorder->partner_id = Auth::user()->id;
 
         $order = Order::find($request->order_id);
+
 //        $order->confirm = 1;
         $order->status = 'delete';
+
+        //tat hien thi phuong tien
+        $product = Product::find($order->orderdetails->product->id);
+        $product->quantity = $product->quantity + $order->orderdetails->quantity;
+
+        $product->status = "ready";
+        $product->save();
         $noteorder->save();
         $order->save();
 
-        $order_details = OrderDetails::find($order->id);
+        $order_details = OrderDetails::where('order_id',$order->id)->first();
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
+    }
+
+    public function paymentOnline(Request $request){
+        $vnp_TxnRef = Str::random(10);
+        $vnp_OrderInfo = $request->order_desc;
+        $vnp_OrderType = $request->order_type;
+        $vnp_Amount = str_replace(',', '', $request->amount) * 100;
+        $vnp_Locale = $request->language;
+        $vnp_BankCode = $request->bank_code;
+        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+
+        $inputData = array(
+            "vnp_Version" => "2.0.0",
+            "vnp_TmnCode" => env('VNP_TMN_CODE'),
+            "vnp_Amount" => $vnp_Amount,
+            "vnp_Command" => "pay",
+            "vnp_CreateDate" => date('YmdHis'),
+            "vnp_CurrCode" => "VND",
+            "vnp_IpAddr" => $vnp_IpAddr,
+            "vnp_Locale" => $vnp_Locale,
+            "vnp_OrderInfo" => $vnp_OrderInfo,
+            "vnp_OrderType" => $vnp_OrderType,
+            "vnp_ReturnUrl" => route('pages.vnpayreturn'),
+            "vnp_TxnRef" => $vnp_TxnRef,
+        );
+
+        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+            $inputData['vnp_BankCode'] = $vnp_BankCode;
+        }
+        ksort($inputData);
+        $query = "";
+        $i = 0;
+        $hashdata = "";
+        foreach ($inputData as $key => $value) {
+            if ($i == 1) {
+                $hashdata .= '&' . $key . "=" . $value;
+            } else {
+                $hashdata .= $key . "=" . $value;
+                $i = 1;
+            }
+            $query .= urlencode($key) . "=" . urlencode($value) . '&';
+        }
+
+        $vnp_Url = env('VNP_URL') . "?" . $query;
+        if (env('VNP_HASH_SECRET')) {
+            // $vnpSecureHash = md5($vnp_HashSecret . $hashdata);
+            $vnpSecureHash = hash('sha256', env('VNP_HASH_SECRET') . $hashdata);
+            $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
+        }
+
+        return redirect($vnp_Url);
+    }
+
+    public function paymentVnpay(Request $request){
+        $cart = Session::get('cart');
+        foreach($cart as $key => $val){
+            $price_total = $val['price_total'];
+            $product_id = $val['product_id'];
+            $note = $val['note'];
+            $product_received_date = $val['product_received_date'];
+            $product_pay_date = $val['product_pay_date'];
+            $quantity = $val['quantity'];
+            $receive_method = $val['receive_method'];
+        }
+        $new_order = new Order();
+
+        $new_order->order_id = Str::random(10);
+        $new_order->customer_id = Auth::user()->id;
+        $new_order->payment_id = 2;
+        $new_order->price_total = $price_total;
+
+        $new_order->status = "pending";
+
+        $new_order->save();
+
+        $new_order_detail = new OrderDetails();
+        $new_order_detail->order_id = $new_order->id;
+        $new_order_detail-> product_id = $product_id;
+        $new_order_detail-> note = $note;
+        $new_order_detail->product_price_total = $price_total;
+        $new_order_detail->product_received_date = $product_received_date;
+        $new_order_detail->product_pay_date = $product_pay_date;
+        $new_order_detail->payments = $receive_method;
+        $new_order_detail->quantity = $quantity;
+
+        $product = Product::find($product_id);
+        $partner_id = User::find($product->partner_id);
+
+        $new_order_detail->save();
+
+        $now = \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
+        $email = Auth::user()->email;
+        $name = Auth::user()->name;
+        $date = "Date: ".''.$now;
+        $products = [
+            'email'=>$email,
+            'name' => $name,
+            'date' => $date,
+            'order_id'=>$new_order->order_id,
+            'price_total'=> $new_order->price_total,
+            'product_name'=>$product->name,
+            'product_image'=>$product->image,
+            'product_engine'=>$product->engine,
+            'product_seat'=>$product->seat,
+            'product_capacity'=>$product->capacity,
+            'product_range'=>$product->range,
+            'product_gear'=>$product->gear,
+            'product_consumption'=>$product->consumption,
+            'product_status'=>'pending',
+            'product_district'=>$product->district->name,
+            'product_brand'=>$product->brand->name,
+            'product_category'=>$product->category->name,
+            'product_partner'=>$partner_id->name
+        ];
+
+        Mail::to($email)->send(new Send_Product_Order($products));
+
+        //insert vnpay
+
+        $vnpay_data = $request->all();
+        $vnpays = [
+            'p_transaction_id' => 2,
+            'p_trasaction_code' => $vnpay_data['vnp_TxnRef'],
+            'p_user_id' => \Auth::user()->id,
+            'p_money' => $price_total,
+            'p_note' => $vnpay_data['vnp_OrderInfo'],
+            'p_vnp_response_code' => $vnpay_data['vnp_ResponseCode'],
+            'p_code_vnpay' => $vnpay_data['vnp_TransactionNo'],
+            'p_code_bank' => $vnpay_data['vnp_BankCode'],
+            'p_time' => date('Y-m-d H:i' , strtotime($vnpay_data['vnp_PayDate']))
+        ];
+        DB::table('payment')->insert($vnpays);
+        Session::forget('cart');
+        $request->session()->flash('success','Bạn đã thuê xe thành công!!!');
+        return view('Frontend.vnpay.hoanthanh',compact('new_order','new_order_detail'));
     }
 }

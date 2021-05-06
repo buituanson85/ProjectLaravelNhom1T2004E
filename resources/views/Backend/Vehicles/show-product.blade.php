@@ -9,10 +9,12 @@
     <!-- Header-->
 
         <div class="breadcrumbs">
-            <div class="col-sm-6">
+            <div class="col-md-10">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
+                        <span style="float: left;margin: 0 5px">/</span>
+                        <span style="float: left"><a href="{{ route('products.index') }}">Danh sách đối tác</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
                         <span style="float: left"><a href="{{ route('dashboards.tableproducts', $product->partner_id) }}">Danh sách phương tiện</a></span>
                         <span style="float: left;margin: 0 5px">/</span>

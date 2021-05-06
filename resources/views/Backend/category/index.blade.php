@@ -1,6 +1,7 @@
 @extends('layouts.Backend.base')
-@section('title', 'Loại danh mục')
+@section('title', 'Loại Danh Mục')
 @section('content')
+
     <div id="right-panel" class="right-panel">
 
         <!-- Header-->
@@ -8,61 +9,58 @@
     <!-- Header-->
 
         <div class="breadcrumbs">
-            <div class="col-sm-4">
+            <div class="col-md-10">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('city.index') }}">Loại Danh Mục</a></span>
+                        <span style="float: left"><a href="{{ route('cate.index') }}">Danh Sách Loại Danh Mục</a></span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="breadcrumbs">
-            <div class="pt-5">
-                <div class="col-md-12">
+            <div class="row pt-5 m-0">
+                <div class="col-md-10 offset-md-1">
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <h3 class="card-title">Danh sách loại danh mục</h3>
-
-                                    <div class="card-tools">
-                                        <a href="{{ route('cate.create') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i>Thêm loại danh mục mới</a>
-                                    </div>
                                 </div>
-                                <div class="col-md-8 mt-4">
-
+                                <div class="col-md-6">
+                                    <a class="btn btn-primary pull-right" href="{{ route('cate.create') }}"><i class="fas fa-plus-circle"></i>&#160;Thêm loại danh mục</a></span>
                                 </div>
                             </div>
                         </div>
-                        <!-- /.card-header -->
                         <div class="card-body">
-
                             @include('partials.alert')
-                            <table id="myTable" class="table table-hover">
+                            <table class="table table-hover text-nowrap" id="product_table" >
+                                <thead>
                                 <tr>
-                                    <th scope="col">ID</th>
+                                    <th scope="col">STT</th>
                                     <th scope="col">Tên</th>
-                                    <th scope="col">Slug</th>
                                     <th scope="col">Trạng thái</th>
                                     <th scope="col">Creat at</th>
                                     <th scope="col">Update at</th>
                                     <th scope="col">Cập nhật</th>
                                     <th scope="col">Xóa</th>
-
-                                @foreach($list_category as $key => $cate)
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @php
+                                    $index = 0;
+                                @endphp
+                                @forelse($list_category as $key => $cate)
                                     <tr>
-
-                                        <td>{{$cate->id}}</td>
+                                        <td>{{ $index++ }}</td>
                                         <td>{{$cate->name}}</td>
-                                        <td>{{$cate->slug}}</td>
                                         <td ><p class="label label-primary">{{$cate->status}}</p></td>
                                         <td>{{$cate->created_at}}</td>
                                         <td>{{$cate->updated_at}}</td>
                                         <td>
                                             <a class="btn btn-sm btn-warning"
-                                               href="{{route('cate.edit',$cate->id)}}">Cập nhật</a>
+                                               href="{{route('cate.edit',$cate->id)}}"><i class="fa fa-edit"></i>&nbsp;Cập nhật</a>
                                         </td>
                                         <td>
                                             <a class="btn btn-sm btn-danger"
@@ -70,10 +68,12 @@
                                                href="{{route('cate.delete',$cate->id)}}">Xóa</a>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>Không có dữ liệu</tr>
+                                @endforelse
+                                </tbody>
                             </table>
                         </div>
-                        <!-- /.card-body -->
                     </div>
                 </div>
             </div>
@@ -85,9 +85,31 @@
 @endsection
 
 @section('addjs')
-    <script>
+    <script type="text/javascript">
+        jQuery(document).ready( function () {
+            jQuery('#product_table').DataTable({
+                "language": {
+                    "lengthMenu": "Hiển thị _MENU_ bản ghi 1 trang",
+                    "zeroRecords": "Không có bản ghi - sorry",
+                    "info": "Trang số _PAGE_ trên tổng số _PAGES_",
+                    "infoEmpty": "Không có dữ liệu",
+                    "infoFiltered": "(Lọc từ _MAX_ bản ghi)",
+                    "paginate": {
+                        "first": "Đầu tiên",
+                        "last": "Cuối cùng",
+                        "next": "Sau",
+                        "previous": "Trước"
+                    },
+                    "search": "Tìm kiếm:",
+                }
+            });
+        } );
         jQuery(document).ready(function () {
-            jQuery('#myTable').DataTable();
+            jQuery('.dataTables_filter input[type="search"]').css(
+                {'width':'400px','display':'inline-block'}
+            );
         });
     </script>
 @endsection
+
+

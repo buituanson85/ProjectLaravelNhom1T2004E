@@ -299,11 +299,10 @@
             var year1 = d.getFullYear();
             var year2 = x.getFullYear();
 
-            var total = z*{{ $product->price }}*quantitys + {{$product->insurrance}};
+            var total = z*{{ $product->price }}*quantitys + {{$product->insurrance}}*quantitys;
             // var total=z.$("#product_price").val()+$("#product_insurrance").val();
             var total_con = total;
             total_con = Number((total_con).toFixed(1)).toLocaleString();
-
 
             document.getElementById("total_time").innerHTML = z+" ngày";
 

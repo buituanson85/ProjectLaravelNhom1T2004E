@@ -42,10 +42,9 @@ class GalaxyController extends Controller
                 $galaxys->product_id = $id;
                 $galaxys->save();
                 $product = Product::find($id);
-                if ($product->status == 'refused'){
-                    $product->status = 'unavailable';
-                    $product ->save();
-                }
+
+                $product->status = 'unavailable';
+                $product ->save();
             }
         }
         return back()->with("success","Thêm ảnh thành công");

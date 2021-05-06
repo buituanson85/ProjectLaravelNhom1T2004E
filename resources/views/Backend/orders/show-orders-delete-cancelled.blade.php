@@ -36,13 +36,13 @@
                                         @elseif($order->order->status == "accept")
                                             <span class="badge badge-success">Đã nhận chuyến</span>
                                         @elseif($order->order->status == "paid")
-                                            <span class="badge badge-primary">Bắt đầu chuyến</span>
+                                            <span class="badge badge-primary">Đang trong chuyến</span>
                                         @elseif($order->order->status == "cancelled")
                                             <span class="badge badge-secondary">Không nhận chuyến</span>
                                         @elseif($order->order->status == "delete")
                                             <span class="badge badge-danger">Hủy chuyến</span>
                                         @elseif($order->order->status == "completed")
-                                            <span class="badge badge-primary" style="background-color: pink">Kết thúc chuyến</span>
+                                            <span class="badge badge-primary">Kết thúc chuyến</span>
                                         @endif
                                     </h6>
                                     <div class="card-tools">

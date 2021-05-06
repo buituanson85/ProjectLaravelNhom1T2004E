@@ -30,7 +30,7 @@
                                     <div class="card-body box-profile">
                                         <div class="text-center pb-3">
                                             <div class="image-preview" id="imagePreview">
-                                                <img class="image-preview__image img-fluid img-circle profile-user-img" style="width: 200px;" src="{{ auth()->user()->profile_photo_path }}" id="img_thumbnail" alt="">
+                                                <img class="image-preview__image img-fluid img-circle profile-user-img" style="width: 200px;" src="{{ \Auth::user()->profile_photo_path }}" id="img_thumbnail" alt="">
                                                 <span id="store_image" class="image-preview__default-text"></span>
                                             </div>
                                             <input class="input-file pt-5" name="image" id="image" type="file">

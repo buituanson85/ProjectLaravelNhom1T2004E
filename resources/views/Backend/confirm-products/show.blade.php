@@ -12,9 +12,9 @@
             <div class="col-sm-8">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('partners.index') }}">Phương tiện</a></span>
+                        <span style="float: left"><a href="{{ route('partners.index') }}">Danh Sách Đăng Ký Phương Tiện</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
                         <span style="float: left"><a href="{{ route('product.show', $product->id) }}">Chi tiết</a></span>
                     </div>

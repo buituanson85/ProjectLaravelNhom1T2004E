@@ -88,7 +88,11 @@
 <script src="{{ asset('Backend/assets/js/slider_single_product.js') }}"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.js"></script>
 
-
+<script>
+    function quaylai(){
+        history.back();
+    }
+</script>
 <script>
     (function($) {
         "use strict";

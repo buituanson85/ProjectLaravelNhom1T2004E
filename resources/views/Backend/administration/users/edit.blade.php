@@ -1,23 +1,37 @@
 @extends('layouts.Backend.base')
     @section('title', 'Cập nhật roles nhân viên')
 @section('content')
-    <section style="padding: 30px 0;">
-        <div class="container-fluid">
-            <div class="row">
-                <ul class="float-left">
-                    <li style="float: left;list-style: none"><a class="longin-a" href="{{ route('dashboard.index') }}">Dashboard</a></li>
-                    <li style="float: left; margin: 0 10px;list-style: none">/</li>
-                    <li style="float: left;list-style: none"><a class="longin-a" href="{{ route('users.index') }}">Cập nhật roles nhân niên</a></li>
-                </ul>
+    <div id="right-panel" class="right-panel">
+
+        <!-- Header-->
+    @include('layouts.Backend.header')
+    <!-- Header-->
+
+        <div class="breadcrumbs">
+            <div class="col-md-10">
+                <div class="page-header float-left">
+                    <div class="page-title" style="margin-top: 10px">
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
+                        <span style="float: left;margin: 0 5px">/</span>
+                        <span style="float: left"><a href="{{ route('users.index') }}">Danh Sách Nhân Viên</a></span>
+                        <span style="float: left;margin: 0 5px">/</span>
+                        <span style="float: left"><a href="{{ route('users.edit', $user->id) }}">Cập nhật roles nhân viên</a></span>
+                    </div>
+                </div>
             </div>
-            <hr>
+        </div>
+        <div class="breadcrumbs">
             <div class="row pt-5">
-                <div class="col-md-10 offset-md-1">
+                <div class="col-md-8 offset-md-2">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Thêm roles nhân viên</h3>
-                            <div class="card-tools">
-                                <a href="{{ route('users.index') }}" class="btn btn-danger"><i class="fas fa-shield-alt"></i> Danh sách nhân viên</a>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 class="card-title">Thêm roles nhân viên</h3>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{{ route('users.index') }}" class="btn btn-danger pull-right"><i class="fas fa-shield-alt"></i> Danh sách nhân viên</a>
+                                </div>
                             </div>
                         </div>
                         <form class="form-group pt-3" method="POST" action="{{ route('users.update', $user->id) }}">
@@ -33,8 +47,8 @@
 
                                         @error('name')
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                         @enderror
                                     </div>
                                 </div>
@@ -51,15 +65,15 @@
                                                 @if($role->name === "Admin")
 
                                                 @else
-                                                <input type="checkbox"
-                                                       @foreach($user->roles as $key)
-                                                            @if($key->name == $role->name)
-                                                                checked="checked"
-                                                            @else
+                                                    <input type="checkbox"
+                                                           @foreach($user->roles as $key)
+                                                           @if($key->name == $role->name)
+                                                           checked="checked"
+                                                           @else
 
-                                                            @endif
-                                                       @endforeach
-                                                       name="roles[]" value="{{ $role->id }}">
+                                                           @endif
+                                                           @endforeach
+                                                           name="roles[]" value="{{ $role->id }}">
                                                 @endif
                                                 <br>
                                             </div>
@@ -75,9 +89,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
-    </section>
+
 @endsection
 
 

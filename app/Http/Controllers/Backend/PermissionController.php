@@ -9,17 +9,8 @@ use Illuminate\Http\Request;
 class PermissionController extends Controller
 {
     public function index(Request $request){
-
-        $name = $request->name;
-
-        if (isset($name)){
-            $permissions = Permission::where('name','like','%'.$name.'%')->paginate(6);
-            $permissions->appends($request->all());
-        }else{
-            $permissions = Permission::orderBy('id', 'DESC')->paginate(6);
-            $permissions->appends($request->all());
-        }
-        return view('Backend.administration.permissions.index', compact('name','permissions'));
+        $permissions = Permission::orderBy('id', 'DESC')->get();
+        return view('Backend.administration.permissions.index', compact('permissions'));
     }
 
     public function create()

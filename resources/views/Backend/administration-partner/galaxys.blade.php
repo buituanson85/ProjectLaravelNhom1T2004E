@@ -8,12 +8,14 @@
     <!-- Header-->
 
         <div class="breadcrumbs">
-            <div class="col-sm-4">
+            <div class="col-md-10">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="#">Thêm Hồ sơ</a></span>
+                        <span style="float: left"><a href="{{ route('partners.index') }}">Danh Sách Phương Tiện</a></span>
+                        <span style="float: left;margin: 0 5px">/</span>
+                        <span style="float: left"><a href="{{ route('dashboards.galaxys', $product->id ) }}">Thêm Hồ sơ</a></span>
                     </div>
                 </div>
             </div>
@@ -32,7 +34,11 @@
                                                     Upload Ảnh:
                                                 </div>
                                                 <div class="col-md-8" style="text-align: right">
-                                                    <a href="{{ route('partners.index') }}" class="btn btn-primary">Về danh sách phương tiện</a>
+                                                    @if($product->status == "ready")
+                                                        <a href="{{ route('partners.index') }}"  style="margin: 5px" class="btn btn-primary">Về danh sách phương tiện</a>
+                                                    @else
+                                                        <a href="{{ route('dashboards.unpartners') }}"  style="margin: 5px" class="btn btn-primary">Về danh sách phương tiện</a>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>

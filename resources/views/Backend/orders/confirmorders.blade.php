@@ -12,9 +12,9 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('dashboards.confirmorders') }}">Đơn hàng chờ xác nhận</a></span>
+                        <span style="float: left"><a href="{{ route('dashboards.confirmorders') }}">Đơn Hàng Chờ Xác Nhận</a></span>
                     </div>
                 </div>
             </div>
@@ -24,8 +24,7 @@
                 <div class="col-md-10 offset-md-1">
                     <div class="card">
                         <div class="card-header">
-
-                            <h3 class="card-title">Đơn hàng chờ xác nhận</h3>
+                            <h3 class="card-title text-center">Lịch sử đơn hàng(Đơn hàng chờ xác nhận)</h3>
                         </div>
                         <div class="card-body">
                             @include('partials.alert')
@@ -35,10 +34,11 @@
                                     <th>STT</th>
                                     <th>Mã đơn hàng</th>
                                     <th>Khách hàng</th>
-                                    <th>Phương thức thanh toán</th>
+                                    <th>Thanh toán</th>
                                     <th>Tổng giá</th>
                                     <th>Trạng thái</th>
                                     <th>Chi tiết</th>
+                                    <th>Đặt hộ</th>
                                     <th>Xóa</th>
                                 </tr>
                                 </thead>
@@ -58,22 +58,28 @@
                                                 Thẻ
                                             @endif
                                         </td>
-                                        <td>{{ number_format($order->price_total, 0) }}</td>
+                                        <td>{{ number_format($order->price_total, 0) }}&#160;VNĐ</td>
                                         <td>
                                             @if($order->status == "pending")
                                                 <a class="badge badge-warning">Chờ nhận chuyến</a>
                                             @elseif($order->status == "accept")
                                                 <a class="badge badge-success">Đã nhận chuyến</a>
                                             @elseif($order->status == "paid")
-                                                <a class="badge badge-primary">Bắt đầu chuyến</a>
+                                                <a class="badge badge-primary">Đang trong chuyến</a>
                                             @elseif($order->status == "cancelled")
                                                 <a class="badge badge-secondary">Không nhận chuyến</a>
                                             @elseif($order->status == "delete")
                                                 <a class="badge badge-danger">Hủy chuyến</a>
                                             @elseif($order->status == "completed")
-                                                <a class="badge badge-primary" style="background-color: pink">Kết thúc chuyến</a>
+                                                <a class="badge badge-primary">Kết thúc chuyến</a>
                                         @endif
-                                        <td><a href="{{route('dashboards.showconfirmorders', $order->order_id)}}"><span class="btn btn-sm btn-secondary" style="background-color: greenyellow;border: none;color: black"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
+                                        <td><a href="{{route('dashboards.showconfirmorders', $order->order_id)}}"><span class="btn btn-sm btn-light"><i class="fa fa-eye"></i>&nbsp;Chi tiết</span></a></td>
+                                        <td>
+                                            <form action="{{route('dashboards.updateconfirmorders', $order->order_id)}}" method="post">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-edit"></i>&nbsp;Đặt hộ</button>
+                                            </form>
+                                        </td>
                                         <td>
                                             @if($order->status == "pending")
                                                 <form action="{{ route('dashboards-orders.destroy',$order->id) }}" method="post">
@@ -89,13 +95,13 @@
                                                 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
                                                 <script type="text/javascript">
 
-                                                    var create_at_{{ $order->id }} = $( "#create_at-{{ $order->id }}" ).val();;
+                                                    var create_at_{{ $order->id }} = $( "#create_at-{{ $order->id }}" ).val();
                                                     var d_{{ $order->id }} = new Date(create_at_{{ $order->id }});
                                                     var n_{{ $order->id }} = d_{{ $order->id }}.getTime();
                                                     var x = new Date();
                                                     var y = x.getTime();
                                                     var z = (y - n_{{ $order->id }})/(1000*60);
-                                                    var times = (30 - z)*60*1000;
+                                                    var times = (60 - z)*60*1000;
                                                     document.getElementById("price_{{ $order->id }}").innerHTML = z;
                                                     document.getElementById("time_{{ $order->id }}").innerHTML = times;
                                                     setTimeout(function(){
@@ -111,6 +117,33 @@
                                 @endforelse
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-10 offset-1 pb-5 pt-5">
+                    <h3 style="font-weight: 700">GHI CHÚ:</h3>
+                    <div class="row pt-3">
+                        <div class="col-md-12">
+                            - Quản lý các đơn hàng chờ đối tác nhận chuyến.
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-md-12">
+                            - Nút <span class="btn btn-danger">Delete</span> sau 1 tiếng kể từ thời gian nhận đơn sẽ hiển thị do quá thời gian quy định không xác nhận đơn.
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-md-12">
+                            - Các đơn hàng có hiển thị Nút <span class="btn btn-danger">Delete</span> sẽ được Admin xử lý.<br>
+                            &#160;&#160;&#160;&#160;+ Gọi điện thông báo cho khách hàng về trường hợp này.<br>
+                            &#160;&#160;&#160;&#160;+ Chuyển đơn sang chủ phương tiện<span class="btn btn-success">Đặt hộ</span> khác dựa theo thông tin order đã đặt(theo Giá,khu vực,loại phương tiện).<br>
+                            &#160;&#160;&#160;&#160;+ Trường hợp khách hàng yêu cầu hủy đơn đối với đơn hàng thanh toán thẻ phải hoàn lại tiền cho khách hàng.
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-md-12">
+                            - Đơn hàng mới được đặt đơn hàng cũ sẽ chuyển confirm sang 1,gửi mail cho khách hàng về thông tin đơn hàng mới.
                         </div>
                     </div>
                 </div>

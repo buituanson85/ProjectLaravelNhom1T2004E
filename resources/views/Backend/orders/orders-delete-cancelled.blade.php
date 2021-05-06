@@ -12,19 +12,19 @@
             <div class="col-sm-6">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('dashboards.ordersdeletecancelled') }}">Danh sách đơn hàng bị từ chối và hủy</a></span>
+                        <span style="float: left"><a href="{{ route('dashboards.ordersdeletecancelled') }}">Danh Sách Đơn Hàng Bị Từ Chối Và Hủy</a></span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="breadcrumbs">
             <div class="row pt-5 m-0">
-                <div class="col-md-10 offset-md-1">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Danh sách đơn hàng</h3>
+                            <h3 class="card-title text-center">Lịch sử đơn hàng(Đơn hàng từ chồi và hủy)</h3>
                         </div>
                         <div class="card-body">
                             @include('partials.alert')
@@ -34,9 +34,11 @@
                                     <th>STT</th>
                                     <th>Mã đơn hàng</th>
                                     <th>Khách hàng</th>
-                                    <th>Phương thức thanh toán</th>
+                                    <th>Thanh toán</th>
                                     <th>Tổng giá</th>
                                     <th>Trạng thái</th>
+                                    <th>Xác nhận</th>
+                                    <th>Đặt hộ</th>
                                     <th>Chi tiết</th>
                                 </tr>
                                 </thead>
@@ -56,22 +58,34 @@
                                                 Thẻ
                                             @endif
                                         </td>
-                                        <td>{{ number_format($order->price_total) }}</td>
+                                        <td>{{ number_format($order->price_total) }}&#160;VNĐ</td>
                                         <td>
                                             @if($order->status == "pending")
                                                 <a class="badge badge-warning">Chờ nhận chuyến</a>
                                             @elseif($order->status == "accept")
                                                 <a class="badge badge-success">Đã nhận chuyến</a>
                                             @elseif($order->status == "paid")
-                                                <a class="badge badge-primary">Bắt đầu chuyến</a>
+                                                <a class="badge badge-primary">Đang trong chuyến</a>
                                             @elseif($order->status == "cancelled")
                                                 <a class="badge badge-secondary">Không nhận chuyến</a>
                                             @elseif($order->status == "delete")
                                                 <a class="badge badge-danger">Hủy chuyến</a>
                                             @elseif($order->status == "completed")
-                                                <a class="badge badge-primary" style="background-color: pink">Kết thúc chuyến</a>
+                                                <a class="badge badge-primary">Kết thúc chuyến</a>
                                         @endif
-                                        <td><a href="{{route('dashboards.showordersdeletecancelled', $order->order_id)}}"><span class="btn btn-sm btn-secondary" style="background-color: greenyellow;border: none;color: black"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
+                                        <td><a href="{{route('dashboards.showordersdeletecancelled', $order->order_id)}}"><span class="btn btn-sm btn-light"><i class="fa fa-eye"></i>&nbsp;Chi tiết</span></a></td>
+                                        <td>
+                                            <form action="{{ route('dashboards.acceptdeletecancelled', $order->order_id) }}" method="post">
+                                                @csrf
+                                                <button type="submit" class="btn btn-warning">Xác nhận</button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form action="{{route('dashboards.updateconfirmorders', $order->order_id)}}" method="post">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-edit"></i>&nbsp;Đặt hộ</button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>

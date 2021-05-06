@@ -45,7 +45,7 @@ class HomeController extends Controller
                 ['status','!=','pending'],
                 ['status','!=','paid'],
                 ['status','!=','accept']
-            ])->orderBy('id','desc')->paginate(5);
+            ])->orderBy('id','desc')->paginate(10);
             $orders->appends($request->all());
         }else{
             $orders = Order::where([
@@ -53,7 +53,7 @@ class HomeController extends Controller
                 ['status','!=','pending'],
                 ['status','!=','paid'],
                 ['status','!=','accept']
-            ])->orderBy('id','desc')->paginate(5);
+            ])->orderBy('id','desc')->paginate(10);
             $orders->appends($request->all());
         }
 
@@ -76,14 +76,14 @@ class HomeController extends Controller
 
     public function chitietdonhang($id){
         $get_order = Order::where('order_id','like', $id)->first();
-        $order = OrderDetails::find($get_order->id);
+        $order = OrderDetails::where('order_id', $get_order->id)->first();
         $galaxies = Galaxy::where('product_id', $order->product->id)->get();
         return view('Frontend.profiles.chitietdonhang')->with(['order'=>$order,'galaxies'=>$galaxies]);
     }
 
     public function ctdonhang($id){
         $get_order = Order::where('order_id','like', $id)->first();
-        $order = OrderDetails::find($get_order->id);
+        $order = OrderDetails::where('order_id', $get_order->id)->first();
         $galaxies = Galaxy::where('product_id', $order->product->id)->get();
         return view('Frontend.profiles.ctdonhang')->with(['order'=>$order,'galaxies'=>$galaxies]);
     }

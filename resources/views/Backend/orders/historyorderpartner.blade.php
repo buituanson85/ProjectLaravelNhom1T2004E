@@ -1,5 +1,5 @@
 @extends('layouts.Backend.base')
-@section('title', 'Đơn hàng')
+@section('title', 'Lịch Sử Đơn Hàng')
 @section('content')
 
     <div id="right-panel" class="right-panel">
@@ -9,31 +9,33 @@
     <!-- Header-->
 
         <div class="breadcrumbs">
-            <div class="col-sm-4">
+            <div class="col-md-10">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
                         <span style="float: left">Dashboard</span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('dashboards.partnerorders') }}">Đơn hàng</a></span>
+                        <span style="float: left"><a href="{{ route('dashboards.partnerorders') }}">Đơn Hàng</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
-                        <span style="float: left"><a href="{{ route('dashboards.historyorderpartner') }}">Lịch sử đơn hàng</a></span>
+                        <span style="float: left"><a href="{{ route('dashboards.historyorderpartner') }}">Lịch Sử Đơn Hàng</a></span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="breadcrumbs">
-            <div class="row pt-5">
+            <div class="pt-5">
                 <div class="col-md-10 offset-md-1">
                     <div class="card">
                         <div class="card-header">
-
-                            <h3 class="card-title">Đơn hàng chờ xác nhận</h3>
-
-                            <div class="card-tools">
-                                <a href="{{ route('dashboards.partnerorders') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i>Đơn hàng</a>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 class="card-title">Lịch sử đơn hàng</h3>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{{ route('dashboards.partnerorders') }}" class="btn btn-primary pull-right"><i class="fas fa-plus-circle"></i>&#160;Đơn hàng</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-body table-responsive p-0">
+                        <div class="card-body">
                             @include('partials.alert')
                             <table class="table table-hover text-nowrap" id="product_table" >
                                 <thead>
@@ -45,7 +47,6 @@
                                     <th>Tổng giá</th>
                                     <th>Trạng thái</th>
                                     <th>Chi tiết</th>
-                                    <th>Xóa</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -71,30 +72,30 @@
                                             @elseif($order->status == "accept")
                                                 <a class="badge badge-success">Đã nhận chuyến</a>
                                             @elseif($order->status == "paid")
-                                                <a class="badge badge-primary">Bắt đầu chuyến</a>
+                                                <a class="badge badge-primary">Đang trong chuyến</a>
                                             @elseif($order->status == "cancelled")
                                                 <a class="badge badge-secondary">Không nhận chuyến</a>
                                             @elseif($order->status == "delete")
                                                 <a class="badge badge-danger">Hủy chuyến</a>
                                             @elseif($order->status == "completed")
-                                                <a class="badge badge-primary" style="background-color: pink">Kết thúc chuyến</a>
+                                                <a class="badge badge-primary">Kết thúc chuyến</a>
                                         @endif
-                                        <td><a href="{{route('dashboards.partnerordersshow', $order->order_id)}}"><span class="btn btn-sm btn-secondary" style="background-color: greenyellow;border: none;color: black"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
-                                        <td>
-                                            @if($order->status == "accept")
-                                                <form action="{{ route('dashboards-orders.destroy',$order->id) }}" method="post">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button class="btn btn-sm btn-danger"><i class="fa fa-edit"></i>&nbsp;Hủy</button>
-                                                </form>
-                                            @elseif($order->status == "pending")
-                                                <form action="{{ route('dashboards-orders.destroy',$order->id) }}" method="post">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button class="btn btn-sm btn-secondary"><i class="fa fa-edit"></i>&nbsp;Cancel</button>
-                                                </form>
-                                            @endif
-                                        </td>
+                                        <td><a href="{{route('dashboards.partnerordersshow', $order->order_id)}}"><span class="btn btn-sm btn-light" ><i class="fa fa-eye"></i>&nbsp;Chi tiết</span></a></td>
+{{--                                        <td>--}}
+{{--                                            @if($order->status == "accept")--}}
+{{--                                                <form action="{{ route('dashboards-orders.destroy',$order->id) }}" method="post">--}}
+{{--                                                    @csrf--}}
+{{--                                                    @method('delete')--}}
+{{--                                                    <button class="btn btn-sm btn-danger"><i class="fa fa-edit"></i>&nbsp;Hủy</button>--}}
+{{--                                                </form>--}}
+{{--                                            @elseif($order->status == "pending")--}}
+{{--                                                <form action="{{ route('dashboards-orders.destroy',$order->id) }}" method="post">--}}
+{{--                                                    @csrf--}}
+{{--                                                    @method('delete')--}}
+{{--                                                    <button class="btn btn-sm btn-secondary"><i class="fa fa-edit"></i>&nbsp;Cancel</button>--}}
+{{--                                                </form>--}}
+{{--                                            @endif--}}
+{{--                                        </td>--}}
                                     </tr>
                                 @empty
                                     <tr>

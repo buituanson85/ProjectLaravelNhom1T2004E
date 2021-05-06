@@ -11,7 +11,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
                         <span style="float: left"><a href="{{ route('users.index') }}">Danh sách nhân viên</a></span>
                     </div>
@@ -23,52 +23,26 @@
                 <div class="col-md-12">
                     <div class="p-0">
                         <div class="card">
-                            <div class="card-header ui-sortable-handle" style="cursor: move">
+                            <div class="card-header">
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="card-tools">
-                                            <a href="{{ route('users.create') }}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Thêm mới nhân viên</a>
-                                        </div>
+                                    <div class="col-md-4">
+                                        <h3 class="card-title" style="font-size: 24px;font-weight: 600">Danh sách nhân viên</h3>
                                     </div>
-                                    <div class="col-md-9">
-                                        <form action="{{ route('users.index') }}" class="form-horizontal">
-                                            @csrf
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <div class="col-md-12">
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <div class="col-md-12">
-                                                            <div class="row">
-                                                                <div class="col-md-9">
-                                                                    <input type="text" name="name" id="name" value="" placeholder="Users Name" class="form-control input-md">
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-5">
+                                        <a class="btn btn-primary pull-right" href="{{ route('users.create') }}"><i class="fas fa-plus-circle"></i>&#160;Thêm nhân viên</a></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
                                 @include('partials.alert')
-                                <table class="table">
+                                <table class="table table-hover text-nowrap" id="product_table" >
                                     <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>STT</th>
                                         <th>Tên</th>
                                         <th>utype</th>
-                                        <th style="width: 20px">Email</th>
+                                        <th>Email</th>
                                         <th>Role</th>
                                         <th>Chi tiết</th>
                                         <th>Sửa</th>
@@ -77,17 +51,12 @@
                                     </thead>
                                     <tbody>
                                     @php
-                                        $index = $users->perPage()*($users->currentPage() - 1);
+                                        $index = 0;
                                     @endphp
                                     @foreach($users as $user)
                                         <tr>
-                                            <td>
-                                                @php
-                                                    $index++;
-                                                @endphp
-                                                {{ $index }}
-                                            </td>
-                                            <td>{{ $user->name }}</td>
+                                            <td>{{ ++$index }}</td>
+                                            <td style="font-weight: 600">{{ $user->name }}</td>
                                             <td>
                                                 <span class="badge badge-success">ADM</span>
                                             </td>
@@ -98,7 +67,7 @@
                                                 @endforeach
                                             </td>
                                             <td>
-                                                <a href="{{ route('users.show', $user->id ) }}"><span class="btn btn-sm btn-info"><i class="fa fa-eye"></i>&nbsp;View</span></a>
+                                                <a href="{{ route('users.show', $user->id ) }}"><span class="btn btn-sm btn-light"><i class="fa fa-eye"></i>&nbsp;View</span></a>
                                             </td>
                                             <td>
                                                 @if(count($user->roles)>0)
@@ -132,7 +101,6 @@
                                     @endforeach
                                     </tbody>
                                 </table>
-                                {!! $users->render('pagination::bootstrap-4') !!}
                             </div>
                         </div>
                     </div>
@@ -147,5 +115,31 @@
 
 @endsection
 
-
+@section('addjs')
+    <script type="text/javascript">
+        jQuery(document).ready( function () {
+            jQuery('#product_table').DataTable({
+                "language": {
+                    "lengthMenu": "Hiển thị _MENU_ bản ghi 1 trang",
+                    "zeroRecords": "Không có bản ghi - sorry",
+                    "info": "Trang số _PAGE_ trên tổng số _PAGES_",
+                    "infoEmpty": "Không có dữ liệu",
+                    "infoFiltered": "(Lọc từ _MAX_ bản ghi)",
+                    "paginate": {
+                        "first": "Đầu tiên",
+                        "last": "Cuối cùng",
+                        "next": "Sau",
+                        "previous": "Trước"
+                    },
+                    "search": "Tìm kiếm:",
+                }
+            });
+        } );
+        jQuery(document).ready(function () {
+            jQuery('.dataTables_filter input[type="search"]').css(
+                {'width':'400px','display':'inline-block'}
+            );
+        });
+    </script>
+@endsection
 

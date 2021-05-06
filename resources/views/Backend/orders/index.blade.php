@@ -12,7 +12,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title" style="margin-top: 10px">
-                        <span style="float: left">Dashboard</span>
+                        <span style="float: left"><a href="{{ route('dashboard.index') }}">Dashboard</a></span>
                         <span style="float: left;margin: 0 5px">/</span>
                         <span style="float: left"><a href="{{ URL::to('/dashboards/order') }}">Lịch sử đơn hàng</a></span>
                     </div>
@@ -24,7 +24,7 @@
                 <div class="col-md-10 offset-md-1">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Danh sách đơn hàng</h3>
+                            <h3 class="card-title text-center">Lịch sử đơn hàng(Đơn hàng đã kết thúc)</h3>
                         </div>
                         <div class="card-body">
                             @include('partials.alert')
@@ -56,22 +56,22 @@
                                                 Thẻ
                                             @endif
                                         </td>
-                                        <td>{{ number_format($order->price_total) }}</td>
+                                        <td>{{ number_format($order->price_total) }}&#160;VNĐ</td>
                                         <td>
                                             @if($order->status == "pending")
                                             <a class="badge badge-warning">Chờ nhận chuyến</a>
                                             @elseif($order->status == "accept")
                                                 <a class="badge badge-success">Đã nhận chuyến</a>
                                             @elseif($order->status == "paid")
-                                                <a class="badge badge-primary">Bắt đầu chuyến</a>
+                                                <a class="badge badge-primary">Đang trong chuyến</a>
                                             @elseif($order->status == "cancelled")
                                                 <a class="badge badge-secondary">Không nhận chuyến</a>
                                             @elseif($order->status == "delete")
                                                 <a class="badge badge-danger">Hủy chuyến</a>
                                             @elseif($order->status == "completed")
-                                                <a class="badge badge-primary" style="background-color: pink">Kết thúc chuyến</a>
+                                                <a class="badge badge-primary">Kết thúc chuyến</a>
                                             @endif
-                                        <td><a href="{{route('dashboards-orders.show', $order->order_id)}}"><span class="btn btn-sm btn-secondary" style="background-color: greenyellow;border: none;color: black"><i class="fa fa-edit"></i>&nbsp;Chi tiết</span></a></td>
+                                        <td><a href="{{route('dashboards-orders.show', $order->order_id)}}"><span class="btn btn-sm btn-light"><i class="fa fa-eye"></i>&nbsp;Chi tiết</span></a></td>
                                     </tr>
                                 @empty
                                     <tr>
