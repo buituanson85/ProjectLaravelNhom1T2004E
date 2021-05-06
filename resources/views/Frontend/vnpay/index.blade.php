@@ -21,12 +21,6 @@
 
                         <form action="{{ route('pages.paymentonline') }}" id="create_form" method="post">
                             @csrf
-{{--                            <input type="hidden" name="price_total" value="{{ $price_total }}">--}}
-{{--                            <input type="hidden" name="product_id" value="{{ $product_id }}">--}}
-{{--                            <input type="hidden" name="note" value="{{ $note }}">--}}
-{{--                            <input type="hidden" name="product_received_date" value="{{ $product_received_date }}">--}}
-{{--                            <input type="hidden" name="product_pay_date" value="{{ $product_pay_date }}">--}}
-{{--                            <input type="hidden" name="quantity" value="{{ $quantity }}">--}}
                             <div class="form-group">
                                 <label for="language">Loại Thanh Toán: </label>
                                 <select name="order_type" id="order_type" class="form-control">
