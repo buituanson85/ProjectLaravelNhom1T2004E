@@ -152,7 +152,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <input id="input-picker" class="form-control" onchange="layvalue()" name="input-picker" width="150" placeholder="Bấm vào để chọn"/>
+                                        <input id="input-picker" data-input="{{ $collections }}" class="form-control" onchange="layvalue()" name="input-picker" width="150" placeholder="Bấm vào để chọn"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -173,30 +173,7 @@
                         <link rel="stylesheet" href="{{ asset('Backend/lib/css/style.css') }}">
                         <script src="{{ asset('Backend/lib/js/mobiscroll.javascript.min.js') }}"></script>
                         <script>
-                            $(document).ready(function () {
-                                $('#input-picker').change(function () {
-                                    var numbers = document.getElementById("input-picker").value;
-                                    var start_timess = numbers.slice(0,10);
-                                    var end_timess = numbers.slice(13,23);
-                                    var id = {{ $product->id }};
-                                    var _token = $('input[name="_token"]').val();
-                                    // alert(end_timess)
-                                    $.ajax({
-                                        url:"{{ url('/pages/show-products') }}",
-                                        method:"POST",
-                                        dataType:"JSON",
-                                        data: {
-                                            start_timess:start_timess,
-                                            end_timess:end_timess,
-                                            id:id,
-                                            _token:_token
-                                        },
-                                        success:function (data) {
-                                            alert('ok')
-                                        }
-                                    })
-                                })
-                            });
+
                         </script>
                         <script>
 
@@ -219,7 +196,10 @@
                             });
 
 
-                            var data = <?php echo json_encode($collections)?>
+                            {{--var data = <?php echo json_encode()?>--}}
+
+                            let data = $("#input-picker").attr('data-input');
+                            data = JSON.parse(data);
                             {{--var data_one = <?php echo json_encode($collections_one)?>--}}
                             mobiscroll.datepicker('#input-picker', {
                                 controls: ['calendar'],
@@ -242,7 +222,7 @@
                         @if($product->category_id == 2)
                             <div class="row" style="width: 100%;padding: 10px 0;">
                                 <div class="col-md-12" style="padding-left: 40px;">
-                                    <h6>Số lượng(<span style="font-size: 12px"> Tồn: {{ $product->quantity }}chiếc</span>):</h6>
+                                    <h6>Số lượng(<span id="quantity_data" style="font-size: 14px;color: red"> Tồn: {{ $product->quantity }}chiếc</span>):</h6>
                                     <div class="row">
 
                                         <div class="col-md-10 pl-3">
@@ -257,6 +237,7 @@
                                 <input class="form-control" type="hidden" value="1" name="quantitys" id="quantitys">
                             </div>
                         @endif
+
                         <div class="row" style="width: 100%;padding: 10px 0;">
                             <div class="col-md-12" style="padding-left: 40px;">
                                 <h6>Dịch vụ bảo hiểm</h6>
@@ -303,9 +284,10 @@
                             <div id="price_2" class="col-md-6"><span style="color: #2cb8af;font-weight: 700"></span></div>
                         </div>
 
-                        <form action="{{route('pages.showinfos',$product->id)}}" method="POST" style="width: 100%;padding-left: 25px;padding-top: 10px;padding-bottom: 20px">
+                        <form action="{{route('pages.showinfos')}}" method="POST" style="width: 100%;padding-left: 25px;padding-top: 10px;padding-bottom: 20px">
                             @csrf
                             <div class="col-md-12" style="width: 100%">
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <input type="hidden" name="total_price" id="total_price"/>
                                 <input type="hidden" name="total_time_send" id="total_time_send"/>
                                 <input type="hidden" name="start_time2" id="start_time2"/>
@@ -315,7 +297,6 @@
                                 <button disabled type="submit" id="datxe" class="btn btn-success datxe"
                                         style="width: 100%; padding-right: 20px; background-color: #2cb8af;border-color: #2cb8af">
                                     <i id="icon_datxe" class="fas fa-ban" style="color: red"></i>&#160;<span id="text_datxe" style="color: red">Đặt Xe</span></button>
-
                             </div>
                         </form>
 
@@ -342,7 +323,90 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-        })
+            $('#input-picker').change(function () {
+                var numbers = document.getElementById("input-picker").value;
+                var start_timess = numbers.slice(0,10);
+                var end_timess = numbers.slice(13,23);
+                var product_id = {{ $product->id }};
+                var _token = $('input[name="_token"]').val();
+                // alert(end_timess)
+                load_data('', _token,start_timess, end_timess, product_id);
+                load_data_quantity('', _token,start_timess, end_timess, product_id);
+
+                function load_data(id="", _token, start_timess, end_timess, product_id)
+                {
+
+                    $.ajax({
+                        url:"{{ route('loadmore.loaddataproduct') }}",
+                        method:"POST",
+                        data:{
+                            id : id,
+                            _token : _token,
+                            start_timess: start_timess,
+                            end_timess : end_timess,
+                            product_id:product_id
+                        },
+                        success:function(data)
+                        {
+                            $('#quantity_data').empty(data);
+                            $('#quantity_data').append(data);
+                        }
+                    });
+                }
+
+                function load_data_quantity(id="", _token, start_timess, end_timess, product_id)
+                {
+
+                    $.ajax({
+                        url:"{{ route('loadmore.loaddataquantity') }}",
+                        method:"POST",
+                        data:{
+                            id : id,
+                            _token : _token,
+                            start_timess: start_timess,
+                            end_timess : end_timess,
+                            product_id:product_id
+                        },
+                        success:function(data)
+                        {
+                            $('#quantitys').empty(data);
+                            $('#quantitys').attr({
+                                "max" : data,        // substitute your own
+                                "min" : 1          // values (or variables) here
+                            });
+
+                            // $(function () {
+                            //     var limitInput = function () {
+                            //         var value = parseInt($('#quantitys').val());
+                            //
+                            //         var max_v = $('#quantitys').attr({
+                            //             "max" : data      // values (or variables) here
+                            //         });
+                            //         var miv_v =$('#quantitys').attr({
+                            //             "min" : 1
+                            //         })
+                            //         var max = parseInt(this.max, max_v);
+                            //         var min = parseInt(this.min, miv_v);
+                            //
+                            //         if (value > max) {
+                            //             document.querySelector('#datxe').disabled = true;
+                            //             // location.reload();
+                            //         } else if (value < min) {
+                            //             document.querySelector('#datxe').disabled = true;
+                            //             // location.reload();
+                            //         }
+                            //     };
+                            //     $("#quantitys").change(limitInput);
+                            //
+                            // });
+                        }
+                    });
+                }
+
+            })
+
+        });
+
     </script>
     <script type="text/javascript">
 

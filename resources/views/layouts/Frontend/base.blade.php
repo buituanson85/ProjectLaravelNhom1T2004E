@@ -53,7 +53,7 @@
             <ul class="nav-list-right-1">
                 <li><a href="{{ route('pages.abountus') }}" class="the_a">Về chúng tôi</a></li>
                 <li><a href="{{ route('pages.tutorial') }}" class="the_a" >Hỗ trợ</a></li>
-                <li><a href="" class="the_a">Khuyến mãi</a></li>
+                <li><a href="{{ route('pages.promotion') }}" class="the_a">Khuyến mãi</a></li>
                 <li>
                     @if(Route::has('login'))
                         @auth()

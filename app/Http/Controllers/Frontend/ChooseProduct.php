@@ -8,6 +8,7 @@ use App\Models\Backend\Category;
 use App\Models\Backend\City;
 use App\Models\Backend\District;
 use App\Models\Backend\Product;
+use App\Models\Frontend\Order;
 use App\Models\Frontend\OrderDetails;
 use App\Models\Frontend\Payment;
 use Illuminate\Http\Request;
@@ -38,34 +39,35 @@ class ChooseProduct extends Controller
         $matchNight = array();
 
         if (isset($category_id)){
-            $x =array('category_id', '=', $category_id);
+            $x =array('category_id', $category_id);
             $matchNight[] = $x;
         }
 
         if (isset($seat)){
-            $x =array('seat', '=', $seat);
+            $x =array('seat', $seat);
             $matchNight[] = $x;
         }
 
         if (isset($gear)){
-            $x =array('gear', '=', $gear);
+            $x =array('gear', $gear);
             $matchNight[] = $x;
         }
 
         if (isset($brand_id)){
-            $x =array('brand_id', '=', $brand_id);
+            $x =array('brand_id', $brand_id);
             $matchNight[] = $x;
         }
 
         if (isset($district_id)){
-            $x =array('district_id', '=', $district_id);
+            $x =array('district_id', $district_id);
             $matchNight[] = $x;
         }
 
         if (isset($city_id)){
-            $x =array('city_id', '=', $city_id);
+            $x =array('city_id', $city_id);
             $matchNight[] = $x;
         }
+
         if (isset($sort)){
             if ($request->sort == 0){
                 $products = Product::where('status','ready')
@@ -73,14 +75,14 @@ class ChooseProduct extends Controller
                     ->where('featured', 0)
                     ->where($matchNight)
                     ->orderBy('price', 'ASC')
-                    ->paginate(10);
+                    ->paginate(12);
             }else{
                 $products = Product::where($matchNight)
                     ->where('status','ready')
                     ->where('confirm', 1)
                     ->where('featured', 0)
                     ->orderBy('price', 'DESC')
-                    ->paginate(10);
+                    ->paginate(12);
             }
         }else{
             $products = Product::where($matchNight)
@@ -88,7 +90,7 @@ class ChooseProduct extends Controller
                 ->where('confirm', 1)
                 ->where('featured', 0)
                 ->orderBy('price', 'ASC')
-                ->paginate(10);
+                ->paginate(12);
         }
 
         //Google map.
@@ -133,36 +135,34 @@ class ChooseProduct extends Controller
         $brand_id = $request->brand_id;
         $sort = $request->sort;
         $district_id = $request->district_id;
-        $start_time = $request->start_time;
-        $end_time = $request->end_time;
 
         if (isset($category_id)){
-            $x =array('category_id', '=', $category_id);
+            $x =array('category_id', $category_id);
             $matchNight[] = $x;
         }
 
         if (isset($seat)){
-            $x =array('seat', '=', $seat);
+            $x =array('seat', $seat);
             $matchNight[] = $x;
         }
 
         if (isset($gear)){
-            $x =array('gear', '=', $gear);
+            $x =array('gear', $gear);
             $matchNight[] = $x;
         }
 
         if (isset($brand_id)){
-            $x =array('brand_id', '=', $brand_id);
+            $x =array('brand_id', $brand_id);
             $matchNight[] = $x;
         }
 
         if (isset($district_id)){
-            $x =array('district_id', '=', $district_id);
+            $x =array('district_id', $district_id);
             $matchNight[] = $x;
         }
 
         if (isset($city_id)){
-            $x =array('city_id', '=', $city_id);
+            $x =array('city_id', $city_id);
             $matchNight[] = $x;
         }
 
@@ -176,7 +176,7 @@ class ChooseProduct extends Controller
                             ->where('featured', 0)
                             ->where($matchNight)
                             ->orderBy('price', 'ASC')
-                            ->limit(5)->get();
+                            ->limit(12)->get();
                     }else{
                         $data = Product::where('id','<', $id)
                             ->where('status','ready')
@@ -184,7 +184,7 @@ class ChooseProduct extends Controller
                             ->where('featured', 0)
                             ->where($matchNight)
                             ->orderBy('price', 'DESC')
-                            ->limit(5)->get();
+                            ->limit(12)->get();
                     }
                 }else{
                     $data = Product::where('id','<', $id)
@@ -193,7 +193,7 @@ class ChooseProduct extends Controller
                         ->where('featured', 0)
                         ->where($matchNight)
                         ->orderBy('price', 'ASC')
-                        ->limit(5)->get();
+                        ->limit(12)->get();
                 }
             }else{
                 if (isset($sort)){
@@ -203,23 +203,23 @@ class ChooseProduct extends Controller
                             ->where('featured', 0)
                             ->where($matchNight)
                             ->orderBy('price', 'ASC')
-                            ->limit(5)->get();
+                            ->limit(12)->get();
                     }else{
                         $data = Product::where('status','ready')
                             ->where('confirm', 1)
                             ->where('featured', 0)
                             ->where($matchNight)
                             ->orderBy('price', 'DESC')
-                            ->limit(5)->get();
+                            ->limit(12)->get();
                     }
                 }else{
                     $data = Product::
-                        where('status','ready')
+                    where('status','ready')
                         ->where('confirm', 1)
                         ->where('featured', 0)
                         ->where($matchNight)
                         ->orderBy('price', 'ASC')
-                        ->limit(5)->get();
+                        ->limit(12)->get();
                 }
             }
             $output = '';
@@ -243,14 +243,14 @@ class ChooseProduct extends Controller
                                                             </span>
                                         <div class="product_detail_type" >
                                             <div class="product_detail_type_1">
-                                                <p><i class="fas fa-map-marked-alt"></i>'.$row->district->name.'</p>
-                                                <p ><i class="fas fa-gas-pump" ></i>
+                                                <p><i class="fas fa-map-marked-alt"></i>&#160;'.$row->district->name.'</p>
+                                                <p ><i class="fas fa-gas-pump" ></i>&#160;
                                                 '.$row->engine.'
                                                 </p>
                                             </div>
                                             <div class="product_detail_type_1">
-                                                <p><i class="fas fa-cogs">'.$row->gear.'</i> </p>
-                                                <p><i class="fas fa-tachometer-alt"></i>'.$row->consumption.'</p>
+                                                <p><i class="fas fa-cogs">&#160;'.$row->gear.'</i> </p>
+                                                <p><i class="fas fa-tachometer-alt"></i>&#160;'.$row->consumption.'</p>
                                             </div>
 
 
@@ -287,11 +287,107 @@ class ChooseProduct extends Controller
         }
     }
 
+    public function loadDataProduct(Request $request){
+        $id = $request->id;
+        $start_timess = $request->start_timess;
+        $end_timess = $request->end_timess;
+        $product_id = $request->product_id;
+        $product = Product::find($product_id);
+        $check_times = OrderDetails::where([
+            ['product_id', $product_id],
+            ['status', 3],
+            ['product_received_date', $start_timess]
+        ])
+            ->orwhere([
+                ['product_id', $product_id],
+                ['status', 3],
+                ['product_pay_date', $end_timess]
+            ])
+            ->orwhere([
+                ['product_id', $product_id],
+                ['status', 3],
+                ['product_received_date', '<', $start_timess],
+                ['product_pay_date', '>', $start_timess]
+            ])
+            ->orwhere([
+                ['product_id', $product_id],
+                ['status', 3],
+                ['product_received_date', '<', $end_timess],
+                ['product_pay_date', '>', $end_timess]
+            ])
+            ->orwhere([
+                ['product_id', $product_id],
+                ['status', 3],
+                ['product_received_date', '>', $start_timess],
+                ['product_pay_date', '<', $end_timess]
+            ])
+            ->get();
+        $total = 0;
+        foreach ($check_times as $check_time) {
+            $total += $check_time->quantity;
+        }
+
+        $total_quantity = $product->quantity - $total;
+        if ($total_quantity < 0){
+            $total_quantity = 0;
+        }
+        echo "Tồn: ".$total_quantity." Chiếc";
+    }
+
+    public function postShowQuantity(Request $request){
+        $id = $request->id;
+        $start_timess = $request->start_timess;
+        $end_timess = $request->end_timess;
+        $product_id = $request->product_id;
+        $product = Product::find($product_id);
+        $check_times = OrderDetails::where([
+            ['product_id', $product_id],
+            ['status', 3],
+            ['product_received_date', $start_timess]
+        ])
+            ->orwhere([
+                ['product_id', $product_id],
+                ['status', 3],
+                ['product_pay_date', $end_timess]
+            ])
+            ->orwhere([
+                ['product_id', $product_id],
+                ['status', 3],
+                ['product_received_date', '<', $start_timess],
+                ['product_pay_date', '>', $start_timess]
+            ])
+            ->orwhere([
+                ['product_id', $product_id],
+                ['status', 3],
+                ['product_received_date', '<', $end_timess],
+                ['product_pay_date', '>', $end_timess]
+            ])
+            ->orwhere([
+                ['product_id', $product_id],
+                ['status', 3],
+                ['product_received_date', '>', $start_timess],
+                ['product_pay_date', '<', $end_timess]
+            ])
+            ->get();
+        $total = 0;
+        foreach ($check_times as $check_time) {
+            $total += $check_time->quantity;
+        }
+
+        $total_quantity = $product->quantity - $total;
+
+        if ($total_quantity < 0){
+            $total_quantity = 0;
+        }
+        echo $total_quantity;
+    }
+
     public function showProducts(Request $request){
         $data = $request->all();
         $starts_times = $request->start_timess;
         $id = $request->id;
         $product = Product::find($id);
+        $collections = null;
         if ($product->category_id == 1){
             $order_times = OrderDetails::where([
                 ['status', 0],
@@ -300,7 +396,7 @@ class ChooseProduct extends Controller
             $collections[] = collect(['start' => '2020-05-05', 'end' => '2020-04-04']);
             foreach ($order_times as $index => $order_time){
                 if ($order_time->product_received_date == $order_time->product_pay_date){
-                     array_push($collections,$order_time->product_received_date);
+                    array_push($collections,$order_time->product_received_date);
                 }else{
                     $collections[] = collect(['start' => $order_time->product_received_date, 'end' => $order_time->product_pay_date]);
                 }
@@ -308,11 +404,17 @@ class ChooseProduct extends Controller
         }else{
             $collections[] = collect(['start' => '2020-05-05', 'end' => '2020-04-04']);
         }
+        $viewdata = [
+            'product' => $product,
+            'collections'=> json_encode($collections),
+            'starts_times'=>$starts_times
+        ];
 //dd($collections);
-        return view('Frontend.single-product', compact('product','collections','starts_times'));
+        return view('Frontend.single-product', $viewdata);
     }
 
-    public function showInfo(Request $request,$id){
+    public function showInfo(Request $request){
+        $id = $request->product_id;
         $product = Product::find($id);
         $allPayment = Payment::all();
         $total_price = $request->total_price;
@@ -341,4 +443,5 @@ class ChooseProduct extends Controller
             'allPayment'=>$allPayment,
         ]);
     }
+
 }

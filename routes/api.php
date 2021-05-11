@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/pages/show-products/{id}/&/{start_time}/&/{end_time}',[ChooseProduct::class,'showProducts'])->name('pages.showproducts');
+//Route::get('/pages/choose-products/{category_id}&{city_id}',[ChooseProduct::class,'chooseproducts']);

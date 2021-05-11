@@ -58,9 +58,12 @@ Route::resource('/home', HomeController::class);
 Route::resource('/pages/registers',RegisterController::class);
 Route::post('/pages/choose-products',[ChooseProduct::class,'index'])->name('pages.chooseproducts');
 Route::post('/pages/load-products',[ChooseProduct::class,'loadData'])->name('loadmore.loaddata');
+Route::post('/pages/load-product',[ChooseProduct::class,'loadDataProduct'])->name('loadmore.loaddataproduct');
+Route::post('/pages/load-quantity',[ChooseProduct::class,'postShowQuantity'])->name('loadmore.loaddataquantity');
 
 Route::post('/pages/show-products',[ChooseProduct::class,'showProducts'])->name('pages.showproducts');
 Route::post('/pages/post-show-products',[ChooseProduct::class,'postShowProducts'])->name('pages.postshowproducts');
+
 
 
 //đăng ký chủ xe
@@ -93,7 +96,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
     Route::get('pages/lsthuexe',[HomeController::class,'lsthuexe'])->name('pages.lsthuexe');
     Route::get('pages/lsthuexe/{id}',[HomeController::class,'ctdonhang'])->name('pages.ctdonhang');
     //Khương
-    Route::post('/pages/show-info/{id}',[ChooseProduct::class,'showInfo'])->name('pages.showinfos');
+    Route::post('/pages/show-info',[ChooseProduct::class,'showInfo'])->name('pages.showinfos');
     //order
     Route::resource('/dashboards/order',OrderController::class);
     Route::post('/pages/payment-online', [OrderController::class, 'paymentOnline'])->name('pages.paymentonline');

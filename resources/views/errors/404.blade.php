@@ -1,5 +1,5 @@
 @extends('layouts.Frontend.base')
-@section('title', 'Categories Home')
+@section('title', '404 Error')
 @section('content')
 <div class="page-contain page-404" style="padding: 60px 0">
 
