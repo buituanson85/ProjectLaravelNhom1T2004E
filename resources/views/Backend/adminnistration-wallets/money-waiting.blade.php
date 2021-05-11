@@ -58,7 +58,7 @@
                                             <td>{{ $wallet->monney }}</td>
                                             <td>{{ $wallet->user->name }}</td>
                                             <td>
-                                                <a href="{{ route('dashboards.sendmoneywaiting', $wallet->id) }}" class="badge badge-warning">pending</a>
+                                                <a href="{{ route('dashboards.sendmoneywaiting', $wallet->id) }}" class="badge badge-warning">Xác nhận</a>
                                             </td>
                                             <td>{{ $wallet->created_at }}</td>
                                         </tr>
@@ -72,6 +72,18 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 offset-1 pb-5">
+                    <h3 style="font-weight: 700">GHI CHÚ:</h3>
+                    <div class="row pt-3">
+                        <div class="col-md-12">
+                            - Khi khách hàng thanh toán qua thẻ tiền sẽ gửi về tiền đang chờ duyệt trong ví.
+                        </div>
+                        <div class="col-md-12 pt-3">
+                            - Nhấn nút <span class="badge badge-warning">Xác nhận</span> để tự động chuyển tiền xuống ví dưới tài khoản ví của chủ phương tiện.
+                            - Nếu số tiền chuyển lớn hơn số tiền duy trì tài khoản,mở khóa tất cả các phương tiện của chủ xe do trước đó bị khóa vì tiền trong ví không đủ.
                         </div>
                     </div>
                 </div>

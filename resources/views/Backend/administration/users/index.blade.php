@@ -67,7 +67,7 @@
                                                 @endforeach
                                             </td>
                                             <td>
-                                                <a href="{{ route('users.show', $user->id ) }}"><span class="btn btn-sm btn-light"><i class="fa fa-eye"></i>&nbsp;View</span></a>
+                                                <a href="{{ route('users.show', $user->id ) }}"><span class="btn btn-sm btn-light"><i class="fa fa-eye"></i>&nbsp;Chi tiết</span></a>
                                             </td>
                                             <td>
                                                 @if(count($user->roles)>0)

@@ -10,8 +10,10 @@ use App\Mail\Sendpendingconfirmorder;
 use App\Models\Backend\HistoryMonney;
 use App\Models\Backend\NoteOrder;
 use App\Models\Backend\Product;
+use App\Models\Backend\Statistical;
 use App\Models\Backend\Wallet;
 use App\Models\Frontend\OrderDetails;
+use App\Models\Frontend\TimeOrder;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -111,7 +113,7 @@ class OrderController extends Controller
             ['status','!=','cancelled'],
             ['status','!=','delete'],
             ['status','!=','completed']
-        ])->findMany($array_id);
+        ])->orderBy('id','desc')->findMany($array_id);
         return view('Backend.orders.partnerorders')->with(['orders'=>$orders]);
     }
 
@@ -242,37 +244,92 @@ class OrderController extends Controller
         return view('Backend.orders.show-orders-delete-cancelled')->with(['order'=>$order]);
     }
 
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
     public function acceptOrder(Request $request, $id){
         $order = Order::where('order_id', $id)->first();
-
-        $order->status = 'accept';
         $product = Product::find($order->orderdetails->product->id);
+        $order_details = OrderDetails::where('order_id',$order->id)->first();
 
-        $product->quantity = $product->quantity - $order->orderdetails->quantity;
-        if ($product->category_id == 2){
-            if ($product->quantity < 0){
-                $request->session()->flash('error', 'Số lượng xe không đủ!');
+        $start_time = $order->orderdetails->product_received_date;
+        $end_time = $order->orderdetails->product_pay_date;
+        if ($product->category_id == 1){
+            $check_time = OrderDetails::where([
+                ['product_id',$product->id],
+                ['status', 0],
+                ['product_received_date',$start_time]
+            ])
+                ->orwhere([
+                    ['product_id',$product->id],
+                    ['status', 0],
+                    ['product_pay_date',$end_time]
+                ])
+                ->orwhere([
+                    ['product_id',$product->id],
+                    ['status', 0],
+                    ['product_received_date','<',$start_time],
+                    ['product_pay_date','>',$start_time]
+                ])
+                ->orwhere([
+                    ['product_id',$product->id],
+                    ['status', 0],
+                    ['product_received_date','<',$end_time],
+                    ['product_pay_date','>',$end_time]
+                ])
+                ->orwhere([
+                    ['product_id',$product->id],
+                    ['status', 0],
+                    ['product_received_date','>',$start_time],
+                    ['product_pay_date','<',$end_time]
+                ])
+                ->first();
+            if ($check_time){
+                $request->session()->flash('error', 'Trùng lịch!');
                 return redirect()->back();
-            }elseif ($product->quantity == 0){
-                $product->status = "unready";
             }
         }else{
-            if ($product->status == 'unready'){
-                $request->session()->flash('error', 'Xe đã nhận chuyến hoặc đang trong chuyến!');
+            $check_times = OrderDetails::where([
+                ['product_id',$product->id],
+                ['status', 3],
+                ['product_received_date',$start_time]
+            ])
+                ->orwhere([
+                    ['product_id',$product->id],
+                    ['status', 3],
+                    ['product_pay_date',$end_time]
+                ])
+                ->orwhere([
+                    ['product_id',$product->id],
+                    ['status', 3],
+                    ['product_received_date','<',$start_time],
+                    ['product_pay_date','>',$start_time]
+                ])
+                ->orwhere([
+                    ['product_id',$product->id],
+                    ['status', 3],
+                    ['product_received_date','<',$end_time],
+                    ['product_pay_date','>',$end_time]
+                ])
+                ->orwhere([
+                    ['product_id',$product->id],
+                    ['status', 3],
+                    ['product_received_date','>',$start_time],
+                    ['product_pay_date','<',$end_time]
+                ])
+                ->get();
+            $total = 0;
+            foreach ($check_times as $check_time){
+                $total += $check_time->quantity;
+            }
+
+            $total_quantity = $product->quantity - $total;
+//            dd($total_quantity);
+
+            if ($total_quantity < $order->orderdetails->quantity){
+                $request->session()->flash('error', 'không đủ xe!');
                 return redirect()->back();
             }
-            $product->status = "unready";
         }
+
+        $order->status = 'accept';
 
         $now = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
         $name = $order->user->name;
@@ -292,7 +349,13 @@ class OrderController extends Controller
 
         $product->save();
         $order->save();
-        $order_details = OrderDetails::where('order_id',$order->id)->first();
+        if ($product->category_id == 1){
+            $order_details->status = 0;
+            $order_details->save();
+        }else{
+            $order_details->status = 3;
+            $order_details->save();
+        }
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
     }
 
@@ -302,14 +365,6 @@ class OrderController extends Controller
         $order->confirm = 1;
         //tat hien thi phuong tien
         $product = Product::find($order->orderdetails->product->id);
-
-        if($product->category_id == 1){
-            $product->status = "unready";
-        }else{
-            if ($product->quantity == 0){
-                $product->status = "unready";
-            }
-        }
 
         //tru tien vi
         $user_id = User::find(\auth()->user()->id);
@@ -348,6 +403,25 @@ class OrderController extends Controller
             $history->save();
         }
 
+        $count_product_xemay = Product::where([
+            ['partner_id', $user_id->id],
+            ['status','!=', 'refused'],
+            ['status','!=', 'pending'],
+            ['status','!=', 'unavailable'],
+            ['category_id', 1]
+        ])->get()->count();
+        $count_product_oto = Product::where([
+            ['partner_id',$user_id->id],
+            ['status','!=', 'refused'],
+            ['status','!=', 'pending'],
+            ['status','!=', 'unavailable'],
+            ['category_id', 2]
+        ])->get()->count();
+        $duytri = $count_product_oto*500000 + $count_product_xemay*100000;
+
+        if ($wallet->monney < $duytri){
+            $product->featured = 1;
+        }
         $order->save();
         $product->save();
         $order_details = OrderDetails::where('order_id',$order->id)->first();
@@ -367,18 +441,43 @@ class OrderController extends Controller
             'ma' => $order->order_id,
             'date' => $date
         ];
+        Mail::to($email)->send(new Send_compled_order($orders));
 
         //tat hien thi phuong tien
         $product = Product::find($order->orderdetails->product->id);
 
-        $product->quantity = $product->quantity + $order->orderdetails->quantity;
-
         $product->status = "ready";
-        Mail::to($email)->send(new Send_compled_order($orders));
+
+        $date_order = \Carbon\Carbon::now()->toDateString($order->orderdetails->created_at);
+//        dd($date_order);
+        if (Statistical::where('order_date',$date_order)->first()){
+            $statistical = Statistical::where('order_date',$date_order)->first();
+//            dd($statistical);
+//            $statistical->order_date = $date_order;
+            $total_sales = $statistical->sales + $order->price_total;
+//            dd($total_sales);
+            $statistical->sales = $total_sales;
+            $total_profit = $statistical->profit + 0.05*$order->price_total;
+            $statistical->profit = $total_profit;
+            $total_quantity = $statistical->quantity + $order->orderdetails->quantity;
+            $statistical->quantity = $total_quantity;
+            $total_total_order = $statistical->total_order + 1;
+            $statistical->total_order = $total_total_order;
+        }else{
+            $statistical = new Statistical();
+            $statistical->order_date = $date_order;
+            $statistical->sales = $order->price_total;
+            $statistical->profit = 0.05*$order->price_total;
+            $statistical->quantity = $order->orderdetails->quantity;
+            $statistical->total_order = 1;
+        }
 
         $product->save();
         $order->save();
+        $statistical->save();
         $order_details = OrderDetails::where('order_id',$order->id)->first();
+        $order_details->status = 1;
+        $order_details->save();
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
     }
 
@@ -387,6 +486,8 @@ class OrderController extends Controller
         $order->status = 'cancelled';
         $order->save();
         $order_details = OrderDetails::where('order_id',$order->id)->first();
+        $order_details->status = 1;
+        $order_details->save();
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
     }
 
@@ -402,6 +503,8 @@ class OrderController extends Controller
         $product->save();
         $order->save();
         $order_details = OrderDetails::where('order_id',$order->id)->first();
+        $order_details->status = 1;
+        $order_details->save();
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
     }
 
@@ -498,6 +601,8 @@ class OrderController extends Controller
         $order = Order::find($id);
         $order_detail = OrderDetails::where('order_id', $id)->first();
         $orderdetails = OrderDetails::find($order_detail->id);
+        $orderdetails->status = 1;
+        $orderdetails->save();
 
         $now = Carbon::now('Asia/Ho_Chi_Minh')->format('d-m-Y H:i:s');
         $name = $orderdetails->product->user->name;
@@ -524,7 +629,7 @@ class OrderController extends Controller
         $order->save();
         $noteorder->save();
         $request->session()->flash('error', 'Xóa Đơn hàng thành công!');
-        return redirect(route('dashboards-orders.index'));
+        return redirect(route('dashboards.confirmorders'));
     }
 
     public function refuseOrders(Request $request){
@@ -549,6 +654,8 @@ class OrderController extends Controller
         $order->save();
 
         $order_details = OrderDetails::where('order_id',$order->id)->first();
+        $order_details ->status = 1;
+        $order_details->save();
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
     }
 
@@ -576,7 +683,6 @@ class OrderController extends Controller
 
         //tat hien thi phuong tien
         $product = Product::find($order->orderdetails->product->id);
-        $product->quantity = $product->quantity + $order->orderdetails->quantity;
 
         $product->status = "ready";
         $product->save();
@@ -584,6 +690,8 @@ class OrderController extends Controller
         $order->save();
 
         $order_details = OrderDetails::where('order_id',$order->id)->first();
+        $order_details->status = 1;
+        $order_details->save();
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order_details]);
     }
 

@@ -8,9 +8,11 @@ use App\Models\Backend\Category;
 use App\Models\Backend\City;
 use App\Models\Backend\District;
 use App\Models\Backend\Product;
+use App\Models\Frontend\OrderDetails;
 use App\Models\Frontend\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use function Sodium\add;
 
 class ChooseProduct extends Controller
 {
@@ -24,14 +26,15 @@ class ChooseProduct extends Controller
         $sort = $request->sort;
         $district_id = $request->district_id;
 
-
-
         $categories = Category::where('status','instock')->get();
         $cities = City::where('status','instock')->orderBy('id', 'DESC')->get();
+        if (isset($city_id)){
+            $districts = District::where('status','instock')->where('city_id',$city_id)->orderBy('id', 'DESC')->get();
+        }else{
+            $districts = District::where('status','instock')->orderBy('id', 'DESC')->get();
+        }
 
-        $districts = District::where('status','instock')->where('city_id',$city_id)->orderBy('id', 'DESC')->get();
         $brands = Brand::where('status','instock')->orderBy('id', 'DESC')->get();
-
         $matchNight = array();
 
         if (isset($category_id)){
@@ -88,7 +91,35 @@ class ChooseProduct extends Controller
                 ->paginate(10);
         }
 
-        return view('Frontend.choose-product', compact('categories','cities','products','brands','districts','category_id','city_id','seat', 'gear','brand_id','sort','district_id'));
+        //Google map.
+        $district_locations = District::where([
+            ['status', 'instock']
+        ])->get();
+//        $collections[] = collect(['start' => '2020-05-05', 'end' => '2020-04-04']);
+//        foreach ($district_locations as $index => $district_location){
+//                $collections[] = collect(['position' => 'new google.maps.LatLng'."(".($district_location->location).")", 'type' => 'info']);
+//        }
+        $collections = array();
+        foreach ($district_locations as $index => $district_location){
+            array_push($collections,$district_location->location);
+        }
+//        dd($collections);
+        $viewData = [
+            'collections' =>json_encode($collections),
+            'categories' => $categories,
+            'cities' =>$cities,
+            'products' => $products,
+            'brands' =>$brands,
+            'districts' => $districts,
+            'category_id' =>$category_id,
+            'city_id' => $city_id,
+            'seat' => $seat,
+            'gear' =>$gear,
+            'brand_id' => $brand_id,
+            'sort' =>$sort,
+            'district_id' => $district_id,
+        ];
+        return view('Frontend.choose-product', $viewData);
     }
 
     function loadData(Request $request)
@@ -102,6 +133,8 @@ class ChooseProduct extends Controller
         $brand_id = $request->brand_id;
         $sort = $request->sort;
         $district_id = $request->district_id;
+        $start_time = $request->start_time;
+        $end_time = $request->end_time;
 
         if (isset($category_id)){
             $x =array('category_id', '=', $category_id);
@@ -226,7 +259,12 @@ class ChooseProduct extends Controller
                                     <div class="product_price">
                                         <div>'.number_format($row->price).'₫ <span style="font-size: 12px">/ngày</span></div>
                                         <p style="font-style: italic;color: green">-5% khi thanh toán online</p>
-                                        <p style="text-align: center;padding-top: 18px;color: white;display: flex"><a href="/pages/show-products/'.$row->id.'" style="border: 1px solid lightseagreen;color: white;flex: 1; background-color:lightseagreen;padding: 5px; border-radius: 5px" >Chi tiết</a></p>
+                                        <p style="text-align: center;padding-top: 18px;color: white;display: flex">
+                                        <form method="post" action="/pages/show-products">
+                                        '.@csrf_field().'
+                                        <input type="hidden" name="id" value="'.$row->id.'">
+                                        <button type="submit" style="border: 1px solid lightseagreen;color: white;flex: 1; background-color:lightseagreen;padding: 5px; border-radius: 5px;width: 100%" >Chi tiết</button></p>
+                                        </form>
                                     </div>
                                 </div>
                     ';
@@ -249,10 +287,29 @@ class ChooseProduct extends Controller
         }
     }
 
-    public function showProducts($id){
-//        $product_id = $request->product_id;
+    public function showProducts(Request $request){
+        $data = $request->all();
+        $starts_times = $request->start_timess;
+        $id = $request->id;
         $product = Product::find($id);
-        return view('Frontend.single-product', compact('product'));
+        if ($product->category_id == 1){
+            $order_times = OrderDetails::where([
+                ['status', 0],
+                ['product_id',$id]
+            ])->get();
+            $collections[] = collect(['start' => '2020-05-05', 'end' => '2020-04-04']);
+            foreach ($order_times as $index => $order_time){
+                if ($order_time->product_received_date == $order_time->product_pay_date){
+                     array_push($collections,$order_time->product_received_date);
+                }else{
+                    $collections[] = collect(['start' => $order_time->product_received_date, 'end' => $order_time->product_pay_date]);
+                }
+            }
+        }else{
+            $collections[] = collect(['start' => '2020-05-05', 'end' => '2020-04-04']);
+        }
+//dd($collections);
+        return view('Frontend.single-product', compact('product','collections','starts_times'));
     }
 
     public function showInfo(Request $request,$id){

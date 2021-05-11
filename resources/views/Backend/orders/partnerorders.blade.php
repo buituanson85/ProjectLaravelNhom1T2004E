@@ -101,10 +101,10 @@
                     <div class="row pt-3">
                         <div class="col-md-12">
                             - Đồng ý cho thuê:<br>
-                            &#160;&#160;&#160;&#160;+ Chủ phương tiện thao tác đồng ý cho thuê trong mục chi tiết đơn hàng chuyển trạng thái <span class="badge badge-success">Đã nhận chuyến</span><br>
-                            &#160;&#160;&#160;&#160;+ Lúc này số lượng phương tiện sẽ giảm đi 1 với oto,số lượng khách hàng đặt với xe máy và ẩn hiển thị trên web với phương tiện nếu số lượng tồn bằng 0.<span class="badge badge-secondary">unready</span><br>
-                            &#160;&#160;&#160;&#160;+ Ô Tô: Không thể nhận chuyến nếu phương tiện đó đã nhận chuyến ở đơn hàng khác(đơn hàng chưa kết thúc hủy,hoàn thành,xóa).<br>
-                            &#160;&#160;&#160;&#160;+ Xe máy: Không thể nhận chuyến nếu số lượng khách hàng đặt lớn hơn số lượng tồn phương tiện trên hệ thống,trường hợp bằng nhau có thể nhận chuyến nhưng trạng thái phương tiện sẽ chuyển sang ẩn hiển thị trên web.<span class="badge badge-secondary">unready</span><br>
+                            &#160;&#160;&#160;&#160;+ Chủ phương tiện thao tác đồng ý cho thuê trong mục <span class="btn btn-sm btn-light">chi tiết</span> chuyển trạng thái <span class="badge badge-success">Đã nhận chuyến</span><br>
+                            &#160;&#160;&#160;&#160;+ Sau khi xác nhận chuyến trạng thái orderdetails chuyển về 0(Ô tô) 3(Xe máy).<span class="badge badge-secondary">unready</span><br>
+                            &#160;&#160;&#160;&#160;+ Ô Tô: Không thể nhận chuyến nếu phương tiện đó đã nhận chuyến ở đơn hàng khác(đơn hàng chưa kết thúc hủy,hoàn thành,xóa) cùng khung thời gian với đơn hàng cần xác nhận.<br>
+                            &#160;&#160;&#160;&#160;+ Xe máy: Không thể nhận chuyến nếu tồn tại nhiều đơn hàng đặt cùng khung thời gian có tổng số lượng khách hàng đặt lớn hơn số lượng tồn phương tiện trên hệ thống.<span class="badge badge-secondary">unready</span><br>
                         </div>
                     </div>
                     <div class="row pt-3">
@@ -130,7 +130,7 @@
                             &#160;&#160;&#160;&#160;+ Trong trường hợp khách hàng không có nhu cầu sử dụng hoặc vì lý do nào đó chủ phương tiện hủy chuyến đơn hàng này.confirm = 0<br>
                             &#160;&#160;&#160;&#160;+ Lúc này đơn hàng chuyển sang trạng thái <span class="badge badge-danger">Hủy chuyến</span>.<br>
                             &#160;&#160;&#160;&#160;+ Đơn hàng do chủ phương tiện hủy sẽ chuyển sang mục "Đơn hàng bị từ chối và hủy" Admin phải kiểm tra và xác nhận đơn hàng này.confirm = 1<br>
-                            &#160;&#160;&#160;&#160;+ Sau khi hủy đơn hàng: Số lượng sẽ sẽ được cộng lại bằng số lượng khách đã thuê.phương tiện chuyển trạng thái <span class="badge badge-primary">ready</span> để có thể tiếp tục nhận chuyến<br>
+                            &#160;&#160;&#160;&#160;+ Sau khi hủy đơn hàng: trạng thái của orderdetails chuyển về bằng một<br>
                         </div>
                     </div>
                     <div class="row pt-3">
@@ -138,7 +138,7 @@
                             - Kết thúc chuyến:<br>
                             &#160;&#160;&#160;&#160;+ Sau khi nhận lại và kiểm tra phương tiện từ phía khách hàng chủ phương tiện có thể kết thúc chuyến thuê để tiếp tục nhận chuyến khác<br>
                             &#160;&#160;&#160;&#160;+ Lúc này đơn hàng chuyển sang trạng thái <span class="badge badge-primary">Hoàn thành chuyến</span>.confirm = 1<br>
-                            &#160;&#160;&#160;&#160;+ Sau khi hoàn thành đơn hàng: Số lượng sẽ sẽ được cộng lại bằng số lượng khách đã thuê.phương tiện chuyển trạng thái <span class="badge badge-primary">ready</span> để có thể tiếp tục nhận chuyến<br>
+                            &#160;&#160;&#160;&#160;+ Sau khi hoàn thành đơn hàng: trạng thái của orderdetails chuyển về bằng một<br>
                         </div>
                     </div>
                     <div class="row pt-3">

@@ -89,13 +89,13 @@
 
                 <div class="user-menu dropdown-menu">
 
-                    <a class="nav-link" href="{{ route('dashboards.profile') }}"><i class="fa fa-user"></i>&nbsp;My Profile</a>
+                    <a class="nav-link" href="{{ route('dashboards.profile') }}"><i class="fa fa-user"></i>&nbsp;Hồ sơ cá nhân</a>
 
-                    <a class="nav-link" href="{{ route('dashboards.getpassword') }}"><i class="fas fa-key"></i>&nbsp;Password</a>
+                    <a class="nav-link" href="{{ route('dashboards.getpassword') }}"><i class="fas fa-key"></i>&nbsp;Đổi mật khẩu</a>
 
-                    <a class="nav-link" href="{{ route('home.index') }}"><i class="fa fa-cog"></i> Home Pages</a>
+                    <a class="nav-link" href="{{ route('home.index') }}"><i class="fa fa-cog"></i> Trang chủ</a>
 
-                    <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> Logout</a>
+                    <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> Thoát</a>
                     <form id="logout-form"  action="{{ route('logout') }}" method="post">
                         @csrf
                     </form>

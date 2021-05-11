@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\SendPayMonneyWaiting;
 use App\Models\Backend\Bankking;
 use App\Models\Backend\HistoryMonney;
+use App\Models\Backend\Product;
 use App\Models\Backend\Wallet;
 use App\Models\User;
 use Carbon\Carbon;
@@ -20,7 +21,23 @@ class WalletController extends Controller
     public function index(){
         $user_id = User::find(\auth()->user()->id);
         $wallet = Wallet::where('partner_id',$user_id->id)->first();
-        return view('Backend.wallet.index', compact('wallet'));
+        $count_product_xemay = Product::where([
+            ['partner_id', $user_id->id],
+            ['status','!=', 'refused'],
+            ['status','!=', 'pending'],
+            ['status','!=', 'unavailable'],
+            ['category_id', 1]
+        ])->get()->count();
+        $count_product_oto = Product::where([
+            ['partner_id',$user_id->id],
+            ['status','!=', 'refused'],
+            ['status','!=', 'pending'],
+            ['status','!=', 'unavailable'],
+            ['category_id', 2]
+        ])->get()->count();
+        $duytri = $count_product_oto*500000 + $count_product_xemay*100000;
+//        dd($duytri);
+        return view('Backend.wallet.index', compact('wallet','duytri'));
     }
 
     public function tutorialMonney($id){
@@ -38,15 +55,49 @@ class WalletController extends Controller
     public function withdrawal(){
         $user_id = User::find(\auth()->user()->id);
         $wallet = Wallet::where('partner_id',$user_id->id)->first();
-        return view('Backend.wallet.withdrawal',compact('wallet'));
+
+        $count_product_xemay = Product::where([
+            ['partner_id', $user_id->id],
+            ['status','!=', 'refused'],
+            ['status','!=', 'pending'],
+            ['status','!=', 'unavailable'],
+            ['category_id', 1]
+        ])->get()->count();
+        $count_product_oto = Product::where([
+            ['partner_id',$user_id->id],
+            ['status','!=', 'refused'],
+            ['status','!=', 'pending'],
+            ['status','!=', 'unavailable'],
+            ['category_id', 2]
+        ])->get()->count();
+        $duytri = $count_product_oto*500000 + $count_product_xemay*100000;
+
+        return view('Backend.wallet.withdrawal',compact('wallet','duytri'));
     }
     public function withdrawalMonney(Request $request){
         $user_id = User::find(\auth()->user()->id);
         $wallet = Wallet::where('partner_id',$user_id->id)->first();
         $monney_send = $request->send_monney;
+
+        $count_product_xemay = Product::where([
+            ['partner_id', $user_id->id],
+            ['status','!=', 'refused'],
+            ['status','!=', 'pending'],
+            ['status','!=', 'unavailable'],
+            ['category_id', 1]
+        ])->get()->count();
+        $count_product_oto = Product::where([
+            ['partner_id',$user_id->id],
+            ['status','!=', 'refused'],
+            ['status','!=', 'pending'],
+            ['status','!=', 'unavailable'],
+            ['category_id', 2]
+        ])->get()->count();
+        $duytri = $count_product_oto*500000 + $count_product_xemay*100000;
+
         if ($monney_send >=50000){
             $total = $wallet->monney - $monney_send;
-            if ($total >= 500000){
+            if ($total >= $duytri){
                 //trừ tài khoản ví.
                 $wallet->monney = $total;
                 $wallet->note = "Rút tiền";
@@ -114,6 +165,37 @@ class WalletController extends Controller
         $banking->status = "accept";
         $banking->save();
         $request->session()->flash('success', 'Cộng tiền thành công!');
+
+        $count_product_xemay = Product::where([
+            ['partner_id', $wallet->partner_id],
+            ['status','!=', 'refused'],
+            ['status','!=', 'pending'],
+            ['status','!=', 'unavailable'],
+            ['category_id', 1]
+        ])->get()->count();
+        $count_product_oto = Product::where([
+            ['partner_id',$wallet->partner_id],
+            ['status','!=', 'refused'],
+            ['status','!=', 'pending'],
+            ['status','!=', 'unavailable'],
+            ['category_id', 2]
+        ])->get()->count();
+        $duytri = $count_product_oto*500000 + $count_product_xemay*100000;
+
+        $open_products = Product::where([
+            ['partner_id',$wallet->partner_id],
+            ['status','!=', 'refused'],
+            ['status','!=', 'pending'],
+            ['status','!=', 'unavailable'],
+        ])->get();
+
+        if ($wallet->monney >= $duytri){
+            foreach ($open_products as $open_product){
+                $open = Product::find($open_product->id);
+                $open->featured = 0;
+                $open->save();
+            }
+        }
         return redirect(route('dashboards.sendwallet'));
     }
 
@@ -145,6 +227,37 @@ class WalletController extends Controller
         $banking->status = "accept";
         $banking->save();
         $request->session()->flash('success', 'Cộng tiền thành công!');
+
+        $count_product_xemay = Product::where([
+            ['partner_id', $wallet->partner_id],
+            ['status','!=', 'refused'],
+            ['status','!=', 'pending'],
+            ['status','!=', 'unavailable'],
+            ['category_id', 1]
+        ])->get()->count();
+        $count_product_oto = Product::where([
+            ['partner_id',$wallet->partner_id],
+            ['status','!=', 'refused'],
+            ['status','!=', 'pending'],
+            ['status','!=', 'unavailable'],
+            ['category_id', 2]
+        ])->get()->count();
+        $duytri = $count_product_oto*500000 + $count_product_xemay*100000;
+
+        $open_products = Product::where([
+            ['partner_id',$wallet->partner_id],
+            ['status','!=', 'refused'],
+            ['status','!=', 'pending'],
+            ['status','!=', 'unavailable'],
+        ])->get();
+
+        if ($wallet->monney >= $duytri){
+            foreach ($open_products as $open_product){
+                $open = Product::find($open_product->id);
+                $open->featured = 0;
+                $open->save();
+            }
+        }
         return redirect(route('dashboards.sendwallet'));
     }
 
@@ -166,10 +279,40 @@ class WalletController extends Controller
         $history = new HistoryMonney();
         $history->trading_code = Str::random(8);
         $history->send_monney = $send_monney;
-        $history->note = "tiền khách hàng thanh toán qua thẻ";
+        $history->note = "Tiền khách hàng thanh toán qua thẻ";
         $history->wallet_id = $wallet->id;
         $history->save();
 
+        $count_product_xemay = Product::where([
+            ['partner_id', $wallet->partner_id],
+            ['status','!=', 'refused'],
+            ['status','!=', 'pending'],
+            ['status','!=', 'unavailable'],
+            ['category_id', 1]
+        ])->get()->count();
+        $count_product_oto = Product::where([
+            ['partner_id',$wallet->partner_id],
+            ['status','!=', 'refused'],
+            ['status','!=', 'pending'],
+            ['status','!=', 'unavailable'],
+            ['category_id', 2]
+        ])->get()->count();
+        $duytri = $count_product_oto*500000 + $count_product_xemay*100000;
+
+        $open_products = Product::where([
+            ['partner_id',$wallet->partner_id],
+            ['status','!=', 'refused'],
+            ['status','!=', 'pending'],
+            ['status','!=', 'unavailable'],
+        ])->get();
+
+        if ($wallet->monney >= $duytri){
+            foreach ($open_products as $open_product){
+                $open = Product::find($open_product->id);
+                $open->featured = 0;
+                $open->save();
+            }
+        }
         $request->session()->flash('success', 'Cộng tiền thành công!');
         return redirect(route('dashboards.moneywaiting'));
     }

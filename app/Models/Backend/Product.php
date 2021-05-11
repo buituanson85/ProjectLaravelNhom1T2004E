@@ -34,7 +34,7 @@ class Product extends Model
     }
 
     public function orderdetails(){
-        return $this->hasMany('App\Models\Frontend\OrderDetails');
+        return $this->hasMany('App\Models\Frontend\OrderDetails', 'product_id');
     }
 
     public function city(){

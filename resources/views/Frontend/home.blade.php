@@ -55,30 +55,9 @@
                             @endforeach
                         </select>
                     </div>
-
-                    {{--                    <div class="form_time">--}}
-                    {{--                        <div class="form_time_general">--}}
-                    {{--                            <div class="row">--}}
-                    {{--                                <div class="col-md-5">--}}
-                    {{--                                    <input class="form-control" style="background-color: whitesmoke;border-radius: 5px;width: 160px"  type="text" id="start_time" name="start_time">--}}
-                    {{--                                    <p id="demo_start_time"></p>--}}
-                    {{--                                </div>--}}
-                    {{--                                <div class="col-md-5">--}}
-                    {{--                                    <input class="form-control" style="background-color: whitesmoke;border-radius: 5px; width: 160px"  type="text" id="end_time" name="end_time">--}}
-                    {{--                                </div>--}}
-                    {{--                            </div>--}}
-                    {{--                        </div>--}}
-                    {{--                    </div>--}}
                     <div class="form_submit">
                         <button class="btn btn-primary" type="submit">Tìm xe</button>
                     </div>
-                    {{--                    <script>--}}
-                    {{--                        var dateStart = document.querySelector('#start_time');--}}
-                    {{--                        var dateEnd = document.querySelector('#end_time');--}}
-                    {{--                        var now = new Date();--}}
-                    {{--                        dateStart.value = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1).toLocaleString('en-GB', { timeZone: 'UTC' });--}}
-                    {{--                        dateEnd.value = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 5).toLocaleString('en-GB', { timeZone: 'UTC' });--}}
-                    {{--                    </script>--}}
 
                 </form>
             </div>
@@ -211,7 +190,7 @@
                 <p style="text-align: center; color: lightseagreen;font-size: 40px">Truyền thông nói gì về chúng tôi</p>
                 <div class="communicate_about">
                     <div class="communicate_about_general" >
-                        <a class="the_a_two" href="https://congthuong.vn/7-startup-viet-xuat-sac-tranh-tai-tai-vong-chung-ket-quoc-gia-vietchallenge-2019-121720-121720.html" style="text-align: center;">
+                        <a class="the_a_two" href="https://congthuong.vn/7-startup-viet-xuat-sac-tranh-tai-tai-vong-chung-ket-quoc-gia-vietchallenge-2019-121720-121720.html" target="_blank" style="text-align: center;">
                             <div class="communicate_about_general_img" style="width: 100%; height: 250px">
                                 <img src="https://chungxe.vn/assets/images/about/challenge.jpg" style="width: 100%;height: 100%"  alt="">
                             </div>
@@ -221,7 +200,7 @@
                         </a>
                     </div>
                     <div class="communicate_about_general" >
-                        <a class="the_a_two" href="https://startup.vnexpress.net/tin-tuc/hanh-trinh-khoi-nghiep/cong-bo-top-15-du-an-vao-vong-thuyet-trinh-startup-viet-2018-3834533-p2.html" style="text-align: center;">
+                        <a class="the_a_two" href="https://startup.vnexpress.net/tin-tuc/hanh-trinh-khoi-nghiep/cong-bo-top-15-du-an-vao-vong-thuyet-trinh-startup-viet-2018-3834533-p2.html" target="_blank" style="text-align: center;">
                             <div class="communicate_about_general_img" style="width: 100%; height: 250px">
                                 <img src="https://chungxe.vn/assets/images/about/doanhnhan8x.jpg" style="width: 100%;height: 100%"  alt="">
                             </div>
@@ -231,7 +210,7 @@
                         </a>
                     </div>
                     <div class="communicate_about_general" >
-                        <a class="the_a_two" href="https://startup.vnexpress.net/tin-tuc/y-tuong-moi/doanh-nhan-8x-va-nen-tang-truc-tuyen-chia-se-xe-tu-lai-3833028.html?fbclid=IwAR1c3qn3I9UoNMHbfd-sKnRC4KC3FM5WmPR9g9wr0reKbcg_mAEmu6QduiQ" style="text-align: center;">
+                        <a class="the_a_two" href="https://startup.vnexpress.net/tin-tuc/y-tuong-moi/doanh-nhan-8x-va-nen-tang-truc-tuyen-chia-se-xe-tu-lai-3833028.html?fbclid=IwAR1c3qn3I9UoNMHbfd-sKnRC4KC3FM5WmPR9g9wr0reKbcg_mAEmu6QduiQ" target="_blank" style="text-align: center;">
                             <div class="communicate_about_general_img" style="width: 100%; height: 250px">
                                 <img src="https://chungxe.vn/assets/images/about/hist.png" style="width: 100%;height: 100%"  alt="">
                             </div>
@@ -241,7 +220,7 @@
                         </a>
                     </div>
                     <div class="communicate_about_general" >
-                        <a class="the_a_two" href="http://www.pcworld.com.vn/articles/cong-nghe/song-va-cong-nghe/2018/10/1257720/hist-2018-chao-don-21-du-an-tham-gia-vong-tang-toc-huan-luyen/" style="text-align: center;">
+                        <a class="the_a_two" href="http://www.pcworld.com.vn/articles/cong-nghe/song-va-cong-nghe/2018/10/1257720/hist-2018-chao-don-21-du-an-tham-gia-vong-tang-toc-huan-luyen/" target="_blank" style="text-align: center;">
                             <div class="https://chungxe.vn/assets/images/about/vnexpress.jpg" style="width: 100%; height: 250px">
                                 <img src="https://chungxe.vn/assets/images/about/vnexpress.jpg" style="width: 100%;height: 100%"  alt="">
                             </div>
@@ -251,7 +230,7 @@
                     </div>
 
                     <div class="communicate_about_general" >
-                        <a class="the_a_two" href="https://cafebiz.vn/y-tuong-bookingcom-trong-linh-vuc-cho-thue-xe-o-to-dat-giai-nhat-cuoc-thi-lap-trinh-ve-giao-thong-thong-minh-20180717153509249.chn" style="text-align: center;">
+                        <a class="the_a_two" href="https://cafebiz.vn/y-tuong-bookingcom-trong-linh-vuc-cho-thue-xe-o-to-dat-giai-nhat-cuoc-thi-lap-trinh-ve-giao-thong-thong-minh-20180717153509249.chn" target="_blank" style="text-align: center;">
                             <div class="https://chungxe.vn/assets/images/about/vnexpress.jpg" style="width: 100%; height: 250px">
                                 <img src="https://chungxe.vn/assets/images/about/vnexpress.jpg" style="width: 100%;height: 100%"  alt="">
                             </div>

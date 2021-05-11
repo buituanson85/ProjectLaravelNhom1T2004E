@@ -317,6 +317,7 @@ class ProductController extends Controller
         $new_order_detail->product_pay_date = $order->orderdetails->product_pay_date;
         $new_order_detail->payments = $order->orderdetails->payments;
         $new_order_detail->quantity = $order->orderdetails->quantity;
+        $new_order_detail->status = 0;
 
         $product = Product::find($id);
         $partner_id = User::find($product->partner_id);

@@ -87,7 +87,7 @@
                                                 <a href="{{ route('dashboards.editunphuongtien', $product->id ) }}"><span class="btn btn-sm btn-warning"><i class="fa fa-edit"></i>&nbsp;Cập nhật</span></a>
                                             </td>
                                             <td>
-                                                <a href="{{ route('dashboards.galaxys', $product->id ) }}"><span class="btn btn-sm btn-info"><i class="fa fa-eye"></i>&nbsp;Hồ sơ</span></a>
+                                                <a href="{{ route('dashboards.galaxys', $product->id ) }}"><span class="btn btn-sm btn-info"><i class="far fa-folder"></i>&nbsp;Hồ sơ</span></a>
                                             </td>
                                             <td>
                                                 <a href="{{ route('product.acceptProduct', $product->id ) }}" class="btn btn-sm btn-light"><span ><i class="fa fa-eye"></i>&nbsp;Chi tiết</span></a>

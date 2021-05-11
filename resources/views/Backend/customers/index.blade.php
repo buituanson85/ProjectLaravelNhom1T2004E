@@ -58,7 +58,7 @@
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->phone }}</td>
                                             <td>
-                                                <a href="{{ route('customers.show', $user->id) }}"><span class="btn btn-sm btn-primary"><i class="fa fa-eye"></i>&nbsp;Chi tiết</span></a>
+                                                <a href="{{ route('customers.show', $user->id) }}"><span class="btn btn-sm btn-light"><i class="fa fa-eye"></i>&nbsp;Chi tiết</span></a>
                                             </td>
                                             <td>
                                                 <form action="{{ route('products.destroy', $user->id) }}" method="post">

@@ -44,7 +44,7 @@
 
                                 <div class="row pt-2 pb-4 text-center">
                                     <div class="col-md-12">
-                                        <span style="font-size: 16px;font-weight: 700">{{ number_format($wallet->monney) }} VNĐ</span>
+                                        <span style="font-size: 16px;font-weight: 700">{{ number_format($wallet->monney - $duytri )}} VNĐ</span>
                                     </div>
                                 </div>
 
@@ -85,7 +85,7 @@
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <span style="font-size: 12px; font-weight: 250">* Không thể rút 50.000 VNĐ - Phí duy trì tài khoản</span>
+                                        <span style="font-size: 12px; font-weight: 250">* Không thể rút {{ number_format($duytri) }} VNĐ - Phí duy trì tài khoản</span>
                                     </div>
                                 </div>
                                 <div class="row pt-3 pl-3">

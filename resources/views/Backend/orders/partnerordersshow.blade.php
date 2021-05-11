@@ -270,12 +270,21 @@
                                 </div>
                             </div>
 
+                            <div class="d-flex text-muted pt-3">
+                                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                                    <div class="d-flex justify-content-between">
+                                        <strong class="text-gray-dark">Bảo hiểm xe/xe:</strong>
+                                        <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{number_format($order->product->insurrance, 0). ' VNĐ' }}</a>
+                                    </div>
+                                </div>
+                            </div>
+
 
                             <div class="d-flex text-muted pt-3">
                                 <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                                     <div class="d-flex justify-content-between">
                                         <strong class="text-gray-dark">Tổng tiền:</strong>
-                                        <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{number_format(($order->product->price) * $total_day) . ' VNĐ'}}</a>
+                                        <a href="#" style="font-size: 14px; font-weight: bold; color: black ">{{number_format($order->order->price_total) . ' VNĐ'}}</a>
                                     </div>
                                 </div>
                             </div>

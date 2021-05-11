@@ -84,7 +84,7 @@
                                                 <span style="font-size: 16px;font-weight: 300">Có thể rút:</span>
                                             </div>
                                             <div class="col-md-6 text-right">
-                                                {{ number_format($wallet->monney- 500000) }} VNĐ
+                                                {{ number_format($wallet->monney- $duytri) }} VNĐ
                                             </div>
                                         </div>
                                     </div>
@@ -106,7 +106,7 @@
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <span style="font-size: 12px; font-weight: 250">* Không thể rút 500.000 VNĐ - Phí duy trì tài khoản</span>
+                                        <span style="font-size: 12px; font-weight: 250">* Không thể rút {{ number_format($duytri) }} VNĐ - Phí duy trì tài khoản</span>
                                     </div>
                                 </div>
                                 <div class="row pt-3">
@@ -126,7 +126,7 @@
                     <h3 style="font-weight: 700">GHI CHÚ:</h3>
                     <div class="row pt-3">
                         <div class="col-md-12">
-                            - Tiền duy trì tài khoản: 500.000 VNĐ.
+                            - Tiền duy trì tài khoản: 500.000 VNĐ/Ô Tô và 100.000 VNĐ/Xe Máy.
                         </div>
                     </div>
                     <div class="row pt-3">

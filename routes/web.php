@@ -59,7 +59,9 @@ Route::resource('/pages/registers',RegisterController::class);
 Route::post('/pages/choose-products',[ChooseProduct::class,'index'])->name('pages.chooseproducts');
 Route::post('/pages/load-products',[ChooseProduct::class,'loadData'])->name('loadmore.loaddata');
 
-Route::get('/pages/show-products/{id}',[ChooseProduct::class,'showProducts'])->name('pages.showproducts');
+Route::post('/pages/show-products',[ChooseProduct::class,'showProducts'])->name('pages.showproducts');
+Route::post('/pages/post-show-products',[ChooseProduct::class,'postShowProducts'])->name('pages.postshowproducts');
+
 
 //đăng ký chủ xe
 Route::get('/pages/register-partners',[PartnerController::class,'registerPartners'])->name('pages.registerpartners');
@@ -101,7 +103,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function (){
 //for admin
 Route::middleware(['auth:sanctum', 'verified','authadmin'])->group(function (){
     Route::resource('/dashboard', DashboardController::class);
-
+    Route::post('/filter-by-date',[DashboardController::class,'filterByDate']);
+    Route::post('/days-order',[DashboardController::class,'daysOrder']);
+    Route::post('/dashboard-filter',[DashboardController::class,'dashboardFilter']);
     //profile
     Route::get('/dashboards/profile', [ UserController::class, 'profile'])->name('dashboards.profile');
     Route::post('/dashboards/profile', [ UserController::class,'editProfile'])->name('dashboards.updateprofile');

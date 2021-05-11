@@ -26,8 +26,7 @@
     <link rel="stylesheet" href="{{ asset('Backend/vendors/jqvmap/dist/jqvmap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('Backend/vendors/jqvmap/dist/jqvmap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('Backend/assets/css/slider_single_product.css') }}">
-    {{--    <link rel="stylesheet" type="text/css" href="{{ asset('Backend/assets/css/bulma.min.css') }}">--}}
-    {{--    <link rel="stylesheet" type="text/css" href="{{ asset('Backend/assets/css/dataTables.bulma.min.css') }}">--}}
+
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 {{--    Alertify--}}
 <!-- CSS -->
@@ -43,7 +42,10 @@
     <link rel="stylesheet" href="{{ asset('Backend/assets/css/style.css') }}">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
-
+    <script>
+        // Ignore this in your implementation
+        window.isMbscDemo = true;
+    </script>
 
 </head>
 
@@ -74,25 +76,16 @@
 
 <!-- Right Panel -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-{{--<script src="{{ asset('Backend/vendors/jquery/dist/jquery.min.js') }}"></script>--}}
 <script src="{{ asset('Backend/vendors/popper.js/dist/umd/popper.min.js') }}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="{{ asset('Backend/assets/js/main.js') }}"></script>
-
 <script src="{{ asset('Backend/vendors/chart.js/dist/Chart.bundle.min.js') }}"></script>
-{{--<script src="{{ asset('Backend/assets/js/dashboard.js') }}"></script>--}}
-{{--<script src="{{ asset('Backend/assets/js/widgets.js') }}"></script>--}}
 <script src="{{ asset('Backend/vendors/jqvmap/dist/jquery.vmap.min.js') }}"></script>
-{{--<script src="{{ asset('Backend/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js') }}"></script>--}}
 <script src="{{ asset('Backend/vendors/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
 <script src="{{ asset('Backend/assets/js/slider_single_product.js') }}"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.js"></script>
 
-<script>
-    function quaylai(){
-        history.back();
-    }
-</script>
+
 <script>
     (function($) {
         "use strict";

@@ -261,7 +261,7 @@ class PartnerController extends Controller
         $product->quantity = $request->quantity;
         $product->save();
         $request->session()->flash('success', 'Tạo phương tiện thành công!');
-        return redirect()->route('partners.index');
+        return redirect()->route('dashboards.unpartners');
     }
 
     public function edit($id){

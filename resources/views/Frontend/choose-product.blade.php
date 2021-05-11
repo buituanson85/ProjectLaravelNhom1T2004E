@@ -164,15 +164,9 @@
                                             @endif
                                             value="{{ $district->id }}">{{ $district->name }}</option>
                                     @endforeach
+
                                 </select>
                             </div>
-                            {{--                    <div class="detail-choose-right-choose-time">--}}
-                            {{--                        <input class="form-control" style="background-color: #ffffff;border-radius: 5px;width: 160px"  type="date" id="start_time" name="start_time" value="{{ $start_time }}">--}}
-                            {{--                    </div>--}}
-                            {{--                    <div class="detail-choose-right-choose-time">--}}
-                            {{--                        <input class="form-control" style="background-color: #ffffff;border-radius: 5px; width: 160px"  type="date" id="end_time" name="end_time" value="{{ $end_time }}">--}}
-                            {{--                    </div>--}}
-
                         </div>
                         <button class="btn btn-primary" style="position: absolute;top: 370px; left: 230px">Tìm Kiếm</button>
                     </form>
@@ -209,7 +203,6 @@
             var sort = $('#sort').val();
             var city_id = $('#city_id').val();
             var district_id = $('#district_id').val();
-
             load_data('', _token,category_id, seat, gear, brand_id, sort, city_id, district_id);
 
             function load_data(id="", _token, category_id, seat, gear, brand_id, sort, city_id, district_id)
@@ -244,5 +237,138 @@
             });
         });
     </script>
+    <script type="text/javascript">
+        "use strict";
 
+        let map;
+        const hanoi = {
+            lat: 21.02904255838699,
+            lng: 105.78266438739159
+        };
+        /**
+         * The CenterControl adds a control to the map that recenters the map on
+         * Chicago.
+         */
+
+        class CenterControl {
+            constructor(controlDiv, map, center) {
+                this.map_ = map; // Set the center property upon construction
+
+                this.center_ = new google.maps.LatLng(center);
+                controlDiv.style.clear = "both"; // Set CSS for the control border
+
+                const goCenterUI = document.createElement("div");
+                goCenterUI.id = "goCenterUI";
+                goCenterUI.title = "Click to recenter the map";
+                controlDiv.appendChild(goCenterUI); // Set CSS for the control interior
+
+                const goCenterText = document.createElement("div");
+                goCenterText.id = "goCenterText";
+                goCenterText.innerHTML = "Center Map";
+                goCenterUI.appendChild(goCenterText); // Set CSS for the setCenter control border
+
+                const setCenterUI = document.createElement("div");
+                setCenterUI.id = "setCenterUI";
+                setCenterUI.title = "Click to change the center of the map";
+                controlDiv.appendChild(setCenterUI); // Set CSS for the control interior
+
+                const setCenterText = document.createElement("div");
+                setCenterText.id = "setCenterText";
+                setCenterText.innerHTML = "Set Center";
+                setCenterUI.appendChild(setCenterText); // Set up the click event listener for 'Center Map': Set the center of
+                // the map
+                // to the current center of the control.
+
+                goCenterUI.addEventListener("click", () => {
+                    const currentCenter = this.center_;
+                    this.map_.setCenter(currentCenter);
+                }); // Set up the click event listener for 'Set Center': Set the center of
+                // the control to the current center of the map.
+
+                setCenterUI.addEventListener("click", () => {
+                    const newCenter = this.map_.getCenter();
+                    this.center_ = newCenter;
+                });
+            }
+        }
+
+        function initMap() {
+
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,
+                center: hanoi
+            }); // Create the DIV to hold the control and call the CenterControl()
+            // constructor passing in this DIV.
+
+            const centerControlDiv = document.createElement("div");
+            const control = new CenterControl(centerControlDiv, map, chicago);
+            centerControlDiv.index = 1;
+            centerControlDiv.style.paddingTop = "10px";
+            map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+                centerControlDiv
+            );
+            var iconBase =
+                'https://developers.google.com/maps/documentation/javascript/examples/full/images/';
+
+            var icons = {
+                parking: {
+                    icon: iconBase + 'parking_lot_maps.png'
+                },
+                library: {
+                    icon: iconBase + 'library_maps.png'
+                },
+                info: {
+                    icon: iconBase + 'info-i_maps.png'
+                }
+            };
+
+            var features = [
+                {
+                    position: new google.maps.LatLng(21.010739445895037, 105.8608104185493),
+                    type: 'info'
+                }, {
+                    position: new google.maps.LatLng(21.02874838969118, 105.85093088225027),
+                    type: 'info'
+                }, {
+                    position: new google.maps.LatLng(21.018231928562958, 105.8300500437901),
+                    type: 'info'
+                }, {
+                    position: new google.maps.LatLng(21.0834462174512, 105.81815897445786),
+                    type: 'info'
+                }, {
+                    position: new google.maps.LatLng(21.01973608154633, 105.88467999332073),
+                    type: 'info'
+                }, {
+                    position: new google.maps.LatLng(21.017331988320013, 105.95262822600478),
+                    type: 'info'
+                }, {
+                    position: new google.maps.LatLng(21.034997834736224, 105.81383898939963),
+                    type: 'info'
+                }, {
+                    position: new google.maps.LatLng(20.986873040698203, 105.86377433194292),
+                    type: 'info'
+                }, {
+                    position: new google.maps.LatLng(20.99767645465602, 105.80975479726138),
+                    type: 'info'
+                }, {
+                    position: new google.maps.LatLng(20.959801156066913, 105.75644726798646),
+                    type: 'info'
+                }, {
+                    position: new google.maps.LatLng(21.076758023357183, 105.77050949425484),
+                    type: 'info'
+                },{
+                    position: new google.maps.LatLng(21.006397863572584, 105.77086055985967),
+                    type: 'info'
+                }];
+
+            // Create markers.
+            for (var i = 0; i < features.length; i++) {
+                var marker = new google.maps.Marker({
+                    position: features[i].position,
+                    icon: icons[features[i].type].icon,
+                    map: map
+                });
+            }
+        }
+    </script>
 @endsection

@@ -1,7 +1,6 @@
 @extends('layouts.Frontend.base')
 @section('title', 'Chi tiết phương tiện')
 @section('content')
-
     <div class="container-fluid banner-product">
         <div class="container">
             <div class="row">
@@ -145,34 +144,114 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row" style="width: 100%">
                             <div class="col-md-12" style="padding-left: 40px;width: 100%">
                                 <h6>Ngày nhận xe - Ngày trả xe</h6>
                                 <div class="row">
-                                    <div class="col-md-6" style="padding-right: 0!important;text-align: center">
-                                        <input class="form-control" style="background-color: #ffffff;border: none;
-                                        border-radius: 5px;width: 160px;font-size: 14px"  type="date" id="start_time" name="start_time" value="2021-05-03" required>
-                                    </div>
-                                    <div class="col-md-6" style="padding-left: 0!important;text-align: center">
-                                        <input class="form-control" style="background-color: #ffffff;border: none;
-                                        border-radius: 5px; width: 160px;font-size: 14px"  type="date" id="end_time" name="end_time" value="2021-05-03" required>
-                                    </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        @if($product->category_id == 2)
-                        <div class="row" style="width: 100%;padding: 10px 0;">
-                            <div class="col-md-12" style="padding-left: 40px;">
-                                <h6>Số lượng(<span style="font-size: 12px"> Tồn: {{ $product->quantity }}chiếc</span>):</h6>
                                 <div class="row">
-
-                                    <div class="col-md-10 pl-3">
-                                        <input class="form-control" type="number" min="1" max="{{ $product->quantity }}" name="quantitys" id="quantitys">
+                                    <div class="col-md-12">
+                                        <input id="input-picker" class="form-control" onchange="layvalue()" name="input-picker" width="150" placeholder="Bấm vào để chọn"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 offset-3">
+                                        <input type="date" id="start_times" style="display: none" name="start_times" value="2021-05-09"  width="150" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 offset-3">
+                                        <input type="date" id="end_times" style="display: none" name="end_times" value="2021-05-09" width="150" />
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+                        <link rel="stylesheet" href="{{ asset('Backend/lib/css/mobiscroll.javascript.min.css') }}">
+                        <link rel="stylesheet" href="{{ asset('Backend/lib/css/style.css') }}">
+                        <script src="{{ asset('Backend/lib/js/mobiscroll.javascript.min.js') }}"></script>
+                        <script>
+                            $(document).ready(function () {
+                                $('#input-picker').change(function () {
+                                    var numbers = document.getElementById("input-picker").value;
+                                    var start_timess = numbers.slice(0,10);
+                                    var end_timess = numbers.slice(13,23);
+                                    var id = {{ $product->id }};
+                                    var _token = $('input[name="_token"]').val();
+                                    // alert(end_timess)
+                                    $.ajax({
+                                        url:"{{ url('/pages/show-products') }}",
+                                        method:"POST",
+                                        dataType:"JSON",
+                                        data: {
+                                            start_timess:start_timess,
+                                            end_timess:end_timess,
+                                            id:id,
+                                            _token:_token
+                                        },
+                                        success:function (data) {
+                                            alert('ok')
+                                        }
+                                    })
+                                })
+                            });
+                        </script>
+                        <script>
+
+                            function layvalue() {
+                                var number = document.getElementById("input-picker").value;
+                                var start_times = number.slice(0,10);
+                                var end_times = number.slice(13,23);
+                                // console.log(start_times)
+                                // console.log(end_times)
+                                document.getElementById("start_times").value = start_times;
+                                document.getElementById("end_times").value = end_times;
+                                document.querySelector('#datxe').disabled = false;
+                                document.getElementById("icon_datxe").style.display = "none";
+                                document.getElementById("text_datxe").style.color = "#ffffff";
+                            }
+                            mobiscroll.setOptions({
+                                locale: mobiscroll.localeEn,
+                                theme: 'ios',
+                                themeVariant: 'light'
+                            });
+
+
+                            var data = <?php echo json_encode($collections)?>
+                            {{--var data_one = <?php echo json_encode($collections_one)?>--}}
+                            mobiscroll.datepicker('#input-picker', {
+                                controls: ['calendar'],
+                                select:'range',
+                                touchUi: true,
+                                min: new Date(),
+                                dateFormat: 'YYYY-MM-DD',
+                                rangeStartLabel: 'Ngày nhận xe',
+                                rangeEndLabel: 'Ngày Trả xe',
+                                invalid: data
+                            });
+                            document
+                                .getElementById('show-picker')
+                                .addEventListener('click', function () {
+                                    instance.open();
+                                    return false;
+                                });
+
+                        </script>
+                        @if($product->category_id == 2)
+                            <div class="row" style="width: 100%;padding: 10px 0;">
+                                <div class="col-md-12" style="padding-left: 40px;">
+                                    <h6>Số lượng(<span style="font-size: 12px"> Tồn: {{ $product->quantity }}chiếc</span>):</h6>
+                                    <div class="row">
+
+                                        <div class="col-md-10 pl-3">
+                                            <input class="form-control" type="number" min="1" max="{{ $product->quantity }}" value="1" name="quantitys" id="quantitys">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
                         @else
                             <div class="col-md-10 pl-3">
                                 <input class="form-control" type="hidden" value="1" name="quantitys" id="quantitys">
@@ -233,17 +312,21 @@
                                 <input type="hidden" name="end_time2" id="end_time2"/>
                                 <input type="hidden" name="receive_Method" id="receive_Method"/>
                                 <input type="hidden" name="quantity" id="quantity"/>
-                                <button type="submit" class="btn btn-success"
+                                <button disabled type="submit" id="datxe" class="btn btn-success datxe"
                                         style="width: 100%; padding-right: 20px; background-color: #2cb8af;border-color: #2cb8af">
-                                    Đặt Xe</button>
+                                    <i id="icon_datxe" class="fas fa-ban" style="color: red"></i>&#160;<span id="text_datxe" style="color: red">Đặt Xe</span></button>
 
                             </div>
                         </form>
 
                         <div class="row" style="width: 100%;padding-left: 40px;padding-top: 10px;padding-bottom: 20px; padding-right: 23px">
                             <div class="col-md-12" style="width: 100%">
-
-                                <button type="button" class="btn btn-secondary" style="width: 100%">Quay Về</button>
+                                <button onclick="goBack()" class="btn btn-secondary" style="width: 100%">Quay Về</button>
+                                <script>
+                                    function goBack() {
+                                        window.history.back();
+                                    }
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -253,32 +336,20 @@
     </div>
 
 
-    {{-- <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $(function (){
-                var dtToday = new Date();
-                var month = dtToday.getMonth() + 1;
-                var day = dtToday.getDate();
-                var year = dtToday.getFullYear();
-                if (month < 10)
-                    month = '0' +month.toString();
-                if (day < 10)
-                    day = '0' + day.toString();
-                var maxDate = year + '-' + month + '-' + day;
-                $('#start_time').attr('min', maxDate);
-                $('#end_time').attr('min', maxDate);
-                // $('#start_time').attr('min', '2021-05-04');
-            })
+
         })
     </script>
     <script type="text/javascript">
+
         function displayVals() {
 
-            var start_time = $( "#start_time" ).val();
-            var end_time = $( "#end_time" ).val();
+            var start_time = $( "#start_times" ).val();
+            var end_time = $( "#end_times" ).val();
             var receive_Method =$( "#receiveMethod" ).val();
             var quantitys =$( "#quantitys" ).val();
 
@@ -286,7 +357,6 @@
             var n = d.getTime();
             var x = new Date(end_time);
             var y = x.getTime();
-
 
             var z = (y - n)/(1000*3600*24) + 1;
 
@@ -320,8 +390,8 @@
             document.getElementById("quantity").value = quantitys;
         }
         $("input").change( displayVals );
-
         displayVals();
+
     </script>
 
 @endsection

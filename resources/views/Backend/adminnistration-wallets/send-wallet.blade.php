@@ -57,9 +57,9 @@
                                             <td>{{ $banking->note }}</td>
                                             <td>
                                                 @if($banking->account == "00100208980")
-                                                    <a href="{{ route('dashboards.sendwallettwo', $banking->id) }}" class="badge badge-warning">{{ $banking->status }}</a>
+                                                    <a href="{{ route('dashboards.sendwallettwo', $banking->id) }}" class="badge badge-warning">Xác nhận</a>
                                                 @else
-                                                    <a href="{{ route('dashboards.sendwalletone', $banking->id) }}" class="badge badge-warning">{{ $banking->status }}</a>
+                                                    <a href="{{ route('dashboards.sendwalletone', $banking->id) }}" class="badge badge-warning">Xác nhận</a>
                                                 @endif
 
                                             </td>
@@ -79,6 +79,18 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 offset-1 pb-5">
+                    <h3 style="font-weight: 700">GHI CHÚ:</h3>
+                    <div class="row pt-3">
+                        <div class="col-md-12">
+                            - Dữ liệu lấy từ thông tin bên ngân hàng gửi về.
+                        </div>
+                        <div class="col-md-12 pt-3">
+                            - Nhấn nút <span class="badge badge-warning">Xác nhận</span> để tự động chuyển tiền vào tài khoản ví của chủ phương tiện.
+                            - Nếu số tiền nạp lớn hơn số tiền duy trì tài khoản,mở khóa tất cả các phương của chủ xe do trước đó bị khóa vì tiền trong ví không đủ.
                         </div>
                     </div>
                 </div>
