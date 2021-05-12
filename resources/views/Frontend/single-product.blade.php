@@ -370,10 +370,18 @@
                         success:function(data)
                         {
                             $('#quantitys').empty(data);
-                            $('#quantitys').attr({
-                                "max" : data,        // substitute your own
-                                "min" : 1          // values (or variables) here
-                            });
+                            if (data > 0){
+                                $('#quantitys').attr({
+                                    "max" : data,        // substitute your own
+                                    "min" : 1          // values (or variables) here
+                                });
+                            }else {
+                                $('#quantitys').attr({
+                                    "max" : data,        // substitute your own
+                                    "min" : 0          // values (or variables) here
+                                });
+                            }
+
 
                             // $(function () {
                             //     var limitInput = function () {

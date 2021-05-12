@@ -426,10 +426,16 @@ class ChooseProduct extends Controller
 
         if ($quantity <= 0 ){
             $request->session()->flash('error', 'Vui lòng nhập số lượng xe lớn hơn không!');
-            return redirect()->back();
+            echo "<script>
+                    alert('Vui lòng nhập số lượng xe lớn hơn không!')
+                    window.history.back();
+                </script>";
         }elseif ($quantity > $product->quantity){
             $request->session()->flash('error', 'Số lượng xe hiện tại không đủ yêu cầu!');
-            return redirect()->back();
+            echo "<script>
+                    alert('Vui lòng nhập số lượng xe lớn hơn không!')
+                    window.history.back();
+                </script>";
         }
 
         return view('Frontend.info-customer')->with([
