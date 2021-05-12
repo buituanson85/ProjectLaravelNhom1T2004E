@@ -30,7 +30,9 @@
                                 </select>
                             </div>
                             <div class="detail-choose-left-loaixe" >
-                                @if($category_id == 1)
+                                @if($category_id == 2)
+
+                                @else
                                     <select class="form-control" id="seat" name="seat" style="flex: 1;background-color: #ffffff;border-bottom: none!important;">
                                         <option value="">Chỗ Ngồi</option>
                                         @if($seat=="7 chỗ")
@@ -71,8 +73,6 @@
                                             <option value="Xe bán tải">Xe bán tải</option>
                                         @endif
                                     </select>
-                                @else
-
                                 @endif
                             </div>
                             <div class="detail-choose-left-hopso" >
