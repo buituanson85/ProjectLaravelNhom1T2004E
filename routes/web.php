@@ -229,10 +229,9 @@ Route::middleware(['auth:sanctum', 'verified','authadmin'])->group(function (){
         Route::resource('/dashboards/partners',PartnerController::class);
         Route::get('/dashboards/unpartners',[PartnerController::class,'unpartners'])->name('dashboards.unpartners');
         Route::get('/dashboards/editphuongtien/{id}',[PartnerController::class,'editphuongtien'])->name('dashboards.editphuongtien');
-        Route::post('/dashboards/updatephuongtien/{id}',[PartnerController::class,'updatephuongtien'])->name('dashboards.updatephuongtien');
         Route::get('/dashboards/editunphuongtien/{id}',[PartnerController::class,'editunphuongtien'])->name('dashboards.editunphuongtien');
+        Route::post('/dashboards/updatephuongtien/{id}',[PartnerController::class,'updatephuongtien'])->name('dashboards.updatephuongtien');
         Route::post('/dashboards/updateunphuongtien/{id}',[PartnerController::class,'updateunphuongtien'])->name('dashboards.updateunphuongtien');
-
         Route::get('/dashboards/partnerunlock/{id}', [PartnerController::class, 'unlockstatustpartner'])->name('dashboards.unlockstatustpartner');
         Route::get('/dashboards/partnerlock/{id}', [PartnerController::class, 'lockstatustpartner'])->name('dashboards.lockstatustpartner');
 

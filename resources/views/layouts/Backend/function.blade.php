@@ -21,14 +21,14 @@
                                                 @if($permission_c->parent == $permission->id )
                                                     @if($permission_c ->name != "Logout")
                                                     <li><a href="{{ route( $permission_c->url ) }}">{!! $permission_c->icon !!}{{ $permission_c->name }}</a></li>
-                                                    @else
-                                                        <li>
-                                                            <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i><span class="ml-1">{{ __('Logout') }}</span></a>
-                                                        </li>
-                                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                                            @csrf
-                                                        </form>
-                                                    @endif
+                            @else
+                                <li>
+                                    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i><span class="ml-1">{{ __('Logout') }}</span></a>
+                                </li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            @endif
                                                 @endif
                                             @endforeach
                                         </ul>

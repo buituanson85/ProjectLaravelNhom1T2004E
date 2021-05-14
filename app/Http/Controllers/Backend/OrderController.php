@@ -121,6 +121,9 @@ class OrderController extends Controller
         $get_order = Order::where('order_id','like', $id)->first();
 //        dd($get_order->id);
         $order = OrderDetails::where('order_id',$get_order->id)->first();
+        if ($order->product->partner_id != Auth::user()->id){
+            return redirect()->back();
+        }
         return view('Backend.orders.partnerordersshow')->with(['order'=>$order]);
     }
 

@@ -46,11 +46,15 @@ class PartnerController extends Controller
 
     public function editphuongtien($id){
         $product = Product::find($id);
-        $cities = City::where('status','instock')->get();
-        $categories = Category::where('status','instock')->get();
-        $districts = District::where('status','instock')->orderBy('id','DESC')->get();
-        $brands = Brand::where('status','instock')->orderBy('id','DESC')->get();
-        return view("Backend.administration-partner.editproduct")->with(['product' => $product, 'categories' => $categories, 'districts' => $districts, 'brands' => $brands, 'cities' => $cities]);
+        if ($product->partner_id != Auth::user()->id){
+            return redirect()->back();
+        }
+
+            $cities = City::where('status','instock')->get();
+            $categories = Category::where('status','instock')->get();
+            $districts = District::where('status','instock')->orderBy('id','DESC')->get();
+            $brands = Brand::where('status','instock')->orderBy('id','DESC')->get();
+            return view("Backend.administration-partner.editproduct")->with(['product' => $product, 'categories' => $categories, 'districts' => $districts, 'brands' => $brands, 'cities' => $cities]);
     }
 
     public function updatephuongtien(Request $request,$id){
@@ -118,11 +122,15 @@ class PartnerController extends Controller
 
     public function editunphuongtien($id){
         $product = Product::find($id);
-        $cities = City::where('status','instock')->get();
-        $categories = Category::where('status','instock')->get();
-        $districts = District::where('status','instock')->orderBy('id','DESC')->get();
-        $brands = Brand::where('status','instock')->orderBy('id','DESC')->get();
-        return view("Backend.administration-partner.editunproduct")->with(['product' => $product, 'categories' => $categories, 'districts' => $districts, 'brands' => $brands, 'cities' => $cities]);
+        if ($product->partner_id == Auth::user()->id){
+            $cities = City::where('status','instock')->get();
+            $categories = Category::where('status','instock')->get();
+            $districts = District::where('status','instock')->orderBy('id','DESC')->get();
+            $brands = Brand::where('status','instock')->orderBy('id','DESC')->get();
+            return view("Backend.administration-partner.editunproduct")->with(['product' => $product, 'categories' => $categories, 'districts' => $districts, 'brands' => $brands, 'cities' => $cities]);
+        }else{
+            return redirect()->back();
+        }
     }
 
     public function updateunphuongtien(Request $request,$id){

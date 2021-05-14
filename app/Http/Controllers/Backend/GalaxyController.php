@@ -7,6 +7,7 @@ use App\Models\Backend\Galaxy;
 use App\Models\Backend\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GalaxyController extends Controller
 {
@@ -53,11 +54,17 @@ class GalaxyController extends Controller
     public function galaxys($id){
         $galaxys = Galaxy::where('product_id', $id)->paginate(5);
         $product = Product::find($id);
+        if ($product->partner_id != Auth::user()->id){
+            return redirect()->back();
+        }
         return view('Backend.administration-partner.galaxys', compact('galaxys','product'));
     }
 
     public function edit($id){
         $galaxy = Galaxy::find($id);
+        if ($galaxy->product->partner_id != Auth::user()->id){
+            return redirect()->back();
+        }
         return view('Backend.administration-partner.edit-galaxy',compact('galaxy'));
     }
 

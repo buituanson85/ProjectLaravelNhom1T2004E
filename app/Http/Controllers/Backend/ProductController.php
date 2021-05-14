@@ -246,6 +246,10 @@ class ProductController extends Controller
     public function acceptProduct($id)
     {
         $product = Product::find($id);
+        if ($product->partner_id != Auth::user()->id){
+            return redirect()->back();
+        }
+
         $galaxies = Galaxy::where('product_id', $id)->get();
         return view('Backend.products.show')->with(['product' => $product,'galaxies' => $galaxies]);
     }
@@ -253,6 +257,7 @@ class ProductController extends Controller
     public function refuseProduct($id)
     {
         $product = Product::find($id);
+
         $product->status = 'refused';
         $product->save();
         $galaxies = Galaxy::where('product_id', $id)->get();
@@ -261,6 +266,7 @@ class ProductController extends Controller
     public function removeProduct($id)
     {
         $product = Product::find($id);
+
         $product->status = 'unavailable';
         $product->save();
         $galaxies = Galaxy::where('product_id', $id)->get();
@@ -269,6 +275,11 @@ class ProductController extends Controller
     public function reupProduct($id)
     {
         $product = Product::find($id);
+
+        if ($product->partner_id != Auth::user()->id){
+            return redirect()->back();
+        }
+
         $product->status = 'pending';
         $email = Auth::user()->email;
         $name = Auth::user()->name;

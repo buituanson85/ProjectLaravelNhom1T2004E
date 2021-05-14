@@ -292,7 +292,11 @@
 
                         </div>
                         <div class="card-footer form-inline">
-                            <a href="{{ route('dashboards.partnerorders') }}" class="btn btn-primary" style="margin: 5px"><i class="fas fa-backward"></i> Quay lại</a>
+                            @if($order->order->status == 'delete' || $order->order->status == 'cancelled' || $order->order->status == 'completed')
+                                <a href="{{ route('dashboards.historyorderpartner') }}" class="btn btn-primary" style="margin: 5px"><i class="fas fa-backward"></i> Quay lại</a>
+                            @else
+                                <a href="{{ route('dashboards.partnerorders') }}" class="btn btn-primary" style="margin: 5px"><i class="fas fa-backward"></i> Quay lại</a>
+                            @endif
                             @if($order->order->status == 'pending')
                                 <form id="acceptOrder" action="{{ route('order.acceptOrder', $order->order->order_id) }}" method="post">
                                     @csrf
